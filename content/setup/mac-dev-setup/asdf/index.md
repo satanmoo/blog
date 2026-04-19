@@ -1,0 +1,107 @@
+## 1. 다운로드 & 설정
+
+```zsh
+brew install asdf
+```
+
+`~/.zshrc.local`에 아래 항목 추가:
+
+```zsh
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+```
+
+### 1-1. JDK
+
+#### 1-1-1. Java 플러그인 추가
+
+(최초 1회) java 플러그인 추가
+  
+  ```zsh
+asdf plugin add java https://github.com/halcyon/asdf-java.git
+  ```
+
+> [!INFO] 참고:
+> https://github.com/halcyon/asdf-java
+#### 1-1-2. JDK 설치
+
+```zsh
+# Temurin 21 설치
+asdf install java latest:temurin-21
+```
+
+#### 1-1-3. 설치확인
+
+```zsh
+asdf list java
+```
+
+#### 1-1-4. `JAVA_HOME` 설정
+
+`~/.zshrc.local`에 아래 항목 추가
+
+```zsh
+asdf_update_java_home() {
+  local java_path
+
+  # asdf 미설정 디렉터리에서 경고 출력 억제
+  java_path="$(asdf which java 2>/dev/null)"
+
+  if [[ -n "$java_path" ]]; then
+    export JAVA_HOME="$(dirname "$(dirname "${java_path:A}")")"
+    export JDK_HOME="$JAVA_HOME"
+  else
+    # 이전 디렉터리의 값이 남지 않도록 정리
+    unset JAVA_HOME
+    unset JDK_HOME
+  fi
+}
+
+autoload -U add-zsh-hook
+add-zsh-hook precmd asdf_update_java_home
+add-zsh-hook chpwd asdf_update_java_home
+
+# 현재 셸에 즉시 반영
+asdf_update_java_home
+```
+
+[원본](https://github.com/halcyon/asdf-java/blob/master/set-java-home.zsh )을 수정함
+
+
+> [!INFO] 참고: 
+> https://github.com/halcyon/asdf-java?tab=readme-ov-file#java_home
+
+
+#### 1-1-4. macOS `JAVA_HOME` integration:
+
+`~/.asdfrc`에 아래 항목 추가
+
+```zsh
+java_macos_integration_enable=yes
+```
+
+> [!INFO] 참고: 
+> https://github.com/halcyon/asdf-java?tab=readme-ov-file#macos
+
+
+#### 1-1-5. workspace에 latest major version 고정
+
+workspace 폴더로 이동 후 아래 실행:
+
+```zsh
+asdf set java latest:temurin-21
+```
+
+이 명령어를 실행하면 `workspace/.tool-versions`에 write
+
+확인:
+
+```zsh
+cat .tool-versions                       
+```
+
+```zsh
+asdf current java
+```
+
+> [!INFO] 참고:
+> https://github.com/halcyon/asdf-java?tab=readme-ov-file#latestj
