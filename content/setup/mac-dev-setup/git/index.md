@@ -97,7 +97,7 @@ git config --global core.excludesfile ~/.gitignore_global
 
 ### 1-3. 디렉토리별 설정
 
-- 공통(전역) 설정에 includeIf 섹션 추가
+- 공통(전역) 설정파일(`~/.gitconfig`)에 includeIf 섹션 추가
 - `touch ~/.gitconfig-{placeholder}`
 	- 디렉토리 이름과 `{placeholder}` 값 동일하게 짓기
 ### 1-4. 디렉토리별로  자격 증명 분리
@@ -146,22 +146,42 @@ Sercretive에서 public key 생성하고 프롬프트 따라하기
 
 ```zsh
 # ~/.ssh/config
+
 Include config.local
 
-Host github.com
-  User git
+# 개인 계정
+Host github-personal
+  HostName github.com
+  User git
+  IdentitiesOnly yes
+
+# 작업 계정
+Host github-work
+  HostName github.com
+  User git
+  IdentitiesOnly yes
+
 ```
 
-우선 모든 mac에서 동일한 공통 설정 작성
+우선 위와 같이 mac에서 동일한 공통 설정 작성
+- 로컬 맥의 정보가 들어가지 않음
 
 ```zsh
 # ~/.ssh/config.local
 Host *
   IdentityAgent ~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+  
+Host github-personal
+	IdentityFile <personal-public-key-path>
+
+Host github-work
+	IdentityFile <work-public-key-path>
 ```
 
-프롬프트에서 알려주는 문장은 `~/.ssh/config.local`에 작성
+프롬프트에서 알려주는 문장(`IdentiyAgent`)은 `~/.ssh/config.local`에 작성
 - 현재 사용하는 mac에 대한 설정
+- `IdentityFile` 경로도 로컬에 의존적이라 `~/.ssh/config.local`에 작성
+	- Secertiv Public Key Path 값
 
 ```bash
 chmod 600 ~/.ssh/config
@@ -183,6 +203,8 @@ chmod 600 ~/.ssh/config.local
 
 #### 1-4-5. SSH 연결 테스트
 ```bash
-ssh -T git@github.com
-# Touch ID 팝업 → "Hi <user.name>!" 나오면 성공
+ssh -T git@github-personal
+# Touch ID 팝업 → "Hi <personal-user-name>!" 나오면 성공
+ssh -T git@github-work
+# Touch ID 팝업 → "Hi <work-user-name>!" 나오면 성공
 ```
