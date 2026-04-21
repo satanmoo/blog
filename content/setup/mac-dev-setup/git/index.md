@@ -111,6 +111,8 @@ Sercretive에서 public key 생성하고 프롬프트 따라하기
 #### 1-4-1. 서명 설정
 ![[Pasted image 20260412233120.png]]
 ```zsh
+# ~/.gitconfig-{placeholder}
+
 [user]
     name = <your-name>
     email = <your-email>
