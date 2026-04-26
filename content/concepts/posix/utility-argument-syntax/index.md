@@ -3,7 +3,7 @@ tags:
   - posix
   - linux
   - unix
-references: https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap12.html
+references: https://pubs.opengroup.org/onlinepubs/9799919799/
 aliases:
   - POSIX Utility Conventions Cheat Sheet
 ---

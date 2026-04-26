@@ -1,5 +1,0 @@
----
-tags:
-  - git
----
-# git-config

@@ -1,6 +1,8 @@
 ---
 tags:
-  - git-config
+  - reference
+  - git
+  - questions
 references: https://git-scm.com/docs/git-config
 ---
 # git-config 문서 질문 로그
