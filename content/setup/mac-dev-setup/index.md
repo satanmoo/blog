@@ -4,10 +4,12 @@ tags:
   - dev
   - setup
 ---
-## Homebrew 설치
+# 패키지 관리
+
+## 1. Homebrew 설치
 
 [설치 링크](https://brew.sh) 참고
-### 앱 설치 목록
+## 2. 앱 설치 목록
 
 ```bash
 # GUI 앱
@@ -36,4 +38,7 @@ brew install --cask wezterm
 
 # zinit
 brew install zinit
+
+# tree
+brew install tree
 ```
