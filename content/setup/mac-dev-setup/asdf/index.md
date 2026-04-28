@@ -103,5 +103,11 @@ cat .tool-versions
 asdf current java
 ```
 
+> [!NOTE] [[#1-1-2. JDK 설치]]에서 설치한 버젼과 달라지는 경우(최신 버젼이 바뀐 경우)
+> 
+> `asdf set java latest:temurin-21` 그리고 `asdf current java`를 실행하면 최신 버젼이 설치되지 않았다고 출력해줌
+> 
+> `asdf install java`를 실행하면 `asdf set java latest:temurin-21`이 갱신한 `.tool-versions`에 따라 새로 JDK 다운로드
+
 > [!INFO] 참고:
 > https://github.com/halcyon/asdf-java?tab=readme-ov-file#latestj
