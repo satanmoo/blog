@@ -1,3 +1,12 @@
+---
+tags:
+  - mac-dev-setup
+  - setup
+aliases:
+  - asdf 설정
+---
+# asdf 설정
+
 ## 1. 다운로드 & 설정
 
 ```zsh
@@ -71,7 +80,7 @@ asdf_update_java_home
 > https://github.com/halcyon/asdf-java?tab=readme-ov-file#java_home
 
 
-#### 1-1-4. macOS `JAVA_HOME` integration:
+#### 1-1-5. macOS `JAVA_HOME` integration:
 
 `~/.asdfrc`에 아래 항목 추가
 
@@ -83,7 +92,7 @@ java_macos_integration_enable=yes
 > https://github.com/halcyon/asdf-java?tab=readme-ov-file#macos
 
 
-#### 1-1-5. workspace에 latest major version 고정
+#### 1-1-6. workspace에 latest major version 고정
 
 workspace 폴더로 이동 후 아래 실행:
 
