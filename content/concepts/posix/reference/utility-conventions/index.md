@@ -2,6 +2,7 @@
 tags:
   - reference
   - posix
+  - utility-conventions
 references: https://pubs.opengroup.org/onlinepubs/9799919799/
 aliases:
   - Utility Conventions
