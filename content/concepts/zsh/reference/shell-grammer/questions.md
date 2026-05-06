@@ -3,7 +3,6 @@ tags:
   - reference
   - questions
   - zsh
-  - shell-grammer
 aliases:
   - Shell Grammer
 references: https://zsh.sourceforge.io/Doc/Release/Shell-Grammar.html#Shell-Grammar

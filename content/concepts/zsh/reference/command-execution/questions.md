@@ -3,7 +3,6 @@ tags:
   - reference
   - questions
   - zsh
-  - command-execution
 aliases:
   - Command Execution
 references: https://zsh.sourceforge.io/Doc/Release/Command-Execution.html#Command-Execution
@@ -18,3 +17,7 @@ references: https://zsh.sourceforge.io/Doc/Release/Command-Execution.html#Comman
 - [[concepts/zsh/reference/shell-builtin-commands/questions|Shell Builtin Commands]]
 
 위에서 해당되지 않으면 `$path`의 원소(실행 파일이 포함된 디렉토리)를 탐색
+
+## `element of $path`
+
+[[concepts/zsh/reference/parameters/questions#15.6 Parameters Used By The Shell#`path`|path]] 참고
