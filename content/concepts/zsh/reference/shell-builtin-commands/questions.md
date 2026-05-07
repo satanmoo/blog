@@ -78,6 +78,14 @@ seperator을 : 말고 다른 값으로 지정할 수 있음
 
 ## `hash`
 
+> [!TODO]
+> one의 의미
+> 
+> PATH 내용은 이미 작성함
+> 
+> named directory hash table?? 
+> - https://unix.stackexchange.com/questions/723248/how-can-one-modify-the-named-directory-hash-table-by-creating-appropriate-shell
+
 > [!QUOTE]
 > 
 > hash can be used to directly modify the contents of the command hash table, and the named directory hash table. Normally one would modify these tables by modifying one’s PATH (for the command hash table) or by creating appropriate shell parameters (for the named directory hash table). The choice of hash table to work on is determined by the -d option; without the option the command hash table is used, and with the option the named directory hash table is used.
