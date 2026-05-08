@@ -296,6 +296,93 @@ typeset -p foo
 
 glob expansion이 적용되어 배열로 적용됨
 
+## 15.3 Positional Parameters
+
+> [!Quote] The positional parameters provide access to the command-line arguments of a shell function, shell script, or the shell itself; see [Invocation](https://zsh.sourceforge.io/Doc/Release/Invocation.html#Invocation), and also [Functions](https://zsh.sourceforge.io/Doc/Release/Functions.html#Functions). The parameter n, where n is a number, is the nth positional parameter. The parameter ‘$0’ is a special case, see [Parameters Set By The Shell](https://zsh.sourceforge.io/Doc/Release/Parameters.html#Parameters-Set-By-The-Shell).
+
+shell function 예시는 다음과 같음
+
+```zsh
+% f () { print "1=$1"; print "2=$2"; }
+% f a b
+1=a
+2=b
+```
+
+`$1`은 첫번째 인자, `$2`는 두번째 인자
+- 현재 실행 문맥에 들어온 인자들을 번호로 꺼내는 개념
+
+shell script 예시는 다음과 같음
+
+```zsh
+vim script.zsh
+```
+
+위와 같이 텍스트 에디터를 연 뒤
+
+```vim
+print "0=$0"
+print "1=$1"
+print "2=$2"
+print "all=$@"
+```
+
+위와 같이 작성하고 저장
+
+```zsh
+% zsh script.zsh a b
+0=script.zsh
+1=a
+2=b
+all=a b
+```
+
+shell itself 예시는 다음과 같음
+- [[concepts/zsh/reference/invocation/questions#`-s` 옵션|Invocation -s 옵션]] 참고
+
+```zsh
+% zsh -s arg1 arg2
+% echo $1
+arg1
+% echo $2
+arg2
+```
+
+---
+
+> [!Quote]
+> 
+> Positional parameters may be changed after the shell or function starts by using the set builtin, by assigning to the argv array, or by direct assignment of the form ‘n=value’ where n is the number of the positional parameter to be changed. This also creates (with empty values) any of the positions from 1 to n that do not already have values. Note that, because the positional parameters form an array, an array assignment of the form ‘n=(value ...)’ is allowed, and has the effect of shifting all the values at positions greater than n by as many positions as necessary to accommodate the new values.
+
+positional parameters가 프로세스 시작할 때 만 정해지는 것이 아니라, 실행 중에도 바뀔 수 있음을 설명함
+
+`set` builtin 을 사용하는 예시는 다음과 같음
+- [[concepts/zsh/reference/shell-builtin-commands/questions#`set`|Shell Builtin Commands-set]]  참고
+
+```zsh
+% zsh -s a b c # 새로운 zsh 프로세스 시작
+% echo $1
+a
+% echo $2
+b
+% echo $3
+c
+```
+
+> [!TODO]
+  두 번째 방법: argv 배열에 할당 
+  세 번째 방법: 직접 n=value 할당
+
+## 15.5 Parameters Set By The Shell
+
+> [!Quote]
+> 
+> argv `<S> <Z>`
+> 
+> Same as `*`. Assigning to argv changes the local positional parameters, but argv is _not_ itself a local parameter. Deleting argv with unset in any function deletes it everywhere, although only the innermost positional parameter array is deleted (so * and @ in other scopes are not affected).
+
+> [!TODO] argv 실습
+
 ## 15.6 Parameters Used By The Shell
 
 ### `sh`, `ksh` emulation mode

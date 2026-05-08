@@ -76,6 +76,42 @@ scalar 값으로 출력됨을 확인할 수 있음
 
 seperator을 : 말고 다른 값으로 지정할 수 있음
 
+## `set`
+
+> [!Quote]
+> 
+> If the -A flag is not present, but there are arguments beyond the options, the positional parameters are set. If the option list (if any) is terminated by ‘--’, and there are no further arguments, the positional parameters will be unset.
+
+`-A가 없고`, 옵션 처리 뒤에 인자들이 남아 있으면 그 인자들로 positional parameters를 설정함
+
+`set -- a b`
+- `set`: builtin command
+- `--`: 옵션 처리 종료
+- `a`: 옵션 뒤에 남은 첫 번째 일반 인자
+- `b`: 옵션 뒤에 남은 두 번째 일반 인자
+
+```zsh
+% echo $1
+a
+% echo $2
+b
+```
+
+다음과 같이 셸의 positional parameters 전체를 제거할 수 있음
+
+```zsh
+% set --
+```
+
+```zsh
+% echo $1
+
+% echo $2
+
+```
+
+참고: https://unix.stackexchange.com/questions/18981/how-to-unset-the-positional-parameters
+
 ## `hash`
 
 > [!TODO]
