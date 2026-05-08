@@ -30,7 +30,7 @@ local config = wezterm.config_builder()
 config.front_end = "WebGpu"
 
 -- 컬러스킴
-config.color_scheme = "iTerm2 Dark Background"
+config.color_scheme = "iTerm2 Light Background"
 
 -- 창 설정
 config.window_decorations = "RESIZE"
