@@ -69,7 +69,7 @@ process environment에 추가된 값은 자식 프로세스가 볼 수 있음
 	- 자동으로 process environment 복사
 	- 자식 프로세스가 볼 수 있음
 
-### *special* parameter
+### special parameter
 
 > [!QUOTE]
 > 
@@ -230,22 +230,31 @@ zsh:typeset: RANDOM: can't change type of a special parameter
 
 에러 메시지는 type 변경처럼 보이지만, 여기서는 `+r`로 readonly attribute 제거를 시도한 상황
 
-### 대입 시 expansion
+### scalar assignment
 
 > [!QUOTE]
 > 
 > The value of a scalar parameter may also be assigned by writing:
 > 
 > > name=value
->  
+> 
 > In scalar assignment, value is expanded as a single string, in which the elements of arrays are joined together; filename expansion is not performed unless the option GLOB_ASSIGN is set.
+
+scalar parameter에는 `name=value` 형태로 값을 할당할 수 있음
+
+```zsh
+foo=hello
+typeset -p foo
+
+# 출력 결과: typeset foo=hello
+```
 
 expansion
 - 셸 용어로 확장
 	- 문자열을 가공/변환하는 처리
 
 `name=value`
-- 위 식에서 우변(value)에 어떤 expansion 규칙이 적용되어 좌변에 대입됨
+- 위 식에서 우변(value)에 scalar assignment expansion 규칙이 적용되어 좌변에 대입됨
 
 파일 확장자는 기본적으로 확장이 적용되지 않음
 
@@ -295,6 +304,65 @@ typeset -p foo
 `GLOB_ASSIGN`을 키고 다시 시도해보자
 
 glob expansion이 적용되어 배열로 적용됨
+
+## 15.2 Array Parameters
+
+> [!QUOTE]
+> 
+> To assign an array value, write one of:
+> 
+> > `set -A` name value ...
+> 
+> > name`=(`value ...`)`
+> 
+> > name`=(``[`key`]=`value ...`)`
+
+array parameter에 값을 할당하는 방법은 여러 가지가 있음
+
+`set -A`를 사용할 수 있음
+
+```zsh
+% set -A arr a b c
+% typeset -p arr
+typeset -a arr=( a b c )
+```
+
+`name=(value ...)` 형태의 array assignment를 사용할 수도 있음
+
+```zsh
+% arr=(a b c)
+% typeset -p arr
+typeset -a arr=( a b c )
+```
+
+`name=([key]=value ...)` 형태로 index를 직접 지정할 수도 있음
+
+```zsh
+% arr=([1]=a [3]=c)
+% typeset -p arr
+typeset -a arr=( a '' c )
+```
+
+`[key]` 형식은 index를 직접 지정하고 싶을 때 사용하는 형태임
+
+값을 순서대로 넣는 일반적인 경우에는 보통 `name=(value ...)` 형태만으로 충분함
+
+> [!QUOTE]
+> 
+> To append to an array without changing the existing values, use one of the following:
+> 
+> > name`+=(`value ...`)`
+> 
+> > name`+=(``[`key`]=`value ...`)`
+
+기존 array 값을 유지하면서 뒤에 원소를 추가할 수도 있음
+
+```zsh
+arr+=(d e)
+typeset -p arr
+
+# 출력 결과: typeset -a arr=( a b c d e )
+```
 
 ## 15.3 Positional Parameters
 
@@ -369,11 +437,86 @@ b
 c
 ```
 
-> [!TODO]
-  두 번째 방법: argv 배열에 할당 
-  세 번째 방법: 직접 n=value 할당
+`set` builtin으로 positional parameters를 다시 설정할 수 있음
+
+```zsh
+% set -- x y
+% echo $1
+x
+% echo $2
+y
+% echo ${3-unset}
+unset
+```
+
+`argv` array에 할당해도 positional parameters가 바뀜
+- `argv` 자체에 대한 설명은 [[#15.5 Parameters Set By The Shell]] 참고
+
+```zsh
+% argv=(x y z)
+% echo $1
+x
+% echo $2
+y
+% echo $3
+z
+```
+
+`n=value` 형태로 특정 positional parameter만 직접 바꿀 수도 있음
+
+```zsh
+% set -- a b c
+% 2=changed
+% echo $1
+a
+% echo $2
+changed
+% echo $3
+c
+```
+
+위 세 방법은 모두 shell, function, script가 시작된 뒤 positional parameters를 변경하는 방법임
 
 ## 15.5 Parameters Set By The Shell
+
+> [!QUOTE]
+> 
+> In the parameter lists that follow, the mark ‘\<S>’ indicates that the parameter is special. ‘\<Z>’ indicates that the parameter does not exist when the shell initializes in sh or ksh emulation mode.
+
+`<S>`는 special parameter를 의미함
+
+`<Z>`는 shell이 `sh` 또는 `ksh` emulation mode로 초기화될 때 존재하지 않는 parameter를 의미함
+
+> [!QUOTE]
+> 
+> The parameters ‘!’, ‘#’, ‘*’, ‘-’, ‘?’, ‘@’, ‘$’, ‘ARGC’, ‘HISTCMD’, ‘LINENO’, ‘PPID’, ‘status’, ‘TTYIDLE’, ‘zsh_eval_context’, ‘ZSH_EVAL_CONTEXT’, and ‘ZSH_SUBSHELL’ are read-only and thus cannot be restored by the user, so they are not output by ‘typeset -p’. This also applies to many read-only parameters loaded from modules.
+
+restoring
+- 재현하는 개념
+- [[concepts/zsh/reference/shell-builtin-commands/questions#`typeset -p`|typeset -p]] 에서 말하는 `typeset`command 형태가 재현하는 개념
+
+```zsh
+% x=hello;readonly ro val;arr=(one two)
+% typeset -p x ro arr
+typeset x=hello
+typeset -r ro=val
+typeset -a arr=( one two )
+```
+
+`typeset -p` 의 출력은 그냥 설명용 텍스트가 아니라 다시 zsh에 입력해서 실행할 수 있는 shell snippet
+- 다시 zsh에 입력해서 사용할 수 있기에 "restoring"이라고 부름
+- https://unix.stackexchange.com/questions/805913/what-does-zsh-mean-by-read-only-parameters-cannot-be-restored-by-the-user-in-r/805915#805915 참고
+
+`status`, `ARGC`는 값은 존재하지만 `typeset -p`로 출력되지 않음
+- 셸에서 사용자가 설정할 수 없는 값(Parameters Set By The Shell)이니까 재현이 성립하지 않음
+
+```zsh
+% echo $status
+0
+% echo $ARGC
+0
+% typeset -p status ARGC
+```
 
 > [!Quote]
 > 
@@ -400,7 +543,7 @@ c
 > `path <S> <Z> (PATH <S>)`
 
 `<S>` path가 special parameter라는 표시
-- [[#*special* parameter]]
+- [[#special parameter]]
 
 `<Z>` path는 zsh 고유 성격의 parameter라서 `sh`, `ksh` emulation mode 에서 동작하지 않음
 
@@ -411,22 +554,47 @@ c
 > 
 > An array (colon-separated list) of directories to search for commands. When this parameter is set, each directory is scanned and all files found are put in a hash table.
 
-zsh는 `path`의 원소
-- 이 원소는 디렉터리
-	- 디렉터리 목록에서 명령어로 입력 받은 실행 파일을 찾음
+여기서 `set`은 `set` builtin command만 말하는 것이 아님
 
-zsh 내부에는 look up table 존재
-- `path`가 설정되면 zsh는 scan해서 `git -> /opt/homebrew/bin/git` 이런식으로 내부 look up table에 등록
-	- 여기서 설정은 `path=(/bin /usr/bin)` 처럼 parameter 에 값 대입을 말함
-- 명령어를 실행할 때 매번 탐색하는 것이 아니라 look up table을 조회해 효율적으로 처리
+`path` parameter의 값이 설정되거나 변경되는 경우 전반을 말한다고 이해하면 됨
+- 구체적인 array assignment 문법은 [[#15.2 Array Parameters]] 참고
+
+예를 들어 `path`는 array parameter이므로 다음처럼 값을 설정할 수 있음
+
+```zsh
+path=(/bin /usr/bin)
+```
+
+```zsh
+set -A path /bin /usr/bin
+```
+
+기존 값을 유지하면서 뒤에 디렉터리를 추가할 수도 있음
+
+```zsh
+path+=(/opt/homebrew/bin)
+```
+
+`path`의 원소는 디렉터리임
+
+zsh는 이 디렉터리 목록에서 command name으로 입력 받은 실행 파일을 찾음
+
+zsh 내부에는 command hash table이 존재함
+- `path`가 설정되면 zsh는 scan해서 `git -> /opt/homebrew/bin/git` 이런식으로 command hash table에 등록
+	- command hash table은 command name을 실행 파일 경로에 연결하는 zsh 내부 table임
+	- [[concepts/zsh/explanation/command-execution/01-command-execution#command hash table|01. zsh command execution/command hash table]] 참고
+- 명령어를 실행할 때 매번 물리적으로 모든 디렉터리를 scan하는 것이 아니라 command hash table을 조회해 효율적으로 처리
+
+command hash table 을 출력하기 위해 아래 명령어를 실행하면 됨
 
 ```zsh
 hash -L
 ```
 - [[concepts/zsh/reference/shell-builtin-commands/questions#`hash -L`|Shell Builtin Commands/Hash/Hash -L]] 참고
 
+#### `PATH` & `path`
 
-### `PATH` & `path`
+[zsh 문서 Paratmeters](https://zsh.sourceforge.io/Doc/Release/Parameters.html#Parameters)에서 "15.6 Parameters Used By The Shell" 섹션에는 아래와 같이 설명함
 
 > [!QUOTE]
 > 
@@ -442,3 +610,19 @@ hash -L
 - 둘 중 하나를 unset 하면 나머지도 unset
 - 하나를 다시 생성하면 나머지도 자동 재생성
 - [[concepts/zsh/reference/shell-builtin-commands/questions#`typeset`|Shell Builtin Commands/typeset]] 설명과 원문 참고
+
+따라서 `PATH` scalar 쪽을 설정해도 `path` array가 함께 바뀜
+- scalar assignment 문법 자체는 [[#scalar assignment]] 참고
+
+```zsh
+PATH=/bin:/usr/bin
+typeset -p path
+
+# 출력 결과: typeset -aT PATH path=( /bin /usr/bin )
+```
+
+`PATH`는 보통 environment variable로 export 하는 용도이므로 다음처럼 설정하는 경우도 많음
+
+```zsh
+export PATH=/bin:/usr/bin
+```
