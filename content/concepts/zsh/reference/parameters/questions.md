@@ -96,7 +96,7 @@ special parameter `+r`로 읽기 전용을 끌 수 없음
 일반 parameter는 type을 바꿀 수 있음
 
 ```zsh
-foo=hello
+% foo=hello
 ```
 
 셸 내부 변수를 선언하는 명령어
@@ -104,13 +104,12 @@ foo=hello
 - foo는 현재 셸 내부 변수
 
 ```zsh
-typeset -p foo # parmeter foo의 현재 정의를 출력하라는 명령
-
-# 출력 결과: typeset foo=hello
+% typeset -p foo
+typeset foo=hello
 ```
 
 ```zsh
-typeset -i foo
+% typeset -i foo
 ```
 
 foo를 정수 paramter로 다루겠다는 명령
@@ -121,21 +120,19 @@ foo를 정수 paramter로 다루겠다는 명령
 정수 paramter로 변경 후 출력해보면 아래와 같음
 
 ```zsh
-typeset -p foo
-
-# 출력 결과: typeset -i foo=0
+% typeset -p foo
+typeset -i foo=0
 ```
 
 integer attribute를 다시 끌 수도 있음
 
 ```zsh
-typeset +i foo
+% typeset +i foo
 ```
 
 ```zsh
-typeset -p foo
-
-# 출력 결과: typeset foo=0
+% typeset -p foo
+typeset foo=0
 ```
 
 일반 parameter는 readonly attribute도 끌 수 있음
@@ -143,88 +140,75 @@ typeset -p foo
 아래와 같이 `-r`  어트리뷰트를 붙인 채 변수 선언
 
 ```zsh
-readonly bar=value
+% readonly bar=value
 ```
 
 ```zsh
-typeset -p bar
-
-# 출력 결과: typeset -r bar=value
+% typeset -p bar
+typeset -r bar=value
 ```
 
 `-r` 어트리뷰트 제거 후 확인하기
 
 ```zsh
-typeset +r bar
+% typeset +r bar
 ```
 
 ```zsh
-typeset -p bar
-
-# 출력 결과: typeset bar=value
+% typeset -p bar
+typeset bar=value
 ```
 
 일반 parameter는 unset 후 다시 만들면 이전 type attribute가 유지되지 않음
 
 ```zsh
+% typeset -i baz=123
+% typeset -p baz
 typeset -i baz=123
-typeset -p baz
-
-# 출력 결과: typeset -i baz=123
 ```
 
 ```zsh
-unset baz
-typeset -p baz
-
-# 출력 결과: typeset: no such variable: baz
+% unset baz
+% typeset -p baz
+typeset: no such variable: baz
 ```
 
 아래와 같이 unset 후 새로 만들었을 때 이전 type attribute인 `-i`가 유지 되지 않음
 
 ```zsh
-baz=abc
-typeset -p baz
-
-# 출력 결과: typeset baz=abc
+% baz=abc
+% typeset -p baz
+typeset baz=abc
 ```
 
 반면 special parameter는 type 변경을 시도하면 실패함
 
 ```zsh
-typeset -p RANDOM
-
-# 출력 결과: typeset -i10 RANDOM=7475
+% typeset -p RANDOM
+typeset -i10 RANDOM=7475
 ```
 
 ```zsh
-typeset +i RANDOM
-```
-
-타입 변경을 시도하면 아래와 같이 오류 메시지 출력
-
-```zsh
+% typeset +i RANDOM
 zsh:typeset: RANDOM: can't change type of a special parameter
 ```
+
+타입 변경을 시도하면 위와 같이 오류 메시지 출력
 
 special parameter는 readonly attribute를 끄려고 해도 실패함
 
 먼저 `RANDOM`에 readonly attribute를 붙임
 
 ```zsh
-readonly RANDOM
-typeset -p RANDOM
-
-# 출력 결과: typeset -i10 -r RANDOM=7544
+% readonly RANDOM
+% typeset -p RANDOM
+typeset -i10 -r RANDOM=7544
 ```
 
 일반 parameter에서는 `typeset +r`로 readonly attribute를 끌 수 있었지만, special parameter에서는 실패함
 
 ```zsh
-typeset +r RANDOM
-```
-
-```zsh
+% typeset +r RANDOM
 zsh:typeset: RANDOM: can't change type of a special parameter
 ```
 
@@ -243,10 +227,9 @@ zsh:typeset: RANDOM: can't change type of a special parameter
 scalar parameter에는 `name=value` 형태로 값을 할당할 수 있음
 
 ```zsh
-foo=hello
-typeset -p foo
-
-# 출력 결과: typeset foo=hello
+% foo=hello
+% typeset -p foo
+typeset foo=hello
 ```
 
 expansion
@@ -261,44 +244,40 @@ expansion
 #### 확인 예시
 
 ```zsh
-arr=(a b c)
-typeset -p arr
-
-# 출력 결과: typeset -a arr=( a b c )
+% arr=(a b c)
+% typeset -p arr
+typeset -a arr=( a b c )
 ```
 
 `-a`는 indexed array attribute
 
 ```zsh
-foo=$arr
-typeset -p foo
-
-# 출력 결과: typeset foo='a b c'
+% foo=$arr
+% typeset -p foo
+typeset foo='a b c'
 ```
 
 array의 원소들이 join 되어 하나의 scalar string이 됨
 
 ```zsh
-touch a.txt b.txt
+% touch a.txt b.txt
 ```
 
 위와 같은 파일들이 있을 때
 
 ```zsh
-foo=*.txt
-typeset -p foo
-
-# 출력 결과: typeset foo='*.txt'
+% foo=*.txt
+% typeset -p foo
+typeset foo='*.txt'
 ```
 
 \*.txt 가 `a.txt b.txt`로 glob expansion 되지 않았음
 
 ```zsh
-setopt GLOB_ASSIGN
-foo=*.txt
-typeset -p foo
-
-# 출력 결과: typeset -a foo=( a.txt b.txt )
+% setopt GLOB_ASSIGN
+% foo=*.txt
+% typeset -p foo
+typeset -a foo=( a.txt b.txt )
 ```
 
 `GLOB_ASSIGN`을 키고 다시 시도해보자
@@ -358,10 +337,9 @@ typeset -a arr=( a '' c )
 기존 array 값을 유지하면서 뒤에 원소를 추가할 수도 있음
 
 ```zsh
-arr+=(d e)
-typeset -p arr
-
-# 출력 결과: typeset -a arr=( a b c d e )
+% arr+=(d e)
+% typeset -p arr
+typeset -a arr=( a b c d e )
 ```
 
 ## 15.3 Positional Parameters
@@ -383,7 +361,7 @@ shell function 예시는 다음과 같음
 shell script 예시는 다음과 같음
 
 ```zsh
-vim script.zsh
+% vim script.zsh
 ```
 
 위와 같이 텍스트 에디터를 연 뒤
@@ -477,6 +455,70 @@ c
 
 위 세 방법은 모두 shell, function, script가 시작된 뒤 positional parameters를 변경하는 방법임
 
+## 15.4 Local Parameters
+
+> [!QUOTE]
+> 
+> Shell function executions delimit scopes for shell parameters. (Parameters are dynamically scoped.)
+> 
+
+shell function 실행은 shell parameter scope의 경계를 만듦
+- function이 호출되면 그 function 실행을 기준으로 새로운 scope가 생긴다고 이해하면 됨
+
+zsh의 parameter scope는 dynamic scope임
+- 어떤 parameter를 읽을 때 lexical하게 정의 위치만 보는 것이 아니라, 현재 실행 중인 function 호출 체인에서 가장 안쪽부터 바깥쪽으로 찾음
+
+```zsh
+% unset x
+% inner() { echo "inner sees x=$x"; }
+% outer() { local x=outer; inner; }
+% outer
+inner sees x=outer
+% echo ${x-unset}
+unset
+```
+
+`inner` 안에는 `x`가 없지만, `inner`가 `outer` 실행 중에 호출되었기 때문에 `outer`의 local parameter인 `x`를 찾음
+
+---
+
+> [!Quote]
+> 
+> `typeset` ... `local` ... `readonly` ... can be used to declare a parameter as being local to the innermost scope.
+
+`innermost scope`는 현재 실행 중인 호출 체인에서 가장 안쪽 scope를 의미함
+- 지금 실행 중인 function의 scope가 가장 안쪽이고, 그 function을 호출한 function의 scope는 그 바깥쪽임
+
+`typeset`, `local`, `readonly`는 현재 `innermost scope`에 local parameter를 만들 수 있음
+
+---
+
+> [!Quote]
+> 
+> When a parameter is read or assigned to, the innermost existing parameter of that name is used.
+
+같은 이름의 parameter가 여러 scope에 있으면 가장 안쪽 parameter가 사용됨
+- 즉 안쪽 scope의 local parameter가 바깥쪽 scope의 parameter를 가림
+
+---
+
+> [!quote]
+> 
+> Local parameters disappear when their scope ends.
+
+local parameter는 자신이 속한 scope가 끝나면 사라짐
+
+아래 예시에서 `x`는 `f` 안에서 `local`로 만들어졌기 때문에 `f` 실행 중에만 존재하고, `f`가 끝난 뒤에는 사라짐
+
+```zsh
+% unset x
+% f() { local x=local; echo "inside: $x"; }
+% f
+inside: local
+% echo ${x-unset}
+unset
+```
+
 ## 15.5 Parameters Set By The Shell
 
 > [!QUOTE]
@@ -518,13 +560,19 @@ typeset -a arr=( one two )
 % typeset -p status ARGC
 ```
 
+### argv
+
+> [!TODO] argv 실습, 설명 보충
+
 > [!Quote]
 > 
 > argv `<S> <Z>`
 > 
 > Same as `*`. Assigning to argv changes the local positional parameters, but argv is _not_ itself a local parameter. Deleting argv with unset in any function deletes it everywhere, although only the innermost positional parameter array is deleted (so * and @ in other scopes are not affected).
 
-> [!TODO] argv 실습
+`argv`에 대입하면 현재 가장 안쪽 positional parameter array가 바뀜
+- 그래서 현재 function 실행 scope의 positional parameters가 바뀐다고 이해하면 됨
+- 단, 이것이 `argv` 자체를 `local argv`처럼 선언한 local parameter라는 뜻은 아님
 
 ## 15.6 Parameters Used By The Shell
 
@@ -562,37 +610,28 @@ typeset -a arr=( one two )
 예를 들어 `path`는 array parameter이므로 다음처럼 값을 설정할 수 있음
 
 ```zsh
-path=(/bin /usr/bin)
+% path=(/bin /usr/bin)
 ```
 
 ```zsh
-set -A path /bin /usr/bin
+% set -A path /bin /usr/bin
 ```
 
 기존 값을 유지하면서 뒤에 디렉터리를 추가할 수도 있음
 
 ```zsh
-path+=(/opt/homebrew/bin)
+% path+=(/opt/homebrew/bin)
 ```
 
 `path`의 원소는 디렉터리임
 
 zsh는 이 디렉터리 목록에서 command name으로 입력 받은 실행 파일을 찾음
 
-zsh 내부에는 command hash table이 존재함
-- `path`가 설정되면 zsh는 scan해서 `git -> /opt/homebrew/bin/git` 이런식으로 command hash table에 등록
-	- command hash table은 command name을 실행 파일 경로에 연결하는 zsh 내부 table임
-	- [[concepts/zsh/explanation/command-execution/01-command-execution#command hash table|01. zsh command execution/command hash table]] 참고
-- 명령어를 실행할 때 매번 물리적으로 모든 디렉터리를 scan하는 것이 아니라 command hash table을 조회해 효율적으로 처리
+zsh는 내부적으로 command hash table 을 사용함
+- path 값을 설정하면 command hash table 도 변경됨
+- [[concepts/zsh/explanation/command-execution/01-command-execution/index#command hash table|command hash table]] 참고
 
-command hash table 을 출력하기 위해 아래 명령어를 실행하면 됨
-
-```zsh
-hash -L
-```
-- [[concepts/zsh/reference/shell-builtin-commands/questions#`hash -L`|Shell Builtin Commands/Hash/Hash -L]] 참고
-
-#### `PATH` & `path`
+### `PATH` & `path`
 
 [zsh 문서 Paratmeters](https://zsh.sourceforge.io/Doc/Release/Parameters.html#Parameters)에서 "15.6 Parameters Used By The Shell" 섹션에는 아래와 같이 설명함
 
@@ -615,14 +654,13 @@ hash -L
 - scalar assignment 문법 자체는 [[#scalar assignment]] 참고
 
 ```zsh
-PATH=/bin:/usr/bin
-typeset -p path
-
-# 출력 결과: typeset -aT PATH path=( /bin /usr/bin )
+% PATH=/bin:/usr/bin
+% typeset -p path
+typeset -aT PATH path=( /bin /usr/bin )
 ```
 
 `PATH`는 보통 environment variable로 export 하는 용도이므로 다음처럼 설정하는 경우도 많음
 
 ```zsh
-export PATH=/bin:/usr/bin
+% export PATH=/bin:/usr/bin
 ```

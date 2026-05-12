@@ -18,6 +18,6 @@ references: https://zsh.sourceforge.io/Doc/Release/Command-Execution.html#Comman
 
 위에서 해당되지 않으면 `$path`의 원소(실행 파일이 포함된 디렉토리)를 탐색
 
-## `element of $path`
+## element of `$path`
 
 [[concepts/zsh/reference/parameters/questions#15.6 Parameters Used By The Shell#`path`|path]] 참고

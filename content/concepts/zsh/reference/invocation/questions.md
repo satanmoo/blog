@@ -87,7 +87,7 @@ arg2
 `-s`  옵션을 사용하되 인자가 있는 예시는 다음과 같음
 
 ```zsh
-vim script.zsh
+% vim script.zsh
 ```
 
 위와 같이 텍스트 에디터를 연 뒤
@@ -112,7 +112,7 @@ second arg: b
 반면 `-s`를 붙여서 실행하면 다음과 같음
 
 ```zsh
-zsh -s script.zsh a b
+% zsh -s script.zsh a b
 ```
 
 새로운 zsh 프로세스가 시작되고 positional parameters은 다음과 같음
