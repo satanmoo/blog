@@ -31,20 +31,27 @@ asdf plugin add java https://github.com/halcyon/asdf-java.git
 
 > [!INFO] 참고:
 > https://github.com/halcyon/asdf-java
-#### 1-1-2. JDK 설치
+
+#### 1-1-2. 설치 가능한 JDK 조회
+
+```zsh
+asdf list all java
+```
+
+#### 1-1-3. JDK 설치
 
 ```zsh
 # Temurin 21 설치
 asdf install java latest:temurin-21
 ```
 
-#### 1-1-3. 설치확인
+#### 1-1-4. 설치확인
 
 ```zsh
 asdf list java
 ```
 
-#### 1-1-4. `JAVA_HOME` 설정
+#### 1-1-5. `JAVA_HOME` 설정
 
 `~/.zshrc.local`에 아래 항목 추가
 
@@ -80,7 +87,7 @@ asdf_update_java_home
 > https://github.com/halcyon/asdf-java?tab=readme-ov-file#java_home
 
 
-#### 1-1-5. macOS `JAVA_HOME` integration:
+#### 1-1-6. macOS `JAVA_HOME` integration:
 
 `~/.asdfrc`에 아래 항목 추가
 
@@ -92,7 +99,7 @@ java_macos_integration_enable=yes
 > https://github.com/halcyon/asdf-java?tab=readme-ov-file#macos
 
 
-#### 1-1-6. workspace에 latest major version 고정
+#### 1-1-7. workspace에 latest major version 고정
 
 workspace 폴더로 이동 후 아래 실행:
 
@@ -101,6 +108,8 @@ asdf set java latest:temurin-21
 ```
 
 이 명령어를 실행하면 `workspace/.tool-versions`에 write
+- temurin-21 중에 최신을 등록함
+- https://github.com/halcyon/asdf-java#latest 참고
 
 확인:
 
