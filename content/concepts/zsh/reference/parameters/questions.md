@@ -342,9 +342,17 @@ typeset -a arr=( a '' c )
 typeset -a arr=( a b c d e )
 ```
 
+### 15.2.1 Array Subscripts
+
+> [!TODO] Array Suscripts 내용 추가
+> 
+> A subscript of the form ‘[*]’ or ‘[@]’ evaluates to all elements of an array; there is no difference between the two except when they appear within double quotes. ‘"$foo[*]"’ evaluates to ‘"$foo[1] $foo[2] ..."’, whereas ‘"$foo[@]"’ evaluates to ‘"$foo[1]" "$foo[2]" ...’.
+
 ## 15.3 Positional Parameters
 
 > [!Quote] The positional parameters provide access to the command-line arguments of a shell function, shell script, or the shell itself; see [Invocation](https://zsh.sourceforge.io/Doc/Release/Invocation.html#Invocation), and also [Functions](https://zsh.sourceforge.io/Doc/Release/Functions.html#Functions). The parameter n, where n is a number, is the nth positional parameter. The parameter ‘$0’ is a special case, see [Parameters Set By The Shell](https://zsh.sourceforge.io/Doc/Release/Parameters.html#Parameters-Set-By-The-Shell).
+
+### shell funciton positional paramters
 
 shell function 예시는 다음과 같음
 
@@ -357,6 +365,8 @@ shell function 예시는 다음과 같음
 
 `$1`은 첫번째 인자, `$2`는 두번째 인자
 - 현재 실행 문맥에 들어온 인자들을 번호로 꺼내는 개념
+
+### shell script positional paramters
 
 shell script 예시는 다음과 같음
 
@@ -382,6 +392,8 @@ print "all=$@"
 2=b
 all=a b
 ```
+
+### shell itshelf positional paramters
 
 shell itself 예시는 다음과 같음
 - [[concepts/zsh/reference/invocation/questions#`-s` 옵션|Invocation -s 옵션]] 참고
@@ -466,7 +478,7 @@ shell function 실행은 shell parameter scope의 경계를 만듦
 - function이 호출되면 그 function 실행을 기준으로 새로운 scope가 생긴다고 이해하면 됨
 
 zsh의 parameter scope는 dynamic scope임
-- 어떤 parameter를 읽을 때 lexical하게 정의 위치만 보는 것이 아니라, 현재 실행 중인 function 호출 체인에서 가장 안쪽부터 바깥쪽으로 찾음
+- 어떤 parameter를 읽을 때 lexical하게 정의 위치만 보는 것이 아니라, 현재 실행 중인 function 호출 체인에서 가장 안쪽(innermost)부터 바깥쪽으로 찾음
 
 ```zsh
 % unset x
@@ -479,17 +491,6 @@ unset
 ```
 
 `inner` 안에는 `x`가 없지만, `inner`가 `outer` 실행 중에 호출되었기 때문에 `outer`의 local parameter인 `x`를 찾음
-
----
-
-> [!Quote]
-> 
-> `typeset` ... `local` ... `readonly` ... can be used to declare a parameter as being local to the innermost scope.
-
-`innermost scope`는 현재 실행 중인 호출 체인에서 가장 안쪽 scope를 의미함
-- 지금 실행 중인 function의 scope가 가장 안쪽이고, 그 function을 호출한 function의 scope는 그 바깥쪽임
-
-`typeset`, `local`, `readonly`는 현재 `innermost scope`에 local parameter를 만들 수 있음
 
 ---
 
@@ -560,6 +561,79 @@ typeset -a arr=( one two )
 % typeset -p status ARGC
 ```
 
+### *
+
+> [!Quote] 
+> 
+> An array containing the positional parameters.
+
+`*`는 positional parameters 전체를 담는 array parameter임
+- 즉 `$1`, `$2`, `$3` ... 를 한 번에 읽는 parameter라고 이해하면 됨
+
+```zsh
+% set -- a b c
+% echo $1
+a
+% echo $2
+b
+% echo $*
+a b c
+```
+
+array이기 때문에 index로 특정 positional parameter를 읽을 수 있음
+- zsh array는 기본적으로 1부터 시작함
+
+```zsh
+% set -- apple banana cherry
+% echo ${*[1]}
+apple
+% echo ${*[2]}
+banana
+% echo ${*[3]}
+cherry
+```
+
+`*` 자체는 read-only parameter라서 직접 대입해서 변경하는 대상이 아님
+- positional parameters를 바꾸면 `*`가 그 결과를 반영함
+- [[#15.5 Parameters Set By The Shell]] 에서 본 restoring 개념 참고
+
+```zsh
+% set -- a b c
+% echo $*
+a b c
+% set -- x y
+% echo $*
+x y
+```
+
+`argv`에 대입해도 local positional parameters가 변경되므로 `*`로 읽히는 값도 바뀜
+
+```zsh
+% argv=(red green blue)
+% echo $*
+red green blue
+% echo ${*[2]}
+green
+```
+
+특정 positional parameter를 직접 바꿔도 `*`에 반영됨
+
+```zsh
+% set -- a b c
+% 2=ZZ
+% echo $*
+a ZZ c
+```
+
+### @
+
+> [!TODO] Array subscripts 개념을 먼저 이해해야함
+
+
+> [!quote]
+> 
+> Same as argv[@], even when argv is not set.
+
 ### argv
 
 > [!TODO] argv 실습, 설명 보충
@@ -570,9 +644,40 @@ typeset -a arr=( one two )
 > 
 > Same as `*`. Assigning to argv changes the local positional parameters, but argv is _not_ itself a local parameter. Deleting argv with unset in any function deletes it everywhere, although only the innermost positional parameter array is deleted (so * and @ in other scopes are not affected).
 
-`argv`에 대입하면 현재 가장 안쪽 positional parameter array가 바뀜
-- 그래서 현재 function 실행 scope의 positional parameters가 바뀐다고 이해하면 됨
-- 단, 이것이 `argv` 자체를 `local argv`처럼 선언한 local parameter라는 뜻은 아님
+위의 [[#*]] 와 유사하니 참고
+
+`argv`에서 `unset`은 특수한 동작이 있음
+- 그래서 `argv`가 일반 local paratmer가 아니라고 표현
+- `unset`의 기본 동작은 [[concepts/zsh/reference/shell-builtin-commands/questions#`unset`|unset]] 참고
+
+```zsh
+% set -- outer1 outer2
+% f() { set -- inner1 inner2; echo "inside before: $*"; unset argv; echo "inside after: $*"; }
+% f
+inside before: inner1 inner2
+inside after:
+% echo "outside: $*"
+outside: outer1 outer2
+% echo ${argv-unset}
+unset
+% set -- a b
+% echo ${argv-unset}
+unset
+% echo $*
+a b
+% argv=(x y)
+% echo $*
+x y
+% echo ${argv-unset}
+x y
+```
+
+안쪽 함수에서 `argv`를 `unset`하면 `argv` 라는 parameter 자체는 local 하나만 지워지는게 아니라 everywhere에서 삭제 됨
+- 하지만 `argv`가 연결된 positional parameter array 는 `unset`의 기본 동작 처럼 innermost 것만 삭제됨
+
+다시 argv 를 설정하기 위해서는 명시적으로 `argv=(value ...)` 할당 해야함
+- [[#15.2 Array Parameters]] 할당하는 방법 참고
+- 명시적으로 할당하지 않고, `set -- ...` 로 간접적으로 할당 불가능
 
 ## 15.6 Parameters Used By The Shell
 

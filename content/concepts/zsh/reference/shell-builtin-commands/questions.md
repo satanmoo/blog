@@ -282,3 +282,42 @@ scalar 값으로 출력됨을 확인할 수 있음
 #### 3. 인자 3개
 
 seperator을 : 말고 다른 값으로 지정할 수 있음
+
+## `unset`
+
+### synopsis
+
+> [!quote] synopsis
+> `unset [ -fmv ] name ...`
+
+옵션 없이 사용하면 다음과 같음
+- 이름이 `name`인 paramter을 unset 상태로 만듬
+
+---
+
+> [!quote]
+> 
+> Each named parameter is unset. Local parameters remain local even if unset; they appear unset within scope, but the previous value will still reappear when the scope ends.
+
+여기서 말하는 "named parameter"은 이름을 가진 paramater
+
+```zsh
+% x=hello
+% echo $x
+hello
+% unset x
+% echo ${x-unset}
+unset
+```
+
+local paramter를 unset해도, 바깥 paramter까지 지워지는 것은 아님
+
+```zsh
+% x=outer
+% f() { local x=inner; echo "before: $x"; unset x; echo "after: ${x-unset}"; }
+% f
+before: inner
+after: unset
+% echo $x
+outer
+```
