@@ -39,6 +39,7 @@ java is <home>/.asdf/shims/java
 
 위의 `command -V` 의 결과를 이해하기 위해 다음을 먼저 이해해야 함
 - zsh에서 `path`의 동작
+- asdf의 `PATH` 설정의 원리
 - asdf shim 의 동작
 
 ### asdf의 PATH 설정 탐구
@@ -60,7 +61,7 @@ export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 > [!NOTE] 기존 `PATH` (기존 검색 경로)가 뒤에 붙는 것이 중요함
 
-따라서 전체 결과는 `${ASDF_DATA_DIR:-$HOME/.asdf}/shims`를 기존 command search path 앞에 추가하는 것임
+따라서 위 명령어의 실행 결과는 `${ASDF_DATA_DIR:-$HOME/.asdf}/shims`를 기존 command search path 앞에 추가하는 것임
 
 ```zsh
 % typeset -p1 PATH
@@ -102,6 +103,7 @@ typeset -aT PATH path=(
 hash java=<home>/.asdf/shims/java
 ```
 
+따라서 현재 셸에서 `java` 명령은 해시된 `<home>/.asdf/shims/java`라는 것을 알 수 있음
 ### asdf shim
 
 `<home>/.asdf/shims/java`는 실제 Java executable이 아니라 asdf shim임

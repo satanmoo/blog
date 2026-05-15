@@ -59,5 +59,3 @@ shim은 다음과 같이 동작
 	- plugin - `exec-env` script
 	- `exec-path` callback in the plugin
 - 최종 실행
-
-
