@@ -55,6 +55,33 @@ cd is a shell builtin
 java is <home>/.asdf/shims/java
 ```
 
+## `export`
+
+> [!Quote] synopsis
+> 
+> export [ name[=value] ... ]
+
+> [!Quote]
+> 
+> The specified names are marked for automatic export to the environment of subsequently executed commands. Equivalent to typeset -gx. If a parameter specified does not already exist, it is created in the global scope.
+
+synopsis 의 `name`이 이후 실행되는 command의 environment로 자동으로 export되는 대상으로 표시됨
+- [[topics/zsh/reference/parameters/questions#`-x` 속성 부여|Parameters/-x 속성 부여]] 에서 다룬 **process environment**
+- 표시(marked)라고 표현한 이유는 다음과 같음
+	- zsh 내부 관점에서 paramter의 어트리뷰트를 추가하는 개념
+	- 개념적으로 `typeset -gx NAME=value`와 동일함
+		- [[topics/zsh/reference/shell-builtin-commands/questions#`typeset -g`|typeset -g]] 참고
+		- [[topics/zsh/reference/shell-builtin-commands/questions#`typeset -x`|typeset -x]] 참고
+
+```zsh
+% foo=bar
+% typeset -p1 foo
+typeset foo=bar
+% export foo
+% typeset -p1 foo
+export foo=bar
+```
+
 ## `hash`
 
 > [!QUOTE]
@@ -227,7 +254,7 @@ typeset -r ro=val
 > 
 > This flag has a different meaning when used with -f; see below. Otherwise the -T option requires zero, two, or three arguments to be present. With no arguments, the list of parameters created in this fashion is shown. With two or three arguments, the first two are the name of a scalar and of an array parameter (in that order) that will be tied together in the manner of \$PATH and \$path. The optional third argument is a single-character separator which will be used to join the elements of the array to form the scalar; if absent, a colon is used, as with $PATH. Only the first character of the separator is significant; any remaining characters are ignored. Multibyte characters are not yet supported.
 
-### synopsis 분석
+#### synopsis 분석
 
 > [!QUOTE] synopsis
 > 
@@ -284,6 +311,68 @@ scalar 값으로 출력됨을 확인할 수 있음
 #### 3. 인자 3개
 
 seperator을 : 말고 다른 값으로 지정할 수 있음
+
+### `typeset -g`
+
+> [!quote]
+> 
+> The -g (global) means that any resulting parameter will not be restricted to local scope. Note that this does not necessarily mean that the parameter will be global, as the flag will apply to any existing parameter (even if unset) from an enclosing function. This flag does not affect the parameter after creation, hence it has no effect when listing existing parameters, nor does the flag +g have any effect except in combination with -m (see below).
+
+그냥 `typeset`은 local scope로 만들고, `-g` 옵션을 추가하면 outer scope를 건드림
+- 반드시 global scope는 아님
+
+```zsh
+# local scope
+% unset foo
+% demo() { typeset foo=local; echo "inside: $foo" }
+% demo
+inside: local
+% echo "outside: ${foo-unset}"
+outside: unset
+```
+
+```zsh
+# outer scope
+% unset foo
+% demo() { typeset -g foo=local; echo "inside: $foo" }
+% demo
+inside: local
+% echo "outside: ${foo-unset}"
+outside: local
+```
+
+```zsh
+# -g 옵션이 global scope는 아님을 보여줌
+% unset foo
+% outer() { typeset foo=outer; inner() { typeset -g foo=changed }; inner; echo "outer: $foo" }
+% outer
+outer: changed
+% echo "top: ${foo-unset}"
+top: unset
+```
+
+### `typeset -x`
+
+> [!quote]
+> 
+> Mark for automatic export to the environment of subsequently executed commands. If the option GLOBAL_EXPORT is set, this implies the option -g, unless +g is also explicitly given; in other words the parameter is not made local to the enclosing function. This is for compatibility with previous versions of zsh.
+
+`-x`는 parameter를 이후 실행되는 command의 environment로 자동 export되도록 표시
+- [[topics/zsh/reference/parameters/questions#process environment|Parameters -x 옵션 & process environment]] 참고
+
+```zsh
+% typeset -x foo=bar
+% typeset -p1 foo
+export foo=bar
+% zsh -fc 'echo $foo' # 새로운 zsh 프로세스 실행
+bar
+```
+
+위 예시는 새로운 zsh 프로세스가 `foo` paramter를 볼 수 있음을 보여줌
+
+`zsh -fc`
+- [[topics/zsh/reference/invocation/questions#`-c` 옵션|Invocation -c 옵션]] 참고
+- `-f` 옵션은 startup file을 읽지 않게 하는 옵션임
 
 ## `unset`
 

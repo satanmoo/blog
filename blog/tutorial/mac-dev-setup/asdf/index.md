@@ -19,6 +19,8 @@ brew install asdf
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 ```
 
+> [!NOTE] 이 줄은 asdf shim 디렉터리를 `PATH` 앞에 추가하는 설정이다. 자세한 분해는 [[how-to-guide/java-execution-path/01-zsh-command-execution/index#asdf의 PATH 설정 분해|asdf의 PATH 설정 분해]] 참고.
+
 ### 1-1. JDK
 
 #### 1-1-1. Java 플러그인 추가

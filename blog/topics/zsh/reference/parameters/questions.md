@@ -35,6 +35,8 @@ Named scalar paremeter
 - 값이 scalar인 parameter
 - https://unix.stackexchange.com/questions/805817/what-does-named-scalar-parameters-mean-in-the-zsh-manual
 
+#### process environment
+
 process environment
 - OS 수준 개념
 - 프로세스가 메모리 안에 가지는 영역
