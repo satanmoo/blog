@@ -2,7 +2,7 @@
 aliases:
   - 01-zsh-command-execution
 tags:
-  - how-to-guide
+  - tutorial
 ---
 # 01. zsh에서 `java -version` 실행 경로 확인하기
 
@@ -66,7 +66,7 @@ export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 ```zsh
 % typeset -p1 PATH
 export -T PATH path=(
-  /Users/sigma/.asdf/shims
+  <home>/.asdf/shims
   ${PATH} # 기존 PATH 나열...
 )
 ```
@@ -104,6 +104,7 @@ hash java=<home>/.asdf/shims/java
 ```
 
 따라서 현재 셸에서 `java` 명령은 해시된 `<home>/.asdf/shims/java`라는 것을 알 수 있음
+
 ### asdf shim
 
 `<home>/.asdf/shims/java`는 실제 Java executable이 아니라 asdf shim임
