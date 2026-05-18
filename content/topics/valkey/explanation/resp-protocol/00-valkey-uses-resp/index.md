@@ -7,7 +7,7 @@ tags:
 ---
 # 00. valkey 의 RESP 프로토콜
 
-> [!NOTE] valkey-server 가 6379 포트에서 동작 중이라고 가정 ([[tutorial/valkey-local-run/index|로컬에서 Valkey 실행하기]] 참고)
+> [!NOTE] valkey-server 가 6379 포트에서 동작 중이라고 가정 ([[how-to-guide/valkey-local-run/index|로컬에서 Valkey 실행하기]] 참고)
 
 valkey-cli 로 명령을 입력하면 valkey-server 까지 어떻게 전달될까?
 

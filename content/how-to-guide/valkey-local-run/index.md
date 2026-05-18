@@ -2,7 +2,7 @@
 aliases:
   - 로컬에서 Valkey 실행하기
 tags:
-  - guide
+  - how-to-guide
   - valkey
 references: https://valkey.io/
 ---
@@ -21,7 +21,7 @@ https://github.com/valkey-io/valkey 에서 valkey 프로젝트를 클론
 % ninja -C cmake-build-debug
 ```
 
-> [!Info] Clion 으로 실행하면 CMake 감지해서 빌드 해줌
+> [!Info] CLion으로 실행하면 CMake를 감지해서 빌드 해줌
 
 ## 3. valkey-server 실행
 
