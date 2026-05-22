@@ -412,3 +412,154 @@ after: unset
 % echo $x
 outer
 ```
+
+## `whence`
+
+> [!quote] synopsis
+> 
+> whence [ -vcwfpamsS ] [ -x num ] name ...
+> 
+
+> [!quote]
+> 
+> For each name, indicate how it would be interpreted if used as a command name.
+> 
+
+**interpreted** 는 넓은 개념
+- 자세한 건 아래 인용 참조
+
+> [!quote]
+> 
+> If name is not an alias, built-in command, external command, shell function, hashed command, or a reserved word, the exit status shall be non-zero, and — if -v, -c, or -w was passed — a message will be written to standard output. (This is different from other shells that write that message to standard error.)
+
+**interperted**의 개념은 인자로 받은 name을 다음 6개 중 하나로 분류하는 것
+- alias
+- built-in command
+- external command
+- shell function
+- hashed command
+- reserved word
+
+standard output에 출력하는 인자들도 있음
+
+각 분류마다 출력되는 형태가 다름 아래 `-v` 옵션에 예시 참고
+
+### `whence -v`
+
+> [!quote]
+> 
+> Produce a more verbose report.
+
+#### alias
+
+```zsh
+% alias greet='echo Hello'
+% greet
+Hello
+% whence greet
+echo Hello
+% whence -v greet
+greet is an alias for echo Hello
+% whence -c greet
+greet: aliased to echo Hello
+which greet
+greet: aliased to echo Hello
+```
+
+#### built-in command
+
+```zsh
+% whence cd
+cd
+% whence -v cd
+cd is a shell builtin
+% whence -c cd
+cd: shell built-in command
+% which cd
+cd: shell built-in command
+```
+
+#### external command
+
+```zsh
+% whence java
+<home>/.asdf/shims/java
+% whence -v java
+java is <home>/.asdf/shims/java
+% whence -c java
+<home>/.asdf/shims/java
+% which java
+<home>/.asdf/shims/java
+```
+
+#### shell function
+
+```zsh
+% greet() { echo $1 }
+% greet g
+g
+% whence greet
+greet
+% whence -v greet
+greet is a shell function
+% whence -c greet
+greet () {
+        echo $1
+}
+% which greet
+greet () {
+        echo $1
+}
+```
+
+#### hashed command
+
+위의 [[#`hash`]]에서 다룬 해시 테이블에 command 가 캐싱된 경우다
+
+```zsh
+% hash -L | grep -w git
+hash git=/opt/homebrew/bin/git
+% whence git
+/opt/homebrew/bin/git
+% whence -v git
+git is /opt/homebrew/bin/git
+% whence -c git
+/opt/homebrew/bin/git
+% which git
+/opt/homebrew/bin/git
+```
+
+git은 바이너리 파일이 존자하기 때문에 실제로 exeternal command
+
+### reserved word
+
+```zsh
+% whence if
+if
+% whence -v if
+if is a reserved word
+% whence -c if
+if: shell reserved word
+% which if
+if: shell reserved word
+```
+
+### `whence -c`
+
+> [!quote] 
+> 
+> Print the results in a csh-like format. This takes precedence over -v.
+
+*csh* 는 `which`의 결과를 간결하게 표현함  `-v`옵션과 다르게 verbose 모드를 off
+
+## `which`
+
+> [!quote] synopsis
+> 
+> which [ -wpamsS ] [ -x num ] name ...
+
+> [!quote]
+> 
+> Equivalent to whence -c.
+
+[[#`whence -c`]] 참고
