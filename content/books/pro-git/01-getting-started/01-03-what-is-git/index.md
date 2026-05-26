@@ -25,7 +25,7 @@ tags:
 Git은 아래와 같이 동작
 - 스냅샷을 저장
 	- 순간의 모든 파일의 모습을 스냅샷으로 찍고, 그 스냅샷에 대한 참조를 저장
-- file이 변경되지 않았으면, 참조를 저장하지 않음
+- file이 변경되지 않았으면, file을 다시 저장하지 않음
 	- 효율성 때문
 	- 대신 이전에 저장해둔 스냅샷에 링크
 
@@ -37,8 +37,8 @@ Git은 아래와 같이 동작
 > 
 > Most operations in Git need only local files and resources to operate — generally no information is needed from another computer on your network. If you’re used to a CVCS where most operations have that network latency overhead, this aspect of Git will make you think that the gods of speed have blessed Git with unworldly powers. Because you have the entire history of the project right there on your local disk, most operations seem almost instantaneous.
 
-Git 에서 대부분 작업은 로컬 파일, 리소스만 필요함
-- CVCS 에 속하는 다른 VCS에 비해 네트워크 지연 오버헤드가 없음
+Git에서 대부분 작업은 로컬 파일, 리소스만 필요함
+- CVCS에 속하는 다른 VCS에 비해 네트워크 지연 오버헤드가 없음
 - 오프라인 작업 가능
 
 ### Git Has Integrity
@@ -49,8 +49,8 @@ Git 에서 대부분 작업은 로컬 파일, 리소스만 필요함
 
 Git은 데이터를 저장할 때 checksum을 계산하고, 그 checksum을 기준으로 식별함
 - 파일 내용, commit 내용을 바탕으로 해시값 생성
-	- 내용을 바탕으로 해시값을 만듬
-	- 내용이 바뀌면 Git이 알 수 밖에 없음
+	- 내용을 바탕으로 해시값을 만듦
+	- 내용이 바뀌면 Git이 알 수밖에 없음
 		- 전송 중 파일이 손상되어도 알 수 있음
 
 > [!quote]
@@ -78,6 +78,7 @@ Git은 기존 데이터를 지우지 않고 새 데이터를 추가하는 방식
 - 한 번 기록된 것을 되돌리거나 찾아내기 쉬움
 - 위 내용은 커밋한 스냅샷에 적용됨
 	- 커밋하지 않은 변경사항은 잃어버릴 수 있음
+- 커밋을 다른 리포지토리에 주기적으로 푸시하면 더 잃어버리기 힘듦
 
 ### The Three States
 
@@ -98,7 +99,7 @@ Modified:
 > Staged means that you have marked a modified file in its current version to go into your next commit snapshot.
 
 Staged:
-- 변경사항의 현재 버젼을 다음 commit snapshot에 들어가도록 표시하는 개념
+- 변경사항의 현재 버전을 다음 commit snapshot에 들어가도록 표시하는 개념
 
 > [!quote]
 > 
@@ -114,11 +115,11 @@ Committed:
 > The working tree is a single checkout of one version of the project. These files are pulled out of the compressed database in the Git directory and placed on disk for you to use or modify.
 
 *working tree(working directory)*:
-- 특정 버젼의 프로젝트를 check-out한 결과
-- 파일은 사용하거나 수정 가능한 상태로 disk에 배치됨
+- 특정 버전의 프로젝트를 check-out한 결과
+- 파일은 압축 해제 후 사용하거나 수정 가능한 상태로 disk에 배치됨
 
 check-out:
-- object을 Git의 database에서 꺼내고, 압축을 품
+- object를 Git의 database에서 꺼내고, 압축을 해제함
 	- 압축을 풀어야 사용자가 편집할 수 있는 일반 파일로 변함
 
 > [!quote]
