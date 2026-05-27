@@ -115,12 +115,19 @@ Committed:
 > The working tree is a single checkout of one version of the project. These files are pulled out of the compressed database in the Git directory and placed on disk for you to use or modify.
 
 *working tree(working directory)*:
-- 특정 버전의 프로젝트를 check-out한 결과
-- 파일은 압축 해제 후 사용하거나 수정 가능한 상태로 disk에 배치됨
+- 특정 버전의 프로젝트를 checkout한 결과
+	- 압축 해제된 파일이 사용하거나 수정 가능한 상태로 disk에 배치됨
 
-check-out:
-- object를 Git의 database에서 꺼내고, 압축을 해제함
-	- 압축을 풀어야 사용자가 편집할 수 있는 일반 파일로 변함
+checkout: ^checkout
+- 특정 commit이 가리키는 파일 상태를 읽고, 압축 해제 후, 현재 디렉터리에 실제 파일들로 펼쳐놓는 동작
+	- 이 파일 상태는 Git의 database에 object로 저장됨
+
+> [!quote] [git-checkout](https://git-scm.com/docs/git-checkout)
+> 
+> git-checkout - Switch branches or restore working tree files
+
+reference에서 위와 같은 checkout의 역할을 확인할 수 있음
+- "restore"라는 용어가 특정 상태를 working directory의 실제 파일에 반영하는 개념
 
 > [!quote]
 > 

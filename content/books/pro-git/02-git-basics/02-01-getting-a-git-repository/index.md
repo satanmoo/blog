@@ -68,7 +68,7 @@ $ git init
 - 관리할 파일을 tracking 대상으로 추가
 - initial commit 생성
 
-tracking할 파일을 `git add`로 지정한 뒤 `git commit`을 실행
+tracking할 파일을 `git add`로 지정한 뒤 `git commit`을 실행 ^tracking-files-with-git-add
 
 ```zsh
 $ git add *.c
