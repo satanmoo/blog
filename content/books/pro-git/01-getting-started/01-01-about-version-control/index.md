@@ -66,7 +66,7 @@ CVCS의 동작은 아래와 같음
 
 CVCS의 장점
 - 프로젝트 참여자들이 다른 사람들이 무엇을 하는지 알기 쉬움
-	- 중앙 서버가 있으니까 변경 이력, 현재 상태를 **공유**하기 쉬움
+	- 중앙 서버가 있으니까 변경 이력, 현재 상태를 ==공유==하기 쉬움
 - 중앙 서버의 관리자가 누가 무엇을 했는지 세밀하게 제어 가능
 
 > [!quote]
@@ -92,6 +92,6 @@ DVCS의 동작은 아래와 같음
 > 
 > Furthermore, many of these systems deal pretty well with having several remote repositories they can work with, so you can collaborate with different groups of people in different ways simultaneously within the same project. This allows you to set up several types of workflows that aren’t possible in centralized systems, such as hierarchical models.
 
-DVCS는 **여러** 원격 리포지토리를 다룰 수 있음
+DVCS는 ==여러== 원격 리포지토리를 다룰 수 있음
 - 같은 프로젝트 안에서도 서로 다른 그룹이 서로 다른 방식으로 협업할 수 있음
 - CVCS에서는 불가능한 계층형 모델

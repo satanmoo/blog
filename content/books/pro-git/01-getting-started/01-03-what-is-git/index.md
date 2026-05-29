@@ -83,9 +83,9 @@ Git은 기존 데이터를 지우지 않고 새 데이터를 추가하는 방식
 ### The Three States
 
 Git이 관리하는 파일은 3가지 상태를 가짐
-- Modified
-- Staged
-- Committed
+- **Modified**
+- **Staged**
+- **Committed**
 
 > [!quote]
 > 
@@ -114,7 +114,7 @@ Committed:
 > 
 > The working tree is a single checkout of one version of the project. These files are pulled out of the compressed database in the Git directory and placed on disk for you to use or modify.
 
-*working tree(working directory)*:
+**working tree(working directory)**:
 - 특정 버전의 프로젝트를 checkout한 결과
 	- 압축 해제된 파일이 사용하거나 수정 가능한 상태로 disk에 배치됨
 
@@ -133,10 +133,10 @@ reference에서 위와 같은 checkout의 역할을 확인할 수 있음
 > 
 > The staging area is a file, generally contained in your Git directory, that stores information about what will go into your next commit. Its technical name in Git parlance is the “index”, but the phrase “staging area” works just as well.
 
-*staging area*:
+**staging area**:
 - 다음 커밋에 포함될 것들의 정보를 담은 파일
 - `.git` 폴더에 위치함
-- Git 용어로 *index* 라고 표현하기도 함
+- Git 용어로 **index** 라고 표현하기도 함
 
 > [!quote]
 > 

@@ -12,69 +12,66 @@ references:
 > [!quote]
 > At this point, you should have a bona fide Git repository on your local machine, and a checkout or working copy of all of its files in front of you. Typically, you’ll want to start making changes and committing snapshots of those changes into your repository each time the project reaches a state you want to record.
 
+"bona fide": 진정한, 명실상부한
+
 작업하기 전 상태는 다음과 같음
 - 정상적인 Git repository가 존재함
 - 그 repository의 file들이 working copy 형태로 눈앞에 있는 상태
-	- [[books/pro-git/01-getting-started/01-03-what-is-git/index#^checkout|checkout]]은 여기서 working copy를 가리키는 표현(checkout의 결과)으로 사용됨
+	- [[books/pro-git/01-getting-started/01-03-what-is-git/index#^checkout|checkout]]은 여기서 working copy를 가리키는 표현(*checkout*의 결과)으로 사용됨
 
 원하는 시점의 작업 결과를 기록하기 위해 스냅샷을 커밋해야 함
 
 > [!quote]
 > Remember that each file in your working directory can be in one of two states: tracked or untracked. Tracked files are files that were in the last snapshot, as well as any newly staged files; they can be unmodified, modified, or staged. In short, tracked files are files that Git knows about.
 
-working directory 안의 각 file은 크게 두 상태 중 하나
-- tracked
-- untracked
+*working directory* 안의 각 file은 크게 두 상태 중 하나
+- **tracked**
+- **untracked**
 
-tracked file은 Git이 알고 있는 file
+*tracked* file은 Git이 알고 있는 file
 - 마지막 commit snapshot에 들어 있던 file
-- 새로 staging area에 올린 file
+- 새로 *staging area*에 올린 file
 
-tracked file은 다시 세부 상태를 가질 수 있음 ^tracked-file-states
-- unmodified
+*tracked* file은 다시 세부 상태를 가질 수 있음 ^tracked-file-states
+- **unmodified**
 	- 마지막 commit 이후 변경되지 않은 상태
-- modified
+- **modified**
 	- 마지막 commit 이후 변경되었지만 아직 staging하지 않은 상태
-- staged
-	- 다음 commit에 들어가도록 staging area에 올려둔 상태
+- **staged**
+	- 다음 commit에 들어가도록 *staging area*에 올려둔 상태
 
 > [!summary] 핵심 구분
-> tracked/untracked는 Git이 해당 file을 관리 대상으로 알고 있는지에 대한 구분
+> *tracked*/*untracked*는 Git이 해당 file을 관리 대상으로 알고 있는지에 대한 구분
 >
-> modified/staged/unmodified는 tracked file 내부의 세부 상태
+> *modified*/*staged*/*unmodified*는 *tracked* file 내부의 세부 상태
 
 > [!quote]
 > Untracked files are everything else — any files in your working directory that were not in your last snapshot and are not in your staging area. When you first clone a repository, all of your files will be tracked and unmodified because Git just checked them out and you haven’t edited anything.
 
-untracked file은 Git이 아직 모르는 file
+*untracked* file은 Git이 *tracked* file이 아닌 file
 - 마지막 commit snapshot에 없었음
-- staging area에도 올라가 있지 않음
+- *staging area*에도 올라가 있지 않음
 
-repository를 처음 clone한 직후에는 모든 file이 tracked이면서 unmodified 상태
+repository를 처음 clone한 직후에는 모든 file이 *tracked*이면서 *unmodified* 상태
 
 > [!quote]
 > As you edit files, Git sees them as modified, because you’ve changed them since your last commit. As you work, you selectively stage these modified files and then commit all those staged changes, and the cycle repeats.
 
-file을 수정하면 Git은 해당 file을 modified 상태로 봄
-- 여기서 말하는 수정 대상은 이미 tracked 상태인 file
-- Git은 다음 근거로 수정된 file을 modified 상태로 봄
-	- 마지막 commit snapshot과 현재 working directory의 file 내용이 달라짐
-	- 마지막 commit snapshot에서 이미 해당 file을 추적하고 있는 개념
+file을 수정하면 Git은 해당 file을 *modified* 상태로 봄
+- 여기서 말하는 수정 대상은 이미 *tracked* 상태인 file
+- Git은 아래 근거로 수정된 file을 *modified* 상태로 봄
+	- 마지막 commit snapshot과 현재 *working directory*의 file 내용이 달라짐
+	- 마지막 commit snapshot에서 이미 해당 file을 tracking하고 있는 개념
 
 다음의 작업 흐름은 반복됨
 - file 수정
-	- modified 상태
+	- *modified* 상태
 - 수정한 file 중 다음 commit에 넣을 것만 선택해서 stage
-	- staged 상태
-- staged changes를 commit
+	- *staged* 상태
+- *staged* changes를 commit
 - 다시 file 수정...
 
 ![[recording-changes-to-the-repository-001.png]] ^file-status-lifecycle
-
-> [!note]
-> 이 그림은 file 상태 전이를 단순화해서 보여주는 참고용 그림
->
-> 여기서는 그림 전체를 완전히 해설하지 않고, 문맥에 필요한 상태 전이만 참조함
 
 ### Checking the Status of Your Files
 
@@ -95,14 +92,15 @@ nothing to commit, working tree clean
 > [!quote]
 > This means you have a clean working directory; in other words, none of your tracked files are modified. Git also doesn’t see any untracked files, or they would be listed here. Finally, the command tells you which branch you’re on and informs you that it has not diverged from the same branch on the server. For now, that branch is always `master`, which is the default; you won’t worry about it here. Git Branching will go over branches and references in detail.
 
-`working tree clean`은 working directory가 깨끗하다는 뜻
-- modified 상태인 tracked file이 없음
-- untracked file도 없음
+`working tree clean`은 *working directory*가 깨끗하다는 뜻
+아래의 조건을 만족함
+- *modified* 상태인 *tracked* file이 없음
+- *untracked* file도 없음
 
 `git status`는 file 상태 외에도 branch 정보를 함께 보여줌
 - 현재 branch
 	- 예시에서는 `master`
-- server의 같은 branch와 diverge되지 않았다는 정보
+- server의 같은 branch와 diverge되지 않았다는 정보 ("up-to-date")
 	- 예시에서는 `origin/master`와 차이가 벌어지지 않은 상태
 
 > [!note] default branch 이름
@@ -117,14 +115,14 @@ nothing to commit, working tree clean
 > [!summary] clean working directory
 > `git status`에서 `nothing to commit, working tree clean`이 보이면 Git 관점에서 commit할 변경사항이 없다는 뜻
 >
-> tracked file의 수정도 없고, 새 untracked file도 보이지 않는 상태
+> *tracked* file의 수정도 없고, 새 *untracked* file도 보이지 않는 상태
 
 > [!quote]
 > Let’s say you add a new file to your project, a simple `README` file. If the file didn’t exist before, and you run `git status`, you see your untracked file like so:
 
 project에 새 file `README`를 추가한다고 가정
 
-이 file이 이전 commit snapshot에 없던 file이라면, `git status`에서 untracked file로 표시됨
+이 file이 이전 commit snapshot에 없던 file이라면, `git status`에서 *untracked* file로 표시됨
 
 ```zsh
 $ echo 'My Project' > README
@@ -144,18 +142,18 @@ nothing added to commit but untracked files present (use "git add" to track)
 
 새로 만든 `README`는 `Untracked files` 아래에 표시됨
 
-`untracked`의 의미
+*untracked*의 의미
 - 이전 snapshot(commit)에 없던 file
-- 아직 staging area에도 올라가지 않은 file
+- 아직 *staging area*에도 올라가지 않은 file
 	- Git이 아직 다음 commit snapshot에 포함할 대상으로 보지 않는 file
 
-Git은 untracked file을 자동으로 commit snapshot에 포함하지 않음
+Git은 *untracked* file을 자동으로 commit snapshot에 포함하지 않음
 - 실수로 생성된 binary file, build output 등을 commit에 넣는 것을 막기 위함
 
-untracked file을 commit에 포함하고 싶으면 tracking을 시작해야 함
+*untracked* file을 commit에 포함하고 싶으면 명시적으로 tracking을 시작해야 함
 
 > [!summary] untracked file
-> untracked file은 working directory에는 있지만, 이전 commit snapshot에도 없고 staging area에도 없는 file
+> *untracked* file은 *working directory*에는 있지만, 이전 commit snapshot에도 없고 *staging area*에도 없는 file
 >
 > Git은 이런 file을 사용자가 명시적으로 staging하기 전까지 commit 대상으로 포함하지 않음
 
@@ -175,12 +173,13 @@ $ git add README
 > [!quote]
 > If you run your status command again, you can see that your `README` file is now tracked and staged to be committed:
 
-다시 `git status`를 실행하면 `README`가 tracked 상태가 되었고, commit될 대상으로 staged된 것을 볼 수 있음
+다시 `git status`를 실행하면 `README`가 *tracked* 상태가 되었고, commit될 대상으로 *staged*된 것을 볼 수 있음
 - `git add` 명령어가 아래 그림에서 "Add the file"에 대응
 	- [[#^file-status-lifecycle]]
-- `git add`는 파일의 상태를 **staged**로 만듦
-	- **tracked** 상태에 포함됨
-		- [[#^tracked-file-states]] 참고
+- `git add`는 파일의 상태를 *staged*로 만듦 ^git-add-untracked-to-staged
+	- *staged*는 *tracked* 상태에 포함되는 개념
+		- 따라서 *tracked* 상태가 되었다고 볼 수 있음
+		- [[#^tracked-file-states]]
 
 ```zsh
 $ git status
@@ -193,31 +192,39 @@ Changes to be committed:
 ```
 
 > [!quote]
-> You can tell that it’s staged because it’s under the “Changes to be committed” heading. If you commit at this point, the version of the file at the time you ran `git add` is what will be in the subsequent historical snapshot. You may recall that when you ran `git init` earlier, you then ran `git add <files>` — that was to begin tracking files in your directory. The `git add` command takes a path name for either a file or a directory; if it’s a directory, the command adds all the files in that directory recursively.
+> You can tell that it’s staged because it’s under the “Changes to be committed” heading. If you commit at this point, the version of the file at the time you ran `git add` is what will be in the subsequent historical snapshot.
 
-`git status`에서 `Changes to be committed` 아래에 표시되는 파일(지금 예시에서는 `README`)들은 tracked 상태
+`git status`에서 `Changes to be committed` 아래에 표시되는 file(지금 예시에서는 `README`)들은 *tracked* 상태
 
-이 시점에 commit하면 다음 historical snapshot에는 `git add`를 실행한 시점의 `README` file의 version이 들어감
+이 시점에 commit하면 다음 historical snapshot에는 `git add`를 ==실행한 시점==의 `README` file의 version이 들어감
+
+> [!quote]
+>
+> You may recall that when you ran `git init` earlier, you then ran `git add <files>` — that was to begin tracking files in your directory.
 
 앞에서 [[books/pro-git/02-git-basics/02-01-getting-a-git-repository/index#^tracking-files-with-git-add|`git init` 이후 `git add`를 실행했던 것]]도 directory 안의 file들을 tracking하기 위한 작업이었음
+
+> [!quote]
+>
+>  The `git add` command takes a path name for either a file or a directory; if it’s a directory, the command adds all the files in that directory recursively.
 
 `git add`는 file path나 directory path를 argument로 받음
 - file path를 넘기면 해당 file을 staging함
 - directory path를 넘기면 그 directory 안의 file들을 recursively staging함
 
 > [!summary] git add
-> `git add`는 untracked file을 tracking하기 시작하게 만들고, 그 file의 현재 상태를 staging area에 올림
+> `git add`는 *untracked* file을 tracking하기 시작하게 만들고, 그 file의 현재 상태를 *staging area*에 올림
 >
-> staged된 file은 다음 commit snapshot에 들어갈 후보가 됨
+> *staged*된 file은 다음 commit snapshot에 들어갈 후보가 됨
 
 ### Staging Modified Files
 
 > [!quote]
 > Let’s change a file that was already tracked. If you change a previously tracked file called `CONTRIBUTING.md` and then run your `git status` command again, you get something that looks like this:
 
-이번에는 이미 tracked 상태인 file을 수정한다고 가정
+이번에는 이미 *tracked* 상태인 file을 수정한다고 가정
 
-예를 들어 기존에 tracked 상태였던 `CONTRIBUTING.md`를 수정한 뒤 `git status`를 실행하면 아래와 비슷한 결과가 나옴
+예를 들어 기존에 *tracked* 상태였던 `CONTRIBUTING.md`를 수정한 뒤 `git status`를 실행하면 아래와 비슷한 결과가 나옴
 
 ```zsh
 $ git status
@@ -236,28 +243,49 @@ Changes not staged for commit:
 ```
 
 > [!quote]
-> The `CONTRIBUTING.md` file appears under a section named “Changes not staged for commit” — which means that a file that is tracked has been modified in the working directory but not yet staged. To stage it, you run the `git add` command. `git add` is a multipurpose command — you use it to begin tracking new files, to stage files, and to do other things like marking merge-conflicted files as resolved. It may be helpful to think of it more as “add precisely this content to the next commit” rather than “add this file to the project”. Let’s run `git add` now to stage the `CONTRIBUTING.md` file, and then run `git status` again:
+> The `CONTRIBUTING.md` file appears under a section named “Changes not staged for commit” — which means that a file that is tracked has been modified in the working directory but not yet staged.
 
 `git status`에서 `CONTRIBUTING.md`는 `Changes not staged for commit` 아래에 표시됨
 
 이는 다음 상태를 의미함
-- **modified** 상태
-	- `CONTRIBUTING.md`는 tracked file임
-	- working directory에서 수정됨
-	- 하지만 수정된 현재 내용은 아직 staging area에 올라가지 않음
-		- [[#^tracked-file-states]] 참고
+- *modified* 상태
+	- `CONTRIBUTING.md`는 *tracked* file임
+	- *working directory*에서 수정됨
+	- 하지만 수정된 현재 내용은 아직 *staging area*에 올라가지 않음
+		- [[#^tracked-file-states]]
+
+> [!quote]
+>
+> To stage it, you run the `git add` command. `git add` is a multipurpose command — you use it to begin tracking new files, to stage files, and to do other things like marking merge-conflicted files as resolved.
 
 이 file을 stage하려면 다시 `git add`를 실행함
+
+지금까지 `git add`을 사용하는 목적 2가지를 배움
+1. 파일을 *untracked* 상태에서 *staged* 상태로 변경
+	- [[#^git-add-untracked-to-staged]]에서 본 상황
+2. 파일을 *modified* 상태에서 *staged* 상태로 변경
+
+"marking merge-conflicted files as resolved" 상황은 나중으로 미룸
 
 > [!summary] git add의 역할
 >
 > `git add`는 여러 상황에서 사용되는 명령
 > - 새 file을 tracking하기 시작할 때
-> - modified file을 staging할 때
+> - 수정된 file을 *staging area*에 올릴 때
+
+> [!quote]
+>
+> It may be helpful to think of it more as “add precisely this content to the next commit” rather than “add this file to the project”.
 
 > [!tip]
 >
 > `git add`는 "file을 project에 추가한다"보다 "이 시점의 정확한 내용을 다음 commit에 추가한다"에 가깝게 이해하는 것이 좋음
+
+> [!quote]
+>
+> Let’s run `git add` now to stage the `CONTRIBUTING.md` file, and then run `git status` again:
+
+`git add`를 실행하고 `git status`로 상태를 확인해보면 다음과 같음
 
 ```zsh
 $ git add CONTRIBUTING.md
@@ -271,20 +299,23 @@ Changes to be committed:
     modified:   CONTRIBUTING.md
 ```
 
-`git add CONTRIBUTING.md`를 실행한 뒤에는 `CONTRIBUTING.md`도 `Changes to be committed` 아래에 표시됨
+`CONTRIBUTING.md`도 `Changes to be committed` 아래에 표시됨
+
+> [!quote]
+>
+> Both files are staged and will go into your next commit.
 
 이제 다음 commit에 들어갈 후보는 두 file
 - `README`
 	- 새 file
 - `CONTRIBUTING.md`
-	- 수정된 tracked file
+	- 수정된 *tracked* file
 
 > [!quote]
-> Both files are staged and will go into your next commit. At this point, suppose you remember one little change that you want to make in `CONTRIBUTING.md` before you commit it. You open it again and make that change, and you’re ready to commit. However, let’s run `git status` one more time:
-
-두 file 모두 staged 상태이므로 다음 commit에 들어갈 예정
+> At this point, suppose you remember one little change that you want to make in `CONTRIBUTING.md` before you commit it. You open it again and make that change, and you’re ready to commit. However, let’s run `git status` one more time:
 
 그런데 commit하기 전에 `CONTRIBUTING.md`를 한 번 더 수정한다고 가정
+- 이미 *staged* 상태의 파일을 수정하는 경우
 
 ```zsh
 $ vim CONTRIBUTING.md
@@ -305,23 +336,35 @@ Changes not staged for commit:
 ```
 
 > [!quote]
-> What the heck? Now `CONTRIBUTING.md` is listed as both staged and unstaged. How is that possible? It turns out that Git stages a file exactly as it is when you run the `git add` command. If you commit now, the version of `CONTRIBUTING.md` as it was when you last ran the `git add` command is how it will go into the commit, not the version of the file as it looks in your working directory when you run `git commit`. If you modify a file after you run `git add`, you have to run `git add` again to stage the latest version of the file:
+> What the heck? Now `CONTRIBUTING.md` is listed as both staged and unstaged. How is that possible?
 
 이제 `CONTRIBUTING.md`가 두 곳에 모두 표시됨
 - `Changes to be committed`
 - `Changes not staged for commit`
 
-이는 Git이 working directory의 최신 내용을 staging area에 자동 반영하는 것이 아니라, `git add`를 실행한 시점의 file 내용을 staging area에 올리기 때문
+> [!quote]
+>
+> It turns out that Git stages a file exactly as it is when you run the `git add` command.
+
+이는 Git이 *working directory*의 최신 내용을 *staging area*에 자동 반영하는 것이 아니라, `git add`를 실행한 시점의 file 내용을 *staging area*에 올리기 때문
 
 현재 상태를 구분하면 다음과 같음
-- staging area의 `CONTRIBUTING.md`
+- *staging area*의 `CONTRIBUTING.md`
 	- 마지막으로 `git add CONTRIBUTING.md`를 실행했을 때의 version
-- working directory의 `CONTRIBUTING.md`
+- *working directory*의 `CONTRIBUTING.md`
 	- 그 이후 다시 수정한 최신 version
+
+> [!quote]
+>
+> If you commit now, the version of `CONTRIBUTING.md` as it was when you last ran the `git add` command is how it will go into the commit, not the version of the file as it looks in your working directory when you run `git commit`.
 
 이 상태에서 commit하면 commit에는 마지막 `git add` 시점의 `CONTRIBUTING.md` version이 들어감
 
-> [!note] working directory에 있는 최신 수정 내용까지 commit에 포함하려면 `git add`를 다시 실행해야 함
+> [!quote]
+>
+> If you modify a file after you run `git add`, you have to run `git add` again to stage the latest version of the file:
+
+*working directory*에 있는 최신 수정 내용까지 commit에 포함하려면 `git add`를 ==반드시 다시== 실행해야 함
 
 ```zsh
 $ git add CONTRIBUTING.md
@@ -335,14 +378,14 @@ Changes to be committed:
     modified:   CONTRIBUTING.md
 ```
 
-다시 `git add CONTRIBUTING.md`를 실행하면 최신 version의 `CONTRIBUTING.md`가 staging area에 올라감
+다시 `git add CONTRIBUTING.md`를 실행하면 최신 version의 `CONTRIBUTING.md`가 *staging area*에 올라감
 
 이제 `CONTRIBUTING.md`는 `Changes not staged for commit`에 표시되지 않음
 
 > [!summary] staged snapshot
-> Git은 `git add`를 실행한 순간의 file 내용을 staging area에 기록함
+> Git은 `git add`를 실행한 순간의 file 내용을 *staging area*에 기록함
 >
-> `git add` 이후 같은 file을 다시 수정하면, staged version과 working directory version이 달라질 수 있음
+> `git add` 이후 같은 file을 다시 수정하면, *staged* version과 *working directory* version이 달라질 수 있음
 >
 > 최신 수정까지 다음 commit에 포함하려면 `git add`를 다시 실행해야 함
 
@@ -365,56 +408,64 @@ M  lib/simplegit.rb
 ```
 
 > [!quote]
-> New files that aren’t tracked have a `??` next to them, new files that have been added to the staging area have an `A`, modified files have an `M` and so on. There are two columns to the output — the left-hand column indicates the status of the staging area and the right-hand column indicates the status of the working tree. So for example in that output, the `README` file is modified in the working directory but not yet staged, while the `lib/simplegit.rb` file is modified and staged. The `Rakefile` was modified, staged and then modified again, so there are changes to it that are both staged and unstaged.
+> New files that aren’t tracked have a `??` next to them, new files that have been added to the staging area have an `A`, modified files have an `M` and so on.
 
 다음 형식`{short-status} {file-name}`의 row 출력
 
 short status는 file 상태를 짧은 기호로 보여줌
-- `??`: untracked file
-- `A`: 새 file이 staging area에 올라간 상태
-- `M`: modified 상태
+- `??`: *untracked* file
+- `A`: 새 file이 *staging area*에 올라간 상태
+- `M`: *modified* 상태
+
+> [!quote]
+>
+> There are two columns to the output — the left-hand column indicates the status of the staging area and the right-hand column indicates the status of the working tree.
 
 short status 출력은 두 column으로 구성됨
 - 왼쪽 column
-	- staging area의 상태
+	- *staging area*의 상태
 - 오른쪽 column
-	- working tree의 상태
+	- *working tree*의 상태
+
+> [!quote]
+>
+> So for example in that output, the `README` file is modified in the working directory but not yet staged, while the `lib/simplegit.rb` file is modified and staged. The `Rakefile` was modified, staged and then modified again, so there are changes to it that are both staged and unstaged.
 
 예시를 해석하면 다음과 같음
 - ` M README`
-	- `README`는 working tree에서 수정됨
+	- `README`는 *working tree*에서 수정됨
 		- 오른쪽 column
-	- 아직 staging area에는 올라가지 않음
+	- 아직 *staging area*에는 올라가지 않음
 - `MM Rakefile`
-	- `Rakefile`은 수정 후 staged됨
+	- `Rakefile`은 수정 후 *staged*됨
 		- 왼쪽 column
-	- 그 이후 working tree에서 다시 수정됨
+	- 그 이후 *working tree*에서 다시 수정됨
 		- 오른쪽 column
-		- "그 이후"인 이유: `git add`의 동작 때문, 만약에 woking tree에서 먼저 수정하고 staging 했으면 이 파일은 staged 상태일 수 밖에 없음
-			- [[#Staging Modified Files]] 참고
+		- "그 이후"인 이유: `git add`의 동작 때문, 만약에 *working tree*에서 먼저 수정하고 staging 했으면 이 file은 *staged* 상태일 수 밖에 없음
+			- [[#Staging Modified Files]]
 - `A  lib/git.rb`
-	- 새 file `lib/git.rb`가 staging area에 올라감
+	- 새 file `lib/git.rb`가 *staging area*에 올라감
 		- 왼쪽 column
-			- `A`는 왼쪽일 수 밖에 없음, tracked 상태의 파일을 새로 추가할 수는 없으니
+			- `A`는 왼쪽일 수 밖에 없음, *tracked* 상태의 file을 새로 추가할 수는 없으니
 - `M  lib/simplegit.rb`
-	- `lib/simplegit.rb`의 수정 내용이 staging area에 올라감
+	- `lib/simplegit.rb`의 수정 내용이 *staging area*에 올라감
 		- 왼쪽 column
 - `?? LICENSE.txt`
-	- `LICENSE.txt`는 untracked file
+	- `LICENSE.txt`는 *untracked* file
 
 > [!summary] short status 두 칸 읽기
-> 왼쪽 column은 staging area의 상태, 오른쪽 column은 working tree의 상태
+> 왼쪽 column은 *staging area*의 상태, 오른쪽 column은 *working tree*의 상태
 >
-> `M`이 왼쪽에 있으면 staged change이고, 오른쪽에 있으면 unstaged change
+> `M`이 왼쪽에 있으면 *staged* change이고, 오른쪽에 있으면 *unstaged* change
 >
-> `MM`은 staged된 수정도 있고, 그 이후 working tree에서 다시 수정한 내용도 있다는 뜻
+> `MM`은 *staged*된 수정도 있고, 그 이후 *working tree*에서 다시 수정한 내용도 있다는 뜻
 
 ### Ignoring Files
 
 > [!quote]
 > Often, you’ll have a class of files that you don’t want Git to automatically add or even show you as being untracked. These are generally automatically generated files such as log files or files produced by your build system. In such cases, you can create a file listing patterns to match them named `.gitignore`. Here is an example `.gitignore` file:
 
-Git이 자동으로 추가하지도 않고, untracked file로 보여주지도 않았으면 하는 file들이 있음
+Git이 자동으로 추가하지도 않고, *untracked* file로 보여주지도 않았으면 하는 file들이 있음
 - log file
 - build system이 생성한 file
 - 임시 file
@@ -441,7 +492,7 @@ $ cat .gitignore
 새 repository에서 작업을 시작하기 전에 `.gitignore`를 설정해두면 원하지 않는 file을 실수로 commit하는 일을 줄일 수 있음
 
 > [!summary] .gitignore
-> `.gitignore`는 Git이 untracked file로 보여주거나 commit 대상으로 추가하지 않았으면 하는 file pattern 목록
+> `.gitignore`는 Git이 *untracked* file로 보여주거나 commit 대상으로 추가하지 않았으면 하는 file pattern 목록
 >
 > 주로 log, temporary file, build output처럼 자동 생성되는 file을 제외하는 데 사용함
 
@@ -461,8 +512,8 @@ $ cat .gitignore
 `.gitignore`에 적을 수 있는 pattern 규칙
 - 빈 줄은 무시됨
 - `#`로 시작하는 줄은 comment로 취급되어 무시됨
-- [[#^glob-pattern | standard glob pattern]]을 사용할 수 있음
-- pattern은 기본적으로 전체 working tree에 recursive하게 적용됨
+- [[#^glob-pattern|standard glob pattern]]을 사용할 수 있음
+- pattern은 기본적으로 전체 *working tree*에 recursive하게 적용됨
 - pattern을 `/`로 시작하면 recursive 적용을 피할 수 있음
 	- 현재 `.gitignore` 위치 기준으로 match
 - pattern을 `/`로 끝내면 directory를 의미함
@@ -471,7 +522,7 @@ $ cat .gitignore
 > [!quote]
 > Glob patterns are like simplified regular expressions that shells use. An asterisk (`*`) matches zero or more characters; `[abc]` matches any character inside the brackets (in this case `a`, `b`, or `c`); a question mark (`?`) matches a single character; and brackets enclosing characters separated by a hyphen (`[0-9]`) matches any character between them (in this case `0` through `9`). You can also use two asterisks to match nested directories; `a/**/z` would match `a/z`, `a/b/z`, `a/b/c/z`, and so on.
 
-glob pattern은 shell에서 사용하는 단순화된 pattern matching 규칙 ^glob-pattern
+**glob pattern**은 shell에서 사용하는 단순화된 pattern matching 규칙 ^glob-pattern
 - `*`
 	- 0개 이상의 문자와 match
 - `[abc]`
@@ -557,20 +608,21 @@ doc/**/*.pdf
 > We’ll cover `git diff` in more detail later, but you’ll probably use it most often to answer these two questions: What have you changed but not yet staged? And what have you staged that you are about to commit? Although `git status` answers those questions very generally by listing the file names, `git diff` shows you the exact lines added and removed — the patch, as it were.
 
 `git diff`는 주로 아래 두 질문에 답할 때 사용함
-- 아직 staged하지 않은 변경은 무엇인가?
-- 다음 commit에 들어갈 staged한 변경은 무엇인가?
+- 아직 *staging area*에 올라가지 않은 변경은 무엇인가?
+- 다음 commit에 들어갈 *staging area*에 올라간 변경은 무엇인가?
 
-`git status`가 file 이름 중심으로 답한다면, `git diff`는 추가/삭제된 line을 보여줌
-- 즉 patch 형태로 변경 내용을 확인함
+`git status`가 ==파일 이름== 중심으로 답한다면, `git diff`는 ==추가/삭제된 line==을 보여줌
+- "patch" 는 라인 별로 보여준다는 의미
 
 > [!quote]
 > Let’s say you edit and stage the `README` file again and then edit the `CONTRIBUTING.md` file without staging it. If you run your `git status` command, you once again see something like this:
 
 예를 들어 다음 상태라고 가정
 - `README`
-	- 수정 후 staged됨
+	- 수정 후 *staged* 상태
 - `CONTRIBUTING.md`
-	- 수정되었지만 아직 staged되지 않음
+	- 수정되었지만 아직 *staged* 상태 아님
+	- *modified* 상태
 
 ```zsh
 $ git status
@@ -591,7 +643,7 @@ Changes not staged for commit:
 > [!quote]
 > To see what you’ve changed but not yet staged, type `git diff` with no other arguments:
 
-argument 없이 `git diff`를 실행하면 아직 staged하지 않은 변경을 보여줌
+argument 없이 `git diff`를 실행하면 아직 *staging area*에 올라가지 않은 변경을 보여줌
 
 ```zsh
 $ git diff
@@ -613,17 +665,16 @@ index 8ebb991..643e24f 100644
 > [!quote]
 > That command compares what is in your working directory with what is in your staging area. The result tells you the changes you’ve made that you haven’t yet staged.
 
-`git diff`는 working directory와 staging area를 비교함
-- 따라서 결과는 아직 staged되지 않은 변경만 보여줌
+`git diff`의 기본 동작은 *working directory*와 *staging area*를 비교해 아직 *staging area*에 올라가지 않은 변경을 보여줌
 
-위 예시에서는 `CONTRIBUTING.md`만 unstaged 상태이므로, `CONTRIBUTING.md`의 diff가 출력됨
+위 예시에서는 `CONTRIBUTING.md`만 *staging area*에 올라가지 않은 상태이므로, `CONTRIBUTING.md`의 diff가 출력됨
 
 > [!quote]
 > If you want to see what you’ve staged that will go into your next commit, you can use `git diff --staged`. This command compares your staged changes to your last commit:
 
-다음 commit에 들어갈 staged 변경을 보려면 `git diff --staged`를 사용함
+다음 commit에 들어갈 *staging area*에 올라간 변경을 보려면 `git diff --staged`를 사용함
 
-`git diff --staged`는 staging area와 마지막 commit을 비교함
+`git diff --staged`는 *staging area*와 마지막 commit을 비교해 *staging area*에 올라간 변경을 보여줌
 
 ```zsh
 $ git diff --staged
@@ -636,32 +687,32 @@ index 0000000..03902a1
 +My Project
 ```
 
-위 예시에서는 `README`가 staged 상태이므로, `README`의 staged diff가 출력됨
+위 예시에서는 `README`가 *staged* 상태이므로, `README`의 *staging area*에 올라간 diff가 출력됨
 
 > [!quote]
 > It’s important to note that `git diff` by itself doesn’t show all changes made since your last commit — only changes that are still unstaged. If you’ve staged all of your changes, `git diff` will give you no output.
 
-`git diff` 단독 실행은 마지막 commit 이후의 모든 변경을 보여주는 명령이 아님
+`git diff` 옵션 없이 단독 실행은 아직 *staging area*에 올라가지 않은 변경만 보여줌
 
-`git diff`는 아직 staging area에 올라가지 않은 변경만 보여줌
-
-따라서 모든 변경을 이미 staged했다면 `git diff`는 아무 output도 내지 않음
+따라서 모든 변경이 이미 *staging area*에 올라갔다면 `git diff`는 아무 출력도 보여주지 않음
 
 > [!summary] git diff 비교 기준
-> `git diff`는 working directory와 staging area를 비교함
+> `git diff`는 *working directory*와 *staging area*를 비교함
 >
-> `git diff --staged`는 staging area와 last commit을 비교함
+> `git diff --staged`는 *staging area*와 last commit을 비교함
 >
 > `git diff` 단독 실행은 last commit 이후의 모든 변경을 보여주는 명령이 아님
 
 > [!quote]
 > For another example, if you stage the `CONTRIBUTING.md` file and then edit it, you can use `git diff` to see the changes in the file that are staged and the changes that are unstaged. If our environment looks like this:
 
-같은 file이 staged 상태이면서 동시에 unstaged 상태일 수 있음
-- 특정 시점의 file 내용은 staging area에 올라감
-- 그 이후 working directory에서 같은 file을 다시 수정함
+같은 file이 *staged* 상태이면서 동시에 *unstaged* 상태일 수 있음
 
-예를 들어 `CONTRIBUTING.md`를 stage한 뒤, 같은 file에 한 줄을 더 추가한다고 가정
+아래 시나리오
+1. 특정 시점의 file 변화는 이미 *staging area*에 올라감
+2. 그 이후 *working directory*에서 같은 file을 다시 수정함
+
+예를 들어 `CONTRIBUTING.md`를 *staging area*에 올린 뒤, 같은 file에 한 줄을 더 추가한다고 가정
 
 ```zsh
 $ git add CONTRIBUTING.md
@@ -682,15 +733,15 @@ Changes not staged for commit:
 ```
 
 이 상태에서 `CONTRIBUTING.md`는 두 version으로 나뉘어 있음
-- staging area의 `CONTRIBUTING.md`
+- *staging area*의 `CONTRIBUTING.md`
 	- `git add CONTRIBUTING.md`를 실행한 시점의 내용
-- working directory의 `CONTRIBUTING.md`
+- *working directory*의 `CONTRIBUTING.md`
 	- 그 이후 `# test line`까지 추가된 최신 내용
 
 > [!quote]
 > Now you can use `git diff` to see what is still unstaged:
 
-`git diff`는 아직 staged되지 않은 추가 수정만 보여줌
+`git diff`는 아직 *staging area*에 올라가지 않은 추가 수정만 보여줌
 
 ```zsh
 $ git diff
@@ -704,12 +755,12 @@ index 643e24f..87f08c8 100644
 +# test line
 ```
 
-여기서 보이는 것은 `git add CONTRIBUTING.md` 이후 working directory에 추가한 `# test line`뿐임
+여기서 보이는 것은 `git add CONTRIBUTING.md` 이후 *working directory*에 추가한 `# test line`뿐임
 
 > [!quote]
 > and `git diff --cached` to see what you’ve staged so far (`--staged` and `--cached` are synonyms):
 
-반대로 staged된 변경만 보려면 `git diff --cached`를 사용할 수 있음
+반대로 *staging area*에 올라간 변경만 보려면 `git diff --cached`를 사용할 수 있음
 
 ```zsh
 $ git diff --cached
@@ -728,7 +779,7 @@ index 8ebb991..643e24f 100644
  that highlights your work in progress (and note in the PR title that it's
 ```
 
-`git diff --cached`는 staging area에 올라간 변경만 보여줌
+`git diff --cached`는 *staging area*에 올라간 변경만 보여줌
 
 `--staged`와 `--cached`는 같은 의미의 option
 - `git diff --staged`
@@ -746,21 +797,25 @@ index 8ebb991..643e24f 100644
 ### Committing Your Changes
 
 > [!quote]
-> Now that your staging area is set up the way you want it, you can commit your changes. Remember that anything that is still unstaged — any files you have created or modified that you haven’t run `git add` on since you edited them — won’t go into this commit. They will stay as modified files on your disk.
+> Now that your staging area is set up the way you want it, you can commit your changes.
 
-staging area가 원하는 상태로 준비되었다면 이제 변경사항을 commit할 수 있음
+*staging area*가 원하는 상태로 준비되었다면 이제 변경사항을 commit할 수 있음
 
-주의할 점은 commit 대상이 working directory 전체가 아니라 staging area라는 것
-- 아직 unstaged 상태인 변경은 이번 commit에 들어가지 않음
+> [!quote]
+>
+> Remember that anything that is still unstaged — any files you have created or modified that you haven’t run `git add` on since you edited them — won’t go into this commit. They will stay as modified files on your disk.
+
+주의할 점은 commit 대상이 *working directory* 전체가 아니라 *staging area*라는 것
+- 아직 *unstaged* 상태인 변경은 이번 commit에 들어가지 않음
 	- file을 만들거나 수정했지만 아직 `git add`하지 않은 경우
 	- `git add` 이후 같은 file을 다시 수정했지만 다시 `git add`하지 않은 경우
 
-이런 변경은 disk의 working directory에 modified 상태로 그대로 남음
+이런 변경은 *working directory*에 *modified* 상태로 그대로 남음
 
 > [!quote]
 > In this case, let’s say that the last time you ran `git status`, you saw that everything was staged, so you’re ready to commit your changes. The simplest way to commit is to type `git commit`:
 
-여기서는 마지막으로 `git status`를 실행했을 때 모든 변경이 staged 상태였다고 가정
+앞으로 진행할 논의에서 상황은 마지막으로 `git status`를 실행했을 때 모든 변경이 *staging area*에 올라갔다고 가정
 
 가장 단순한 commit 방법은 `git commit`을 실행하는 것
 
@@ -847,16 +902,17 @@ commit이 생성되면 Git은 방금 만든 commit에 대한 정보를 출력함
 > [!quote]
 > Remember that the commit records the snapshot you set up in your staging area. Anything you didn’t stage is still sitting there modified; you can do another commit to add it to your history. Every time you perform a commit, you’re recording a snapshot of your project that you can revert to or compare to later.
 
-commit은 staging area에 준비해둔 snapshot을 기록함
-- stage하지 않은 변경은 commit에 들어가지 않고 modified 상태로 남음
-- stage하지 않은 변경을 history에 추가하려면 나중에 다시 staging하고 commit하면 됨
+commit은 *staging area*에 준비해둔 snapshot을 기록함
+- *staging area*에 올라가지 않은 변경은 commit에 들어가지 않고 *modified* 상태로 남음
+- *staging area*에 올라가지 않은 변경을 history에 추가하려면 나중에 다시 *staging area*에 올리고 commit하면 됨
+	- `git add`로 *staging area*에 올릴 수 있음
 
 commit을 할 때마다 나중에 되돌아가거나 비교할 수 있는 project snapshot이 하나씩 기록됨
 
 > [!summary] commit
-> commit은 staging area에 있는 snapshot을 repository history에 기록하는 작업
+> commit은 *staging area*에 있는 snapshot을 repository history에 기록하는 작업
 >
-> unstaged change는 commit에 포함되지 않고 working directory에 남음
+> *unstaged* change는 commit에 포함되지 않고 *working directory*에 남음
 >
 > `git commit`은 editor에서 message를 작성하고, `git commit -m "message"`는 command line에서 message를 바로 전달함
 
@@ -865,12 +921,12 @@ commit을 할 때마다 나중에 되돌아가거나 비교할 수 있는 projec
 > [!quote]
 > Although it can be amazingly useful for crafting commits exactly how you want them, the staging area is sometimes a bit more complex than you need in your workflow. If you want to skip the staging area, Git provides a simple shortcut.
 
-Git은 staging area를 건너뛰는 shortcut을 제공함
+Git은 *staging area*를 건너뛰고 커밋하는 shortcut을 제공함
 
 > [!quote]
 > Adding the `-a` option to the `git commit` command makes Git automatically stage every file that is already tracked before doing the commit, letting you skip the `git add` part:
 
-`git commit`에 `-a` option을 붙이면 이미 tracked 상태인 file의 변경을 자동으로 staging함
+`git commit`에 `-a` option을 붙이면 이미 *tracked* 상태인 file의 변경을 자동으로 staging함
 - 즉 `git add`를 따로 실행하지 않고 commit할 수 있음
 
 ```zsh
@@ -889,9 +945,9 @@ $ git commit -a -m 'Add new benchmarks'
  1 file changed, 5 insertions(+), 0 deletions(-)
 ```
 
-위 예시에서는 `CONTRIBUTING.md`가 이미 tracked file임
+위 예시에서는 `CONTRIBUTING.md`가 이미 *tracked* file임
 
-따라서 `git commit -a -m 'Add new benchmarks'`를 실행하면 Git이 `CONTRIBUTING.md`의 변경을 자동으로 staging한 뒤 commit함
+따라서 `git commit -a -m 'Add new benchmarks'`를 실행하면 Git이 `CONTRIBUTING.md`의 변경을 자동으로 *staging area*에 올린 뒤 commit함
 
 따로 아래 명령을 실행하지 않아도 됨
 
@@ -903,35 +959,40 @@ $ git add CONTRIBUTING.md
 > Notice how you don’t have to run `git add` on the `CONTRIBUTING.md` file in this case before you commit. That’s because the `-a` flag includes all changed files. This is convenient, but be careful; sometimes this flag will cause you to include unwanted changes.
 
 편리하지만 주의해야 함
-- 의도하지 않은 tracked file 변경까지 함께 commit될 수 있음
-- untracked file은 자동으로 포함되지 않음
+- 의도하지 않은 *tracked* 상태를 가진 file의 변경까지 함께 commit될 수 있음
+- *untracked* 상태인 file은 자동으로 포함되지 않음
 	- 새 file은 여전히 `git add`로 tracking을 시작해야 함
 
 > [!summary] `git commit -a`
-> `git commit -a`는 commit 전에 변경된 tracked file을 자동으로 staging함
+> `git commit -a`는 commit 전에 변경된 *tracked* file을 자동으로 staging함
 >
-> 새 untracked file은 포함하지 않음
+> 새 *untracked* file은 포함하지 않음
 >
-> 편리하지만 원하지 않는 tracked change까지 commit에 들어갈 수 있으므로 commit 전에 `git status`나 `git diff`로 확인하는 것이 좋음
+> 편리하지만 원하지 않는 *tracked* change까지 commit에 들어갈 수 있으므로 commit 전에 `git status`나 `git diff`로 확인하는 것이 좋음
 
 ### Removing Files
 
 > [!quote]
-> To remove a file from Git, you have to remove it from your tracked files (more accurately, remove it from your staging area) and then commit. The `git rm` command does that, and also removes the file from your working directory so you don’t see it as an untracked file the next time around.
+> To remove a file from Git, you have to remove it from your tracked files (more accurately, remove it from your staging area) and then commit.
 
-Git에서 file을 제거하려면 tracked file 목록에서 제거하고 commit해야 함
-- staging area에서 제거 대상이라는 change를 만들고 commit하는 것
+Git에서 file을 제거하려면 tracking 대상에서 제거하고 commit해야 함
+- 제거 대상이라는 change를 *staging area*에 올리고 commit하는 것
+
+> [!quote]
+>
+> The `git rm` command does that, and also removes the file from your working directory so you don’t see it as an untracked file the next time around.
 
 `git rm`은 다음을 한 번에 처리함 ^git-rm
-1. file을 tracking 대상에서 제거하는 change를 staging함
-2. working directory에서도 file을 삭제함
-	- 다음 `git status`에서 같은 file이 untracked file로 다시 보이지 않게 함
+1. file을 tracking 대상에서 제거하는 change를 *staging area*에 올림
+2. *working directory*에서도 file을 삭제함
+	- `git rm` 이후 `git status`에서 같은 file이 *untracked* 상태로 표시되지 않음
+		- *working directory*에서 지움
 
 > [!quote]
 > If you simply remove the file from your working directory, it shows up under the “Changes not staged for commit” (that is, unstaged) area of your `git status` output:
 
-working directory에서 바로 file만 삭제하면, 삭제 사실(change)은 아직 staged되지 않은 상태로 남음
-- `git rm`의 두 가지 동작 중 2번만 수행
+*working directory*에서 바로 file만 삭제하면, 삭제 사실(change)은 아직 *staged*되지 않은 상태로 남음
+- `git rm`의 2번 동작만 직접 수행한 것과 동일함
 
 즉 `git status`에서는 `Changes not staged for commit` 아래에 표시됨
 
@@ -949,14 +1010,14 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-위 상태는 working directory에서는 `PROJECTS.md`가 삭제되었지만, 삭제 change가 아직 staging area에 올라가지 않았다는 뜻
+위 상태는 *working directory*에서는 `PROJECTS.md`가 삭제되었지만, 삭제 change가 아직 *staging area*에 올라가지 않았다는 뜻
 
 > [!quote]
 > Then, if you run `git rm`, it stages the file’s removal:
 
-이후 `git rm`을 실행하면 file 삭제가 staging area에 올라감
+이후 `git rm`을 실행하면 file 삭제라는 변화가 *staging area*에 올라감
 - 1번 동작 수행
-	- 2번 동작은 이미 했으니 생략
+	- 2번 동작은 이미 했으니 생략해도 괜찮음
 
 ```zsh
 $ git rm PROJECTS.md
@@ -970,7 +1031,7 @@ Changes to be committed:
     deleted:    PROJECTS.md
 ```
 
-이제 `PROJECTS.md` 삭제는 다음 commit에 들어갈 staged change가 됨
+이제 `PROJECTS.md` 삭제라는 변화는 다음 commit에 들어갈 예정
 
 > [!quote]
 > The next time you commit, the file will be gone and no longer tracked.
@@ -982,11 +1043,14 @@ Changes to be committed:
 > [!quote]
 > If you modified the file or had already added it to the staging area, you must force the removal with the `-f` option. This is a safety feature to prevent accidental removal of data that hasn’t yet been recorded in a snapshot and that can’t be recovered from Git.
 
-`-f` option이 필요한 경우는 다음과 같음
-- modified 상태 file이거나
-- 이미 staging area에 올라간 file
+`git rm -f` option이 필요한 경우는 다음과 같음
+- *modified* 상태의 file을 대상으로 하는 경우
+- 이미 *staging area*에 올라간 file을 대상으로 하는 경우
 
-#### modified 상태의 파일을 제거하려고 시도하는 경우
+참고로 위에서 본 `rm 'PROJECT.md'`의 예시는 *unmodified* 상태의 file을 대상으로 하는 경우
+- `-f`옵션이 필요한 경우에 해당되지 않음
+
+#### *modified* 상태의 파일을 제거하려고 시도하는 경우
 
 ```zsh
 $ git status
@@ -1010,10 +1074,12 @@ Changes to be committed:
         deleted:    README
 ```
 
-이번 수정 사항 change는 무시하고, 파일의 삭제라는 change만 stage
-- 이번 수정 사항은 snapshot으로 기록되지 않기에 Git에서 안전 장치로 막아줌
+이번 수정 사항 변화는 *staging area*에 올라가지 않음
+- 이미 tracking된 변화까지는 commit되어 있는 상태
 
-#### 이미 staging area에 올라간 file을 제거하려고 시도하는 경우
+지금 *working directory*에서 수정한 변화가 snapshot으로 기록되지 않고, *working directory*에서 완전히 사라질 수 있기에 Git에서 안전 장치로 막아줌
+
+#### *staged* 상태의 파일을 제거하려고 시도하는 경우
 
 ```zsh
 $ touch 123
@@ -1046,22 +1112,20 @@ Changes to be committed:
         deleted:    README
 ```
 
-파일 생성 change는 무시하고, 파일의 삭제라는 change도 stage 않음
-- 처음부터 없었던 파일로 취급하기에 Git에서 안전 장치로 막아줌
+마찬가지로 snapshot으로 기록되지 않은 변화(*staging area*에 올라온 새 file)가 *working directory*에서 사라질 수 있기에 Git에서 안전 장치로 막아줌
 
 > [!warning] `git rm -f`
 > `-f`는 force removal을 의미함
 >
 > 아직 snapshot에 기록되지 않은 data를 실수로 삭제하면 Git으로 복구할 수 없을 수 있음
 >
-> 그래서 Git은 modified file이나 staged file을 그냥 제거하지 않고 명시적인 force option을 요구함
+> 그래서 Git은 *modified* file이나 *staged* file을 그냥 제거하지 않고 명시적인 force option을 요구함
 
 > [!quote]
 > Another useful thing you may want to do is to keep the file in your working tree but remove it from your staging area. In other words, you may want to keep the file on your hard drive but not have Git track it anymore.
 
-file은 working tree에 남겨두고 Git tracking에서만 제거하고 싶을 때도 있음
-- [[#^git-rm]]은 기본적으로 working tree에서 파일을 삭제하기 때문
-- 즉 hard drive에는 file을 유지하지만, Git이 더 이상 추적하지 않게 만드는 경우
+file은 *working tree*에 남겨두고 Git의 tracking에서 제외하고 싶을 때도 있음
+- [[#^git-rm]]은 기본적으로 *working tree*에서 file을 삭제하기 때문
 
 > [!quote]
 > This is particularly useful if you forgot to add something to your `.gitignore` file and accidentally staged it, like a large log file or a bunch of `.a` compiled files. To do this, use the `--cached` option:
@@ -1074,7 +1138,7 @@ file은 working tree에 남겨두고 Git tracking에서만 제거하고 싶을 �
 $ git rm --cached README
 ```
 
-`git rm --cached README`는 `README`를 working tree에는 남겨두고 Git tracking 대상에서 제거함
+`git rm --cached README`는 `README`를 *working tree*에는 남겨두고 Git tracking 대상에서 제거함
 
 > [!quote]
 > You can pass files, directories, and file-glob patterns to the `git rm` command. That means you can do things such as:
@@ -1093,15 +1157,15 @@ $ git rm log/\*.log
 `*` 앞의 backslash(`\`)에 주의해야 함
 - backslash는 shell이 먼저 `*.log`를 expand하지 않도록 막음
 
-shell이 먼저 expand하면 다음과 같은 문제가 발생
+shell이 먼저 **expand**하면 다음과 같은 문제가 발생
 - shell은 파일 시스템만 알 수 있음
-	- Git tracked/untracked 모름
+	- Git *tracked*/*untracked* 모름
 - shell 구현체마다 glob 동작이 다를 수 있음
-	- Git이 자체 filename expansion을 수행하기에 오직 Git의 filename expansion만 동작하도록 막음
+	- Git이 자체 **filename expansion**을 수행하기에 오직 Git의 *filename expansion*만 동작하도록 막음
 
-참고로 위에서 본 [[#Ignoring Files]]에서는 이스케이프(blackslash)처리가 필요 없음
-- 이 파일은 shell을 거치치 않고 Git이 바로 읽기 때문
-- shell에서 GIt command를 입력할 때는 shell의 command 처리 과정을 거침
+위에서 본 [[#Ignoring Files]]에서는 이스케이프(backslash)처리가 필요 없음
+- 이 파일은 shell을 거치지 않고 Git이 바로 읽기 때문
+- shell에서 Git command를 입력할 때는 shell의 command 처리 과정을 거침
 
 위 명령은 `log/` directory 안의 `.log` file들을 제거함
 
@@ -1112,20 +1176,18 @@ $ git rm \*~
 이 명령은 이름이 `~`로 끝나는 모든 file을 제거함
 
 > [!summary] git rm
-> `git rm`은 working directory에서 file을 삭제하고, 그 removal을 staging area에 올림
+> `git rm`은 *working directory*에서 file을 삭제하고, 그 제거 변화를 *staging area*에 올림
 >
-> `git rm --cached`는 working directory의 file은 유지하고 Git tracking에서만 제거함
+> `git rm --cached`는 *working directory*의 file은 유지하고 Git tracking에서만 제거함
 >
-> modified file이나 staged file을 제거하려면 `git rm -f`가 필요할 수 있음
+> *modified* file이나 *staged* file을 제거하려면 `git rm -f`가 필요할 수 있음
 
 ### Moving Files
 
 > [!quote]
 > If you rename a file in Git, no metadata is stored in Git that tells it you renamed the file.
 
-즉 rename 정보 자체가 Git object에 따로 저장되는 것은 아님
-
-Git은 delete/add change를 보고 "이건 file이 이동되었거나 이름이 바뀐 것처럼 보인다"고 판단함
+rename 정보 자체가 Git object에 따로 저장되는 것은 아님
 
 Git에서 file 이름을 바꾸고 싶다면 다음 command를 사용할 수 있음
 
@@ -1133,7 +1195,7 @@ Git에서 file 이름을 바꾸고 싶다면 다음 command를 사용할 수 있
 $ git mv file_from file_to
 ```
 
-이 command는 실제로 file 이름을 바꾸고, 그 rename처럼 보이는 change를 staging area에 올림
+이 command는 file system의 file 이름을 바꾸고, 그 rename처럼 보이는 변화를 *staging area*에 올림
 
 예를 들어 `README.md`를 `README`로 바꾸면 다음과 같음
 
@@ -1148,11 +1210,11 @@ Changes to be committed:
     renamed:    README.md -> README
 ```
 
-`renamed: README.md -> README`는 Git이 staged change를 rename으로 인식했다는 뜻
-- old path removal과 new path add가 staging area에 있고 Git이 두 file content의 유사성을 보고 rename으로 보여주는 것
+`renamed: README.md -> README`는 Git이 *staging area*에 올라온 변화를 rename으로 인식했다는 뜻
+- old path 제거라는 변화와 new path 추가라는 변화가 *staging area*에 있고 Git이 두 file content의 유사성을 보고 rename으로 보여주는 것
 - `git mv`가 special rename metadata를 저장했기 때문이 아님
 
-`git mv`는 다음 3개 명령을 순서대로 처리한 것과 동일함
+사실 `git mv`는 다음 3개 명령을 순서대로 처리한 것과 동일함
 
 ```zsh
 $ mv README.md README
@@ -1162,8 +1224,8 @@ $ git add README
 
 정리하면 `git mv`가 처리하는 작업은 다음과 같음
 1. file system에서 `README.md`를 `README`로 rename함
-2. old path인 `README.md` removal을 staging함
-3. new path인 `README` add를 staging함
+2. old path인 `README.md` removal을 *staging area*에 올림
+3. new path인 `README` add를 *staging area*에 올림
 
 > [!summary] git mv
 > Git은 rename metadata를 따로 저장하지 않음
