@@ -58,7 +58,7 @@ CVCS의 동작은 아래와 같음
 
 "check out"
 - 중앙 서버에서 파일을 받아 작업 사본을 만드는 개념
-	- 전체 히스토리가 아니라 현재 작업할 파일 상태를 가져옴
+	- 전체 history가 아니라 현재 작업할 파일 상태를 가져옴
 
 > [!quote]
 > 
@@ -84,7 +84,7 @@ CVCS의 단점
 > This is where Distributed Version Control Systems (DVCSs) step in. In a DVCS (such as Git, Mercurial or Darcs), clients don’t just check out the latest snapshot of the files; rather, they fully mirror the repository, including its full history. Thus, if any server dies, and these systems were collaborating via that server, any of the client repositories can be copied back up to the server to restore it. Every clone is really a full backup of all the data.
 
 DVCS의 동작은 아래와 같음
-- 클라이언트는 리포지토리(히스토리 포함)을 전체 복사해서 가져옴
+- 클라이언트는 리포지토리(history 포함)을 전체 복사해서 가져옴
 	- CVCS에서 클라이언트는 현재 작업할 파일 상태만 가져왔음
 - 원격 서버가 다운되거나 날아가도, 누군가의 로컬에 리포지토리의 클론이 남아 있기에 복구할 수 있음
 
