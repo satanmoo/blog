@@ -30,8 +30,8 @@ references:
 - *push* / *pull*로 데이터를 ==주고받기==
 
 *remote repository* 관리에 포함되는 작업
-- *remote* 추가
-- ==유효하지 않은 *remote* 제거==
+- *remote repository* 추가
+- ==유효하지 않은 *remote repository* 제거==
 - 다양한 *remote branch* 관리
 	- *tracked* 여부 정의 등
 
@@ -42,9 +42,10 @@ references:
 "remote"는 ==물리적 거리가 아닌 "다른 곳"==을 뜻함
 - 네트워크/인터넷 너머에 있을 필요 없이, ==같은 호스트 안==의 다른 위치도 *remote*가 될 수 있음
 - 그런 *remote*를 대상으로도 ==표준 동작이 동일하게 동작==
-	- *push*
-	- *pull*
-	- *fetch*
+	- 표준 동작은 아래와 같음
+		- *push*
+		- *pull*
+		- *fetch*
 
 ### Showing Your Remotes
 
@@ -65,7 +66,7 @@ references:
 > origin
 > ```
 
-설정된 *remote*들을 보려면 `git remote` 실행
+설정된 *remote repository*들을 보려면 `git remote` 실행
 - 등록된 각 *remote handle*의 **shortname**을 나열
 
 **origin**
@@ -107,24 +108,24 @@ references:
 > 
 > This means we can pull contributions from any of these users pretty easily. We may additionally have permission to push to one or more of these, though we can't tell that here.
 
-*remote*가 여러 개면 ==전부 나열==됨
-- 예시는 여러 협업자(`bakkdoor`, `cho45`, `defunkt`, `koke`)의 저장소를 각각 *remote*로 등록한 모습
+*remote repository*가 여러 개면 ==전부 나열==됨
+- 예시는 여러 협업자(`bakkdoor`, `cho45`, `defunkt`, `koke`)의 저장소를 각각 *remote repository*로 등록한 모습
 - `origin`은 통상 ==자신이 *clone*한 기준 저장소==
 
 이 출력으로 알 수 있는 것
-- 어떤 *remote*에서 변경을 ==`pull`로 쉽게 가져올 수 있는지==
+- 어떤 *remote*에서 변경을 ==*pull*로 쉽게 가져올 수 있는지==
 	- `(fetch)` 표기로 알 수 있음
-- 아마도("may additionally have permission") 어떤 *remote*에 `push` 할 수 있을 수 있다 정도
+- 아마도("may additionally have permission") 어떤 *remote*에 *push* 할 수 있을 수 있다 정도
 
 알 수 없는 것
-- 어떤 *remote*에 ==`push` 권한이 있는지 여부==
-	- 실제 시도하거나 권한 정보를 별도로 확인해야 함
+- 어떤 *remote*에 ==*push* 권한이 있는지 여부==
+	- 실제 시도하거나 권한 정보를 별도로 확인해야 *push* 권한이 있는지 알 수 있음
 
 > [!quote]
 > 
 > Notice that these remotes use a variety of protocols; we'll cover more about this in [Getting Git on a Server](https://git-scm.com/book/en/v2/ch00/_getting_git_on_a_server).
 
-예시 출력의 *remote*들은 ==서로 다른 프로토콜==을 사용
+예시 출력의 *remote repository*들은 ==서로 다른 프로토콜==을 사용
 - `https://...` — HTTPS
 - `git://...` — Git native protocol
 - `git@github.com:...` — SSH
@@ -149,8 +150,8 @@ references:
 > pb	https://github.com/paulboone/ticgit (push)
 > ```
 
-`git clone`은 ==`origin` *remote*를 자동으로 등록==
-- 명시적으로 새 *remote*를 추가하려면 `git remote add <shortname> <url>` 사용
+`git clone`은 ==`origin` *remote repository*를 자동으로 등록==
+- 명시적으로 새 *remote repository*를 추가하려면 `git remote add <shortname> <url>` 사용
 
 예시 흐름
 - 처음엔 `git remote` 결과가 `origin` 하나
@@ -181,6 +182,8 @@ references:
 - `[new branch] ticgit -> pb/ticgit`
 	- 마찬가지로 `ticgit` *branch*를 `pb/ticgit`으로 가져옴
 
+`git fetch` 의 동작은 다음 섹션인 [[#Fetching and Pulling from Your Remotes]]에서 다룸
+
 > [!quote]
 > 
 > Paul's `master` branch is now accessible locally as `pb/master` — you can merge it into one of your branches, or you can check out a local branch at that point if you want to inspect it. We'll go over what branches are and how to use them in much more detail in [Git Branching](https://git-scm.com/book/en/v2/ch00/ch03-git-branching).
@@ -188,7 +191,7 @@ references:
 Paul의 `master`는 이제 로컬에서 `pb/master`로 접근 가능
 - 활용 방법
 	- 내 *branch* 중 하나에 ==*merge*==
-	- 그 지점에서 로컬 *branch*를 ==*checkout*해 들여다보기==
+	- 로컬로 받아온 *branch* 에 ==*checkout*해 들여다보기==
 - *branch*의 개념과 사용법은 *Git Branching* 챕터에서 ==본격적으로 다룸==
 
 > [!TODO] Git Branching 문서 링크
@@ -205,9 +208,9 @@ Paul의 `master`는 이제 로컬에서 `pb/master`로 접근 가능
 > 
 > The command goes out to that remote project and pulls down all the data from that remote project that you don't have yet. After you do this, you should have references to all the branches from that remote, which you can merge in or inspect at any time.
 
-`git fetch <remote>`로 *remote* 프로젝트의 데이터를 가져옴
-- 해당 *remote*에서 ==내 로컬에 아직 없는 데이터를== 모두 내려받음
-- 실행 후엔 해당 *remote*의 ==모든 *branch*에 대한 reference==를 가지게 됨
+`git fetch <remote>`로 *remote repository*(프로젝트)의 데이터를 가져옴
+- 해당 *remote repository*에서 ==내 로컬에 아직 없는 데이터를== 모두 내려받음
+- 실행 후엔 해당 *remote*의 ==모든 *branch*에 대한 *reference*==를 가지게 됨
 	- 이후 원할 때 다음과 같이 활용 가능
 		- *merge*
 		- *inspect* 가능
@@ -216,11 +219,11 @@ Paul의 `master`는 이제 로컬에서 `pb/master`로 접근 가능
 > 
 > If you clone a repository, the command automatically adds that remote repository under the name "origin". So, `git fetch origin` fetches any new work that has been pushed to that server since you cloned (or last fetched from) it. It's important to note that the `git fetch` command only downloads the data to your local repository — it doesn't automatically merge it with any of your work or modify what you're currently working on. You have to merge it manually into your work when you're ready.
 
-`git clone <target-url>`은  `origin`을 등록함
-- `git remote add origin <target-url>`로 등록하는 것과 동일함
+`git clone <target-remote-repository-url>`은 자동으로 *remote repository*를 `origin`으로 등록함
+- `git remote add origin <target-remote-repository-url>`로 등록하는 것과 동일함
 
-`git clone` 이후 `git fetch origin`을 수행하면 마지막 *clone* 또는 *fetch* 이후 ==그 서버에 push된 새 작업을 가져옴==
-- 여기서 "그 서버"는 `<target-url>`로 식별
+`git clone` 이후 `git fetch origin`을 수행하면 마지막 *clone* 또는 *fetch* 이후 ==그 서버에 *push*된 새 작업을 가져옴==
+- 여기서 "그 서버"는 `origin` (`<target-remote-repository-url>`과 동일함)
 
 `git fetch`의 중요한 특징
 - ==다운로드만== 수행 — 로컬 *repository*에 데이터를 가져올 뿐
@@ -231,7 +234,7 @@ Paul의 `master`는 이제 로컬에서 `pb/master`로 접근 가능
 > 
 > If your current branch is set up to track a remote branch (see the next section and [Git Branching](https://git-scm.com/book/en/v2/ch00/ch03-git-branching) for more information), you can use the `git pull` command to automatically fetch and then merge that remote branch into your current branch.
 
-현재 *branch*가 *remote branch*를 *track*하도록 설정돼 있으면 `git pull` 사용 가능
+현재 *branch*가 *remote branch*를 *tracking*하도록 설정돼 있으면 `git pull` 사용 가능
 - `git pull` = ==`git fetch` + `git merge`==를 한 번에 
 	- *remote branch* 추적 조건은 `git merge` 때문
 	- `git fetch`는 *remote branch* 추적과 무관함
@@ -242,10 +245,14 @@ Paul의 `master`는 이제 로컬에서 `pb/master`로 접근 가능
 > 
 > by default, the `git clone` command automatically sets up your local `master` branch to track the remote `master` branch (or whatever the default branch is called) on the server you cloned from.
 
-기본적으로 `git clone` 시점에 Git이 ==자동으로 브랜치 *tracking* 관계를 설정==
+기본적으로 `git clone` 시점에 Git이 ==자동으로 *branch* *tracking* 관계를 설정==
 - 로컬 `master` ←→ 원격 `master`
 	- 서버의 default branch 이름이 다르면 그 이름 그대로 — 예: 로컬 `master` ←→ 원격 `main`
 - 따라서 *clone*한 *repository*에서는 별도 설정 없이 ==`git pull`이 곧바로 동작==
+
+지금까지 확인된 `git clone`의 기능
+- `git remote add origin <target-remote-repository-url>`로 등록하는 것과 동일한 *remote repository* 등록 기능
+- 로컬 `master` *branch*가 *clone* 대상의 원격 `master` *branch*를 추적
 
 > [!TODO] Git Branching 문서 링크
 
@@ -259,6 +266,7 @@ Paul의 `master`는 이제 로컬에서 `pb/master`로 접근 가능
 
 Git 2.27부터 `pull.rebase` 변수가 ==미설정이면 `git pull` 실행 시 경고==
 - 설정 전까지 ==계속 경고==가 출력됨
+- `git pull`이 `git merge` 기능을 포함하기 때문
 
 선택지
 - `git config --global pull.rebase "false"` — Git의 ==기본 동작==
@@ -282,7 +290,7 @@ Git 2.27부터 `pull.rebase` 변수가 ==미설정이면 `git pull` 실행 시 �
 프로젝트를 ==공유할 준비==가 된 시점에 *push*로 ==업스트림으로 올림==
 - 명령 형식: `git push <remote> <branch>`
 - `git clone`이 다음을 수행하기에 별도의 추가적인 작업 없이 *push* 가능
-	- `origin` *repository* 추가
+	- `origin` *remote repository* 추가
 	- 로컬 *branch*가 `master`(또는 서버의 default branch) *remote branch*를 추적
 - 예: `git push origin master` — 로컬 `master`의 *commit*들을 `origin` 서버로 올림
 
@@ -291,8 +299,8 @@ Git 2.27부터 `pull.rebase` 변수가 ==미설정이면 `git pull` 실행 시 �
 > This command works only if you cloned from a server to which you have write access and if nobody has pushed in the meantime.
 
 `git push origin master`가 동작하려면 ==두 조건이 모두 충족==돼야 함
-- 1. *clone*한 서버에 ==write 권한==이 있을 것
-- 2. 그 사이 ==다른 사람이 *push*하지 않았을== 것
+- *clone*한 서버에 ==write 권한==이 있을 것
+- 그 사이 ==다른 사람이 *push*하지 않았을== 것
 
 > [!quote]
 > 
@@ -302,6 +310,7 @@ Git 2.27부터 `pull.rebase` 변수가 ==미설정이면 `git pull` 실행 시 �
 - 해결 순서
 	- 먼저 `git fetch`로 ==상대 작업을 가져옴==
 	- 내 작업에 통합(예: *merge* / *rebase*)
+		- 위 두 작업을 한 번에 하는 것이 `git pull`
 	- 그 후 *push*
 - *push*의 상세한 활용은 *Git Branching* 챕터에서 다룸
 
@@ -345,10 +354,10 @@ Git 2.27부터 `pull.rebase` 변수가 ==미설정이면 `git pull` 실행 시 �
 이 출력이 알려주는 것
 - *remote*의 URL과 *tracking branch* 정보
 - 현재 위치가 로컬 `master`일 때 `git pull`을 실행하면 ==원격 `master`를 *fetch* 후 로컬 `master`에 자동 *merge*==한다는 사실
-- 지금까지 ==가져온 모든 원격 reference== 목록
+- 지금까지 ==가져온 모든 원격 *reference*== 목록
 	- `git remote show origin` 출력에서 "Remote branches" 블록을 말함
 	- 마지막 *fetch* 시점 기준으로 `origin`에서 받아서 로컬에 들고 있는 *branch ref* 목록
-		- [[#Fetching and Pulling from Your Remotes]] 의 `git fetch` 기본 동작을 참고
+		- 즉 [[#Fetching and Pulling from Your Remotes]]의 `git fetch` 기본 동작
 
 > [!quote]
 > 
@@ -390,10 +399,12 @@ Git을 더 깊게 쓰면 ==`git remote show`가 훨씬 많은 정보를== 보여
 	- `git remote prune`으로 정리 가능
 
 이 출력으로 알 수 있는 것
-- ==특정 로컬 *branch*에서 `git push`했을 때 어디로== 올라가는지
+- ==특정 로컬 *branch*에서 `git push`했을 때 어디 *branch*로== 올라가는지
+	- "Local refs configured for 'git push'"
 - 서버에 있지만 ==내가 아직 못 가져온 원격 *branch*== (`new`)
 - 서버에서 ==삭제됐는데 내 로컬에 ref만 남은 *branch*== (`stale`)
 - 여러 로컬 *branch* 중 ==`git pull` 시 원격 *branch*와 자동 *merge*되도록== 설정된 것들
+	- "Local branches configured for 'git pull'"
 
 ### Renaming and Removing Remotes
 
@@ -418,7 +429,9 @@ Git을 더 깊게 쓰면 ==`git remote show`가 훨씬 많은 정보를== 보여
 
 **Remote-tracking branch**
 - 로컬에 저장된 ==원격 *branch*에 대한 *reference*==
-- 이름은 `<remote>/<branch>` 형식 — 예: `pb/master`, `origin/master`
+- `git fetch` 시 받아오는 원격 *branch* 목록
+	- 각 *branch* 이름에 접두사를 붙여서 로컬에서 식별함
+	- 이름은 `<remote>/<branch>` 형식 — 예: `pb/master`, `origin/master`
 
 `git remote rename`은 ==`<remote>` 부분이 모두 새 이름으로 갱신==됨
 - 예: `pb/master` → `paul/master`, `pb/ticgit` → `paul/ticgit`
@@ -448,5 +461,6 @@ Git을 더 깊게 쓰면 ==`git remote show`가 훨씬 많은 정보를== 보여
 
 *remote*를 제거하면 그에 묶인 ==모든 부수 정보도 함께 삭제==됨
 - 해당 *remote*의 모든 *remote-tracking branch* (`<shortname>/*`)
+	- `git fetch` 한 결과인 원격 *branch* 목록도 사라짐
 - 해당 *remote*와 연결된 ==config 설정==
-	- 예: `branch.<name>.remote`, `branch.<name>.merge` 등 tracking 관련 항목
+	- 예: `branch.<name>.remote`, `branch.<name>.merge` 등 *tracking* 관련 항목
