@@ -68,6 +68,8 @@ references:
 - 이전 *commit*을 밀어내고 새 *commit*을 그 자리에 ==놓는 동작==
 - 결과적으로 이전 *commit*은 ==처음부터 없었던 것처럼== *history*에 나타나지 않음
 
+"not so much A as B": A라기보다는 오히려 B
+
 > [!quote]
 > 
 > The obvious value to amending commits is to make minor improvements to your last commit, without cluttering your repository history with commit messages of the form, "Oops, forgot to add a file" or "Darn, fixing a typo in last commit".
@@ -79,7 +81,7 @@ references:
 > 
 > Only amend commits that are still local and have not been pushed somewhere. Amending previously pushed commits and force pushing the branch will cause problems for your collaborators. For more on what happens when you do this and how to recover if you're on the receiving end read [The Perils of Rebasing](https://git-scm.com/book/en/v2/ch00/_rebase_peril).
 
-`--amend`는 ==아직 *push*하지 않은 로컬 *commit*==에만 사용
+`--amend`는 ==아직 *push*하지 않은 로컬 *commit*==에만 사용하기를 권함
 - 이미 원격에 올라간 *commit*을 *amend* + force push하면 협업자에게 문제가 발생함
 - 자세한 내용·복구 방법은 *The Perils of Rebasing* 절에서 다룸
 
@@ -135,6 +137,9 @@ references:
 - 대상 파일이 *staging area*에서 빠지고 ==*modified* 상태로 되돌아감==
 - `git status`에서 해당 파일이 `Changes to be committed`가 아닌 `Changes not staged for commit`로 이동한 것을 확인 가능
 - 다른 *staged* 파일(`README` rename)은 ==영향 없이 그대로== 남음
+
+`git reset` 출력의 `M	CONTRIBUTING.md`는 [[books/pro-git/02-git-basics/02-02-recording-changes-to-the-repository/index#Short Status|short status]] 형식과 같음
+- 왼쪽 column 비어있고 오른쪽이 `M` → *working tree*만 *modified*, *staging area*는 비어있음을 의미
 
 > [!quote] Note
 > 
@@ -192,8 +197,8 @@ references:
 
 `git checkout -- CONTRIBUTING.md` 실행 결과는 다음과 같음
 - `git status` 출력에서 `CONTRIBUTING.md`의 *modified* 항목이 사라짐
-- 파일이 ==마지막 *commit* 시점의 내용으로 되돌아옴==
-	- *working directory*의 로컬 변경도 사라짐
+- 파일이 ==마지막 *commit* 시점의 내용으로 되돌아옴== 
+- ==*working directory*의 로컬 변경도 사라짐==
 
 > [!quote] Important
 > 
