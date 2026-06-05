@@ -386,7 +386,7 @@ path filter
 - directory 또는 file name을 지정
 - ==해당 path에 변경을 도입한 commit만 표시==
 - 항상 명령 끝에 위치
-- `--` (double dash)를 앞에 붙여 option과 path를 구분
+- `--` (double dash)를 앞에 붙여 option과 path를 구분 ^double-dash-separator
 
 ```zsh
 $ git log -- path/to/file
