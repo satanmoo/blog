@@ -332,7 +332,7 @@ Git의 *tag*는 ==두 종류==
 
 *tag* 일괄 push
 - `git push origin --tags`로 ==한 번에 여러 *tag* push==
-- ==remote에 아직 없는 모든 *tag*만== 전송됨
+- ==*remote repository*에 아직 없는 모든 *tag*만== 전송됨
 - *annotated tag* / *lightweight tag* ==구분 없이== 함께 전송됨
 	- 예시 출력에서 `v1.4` (annotated)와 `v1.4-lw` (lightweight)가 한 번에 push
 
@@ -489,3 +489,5 @@ remote *tag* 삭제 — 두 번째 방법
 - 그 결과 새 *branch*와 기준 *tag*가 ==더 이상 동일 *commit*을 가리키지 않음==
 - 따라서 두 ref의 상태 차이를 ==항상 인지하고 작업== 
 	- 책에서 "so do be careful" 라고 표현
+
+"since": 왜냐하면으로 해석
