@@ -2,6 +2,8 @@
 tags:
   - books
   - pro-git
+aliases:
+  - 1.3 Getting Started - What is Git?
 ---
 # 1.3 Getting Started - What is Git?
 
@@ -57,13 +59,14 @@ Git은 데이터를 저장할 때 checksum을 계산하고, 그 checksum을 기�
 > 
 > The mechanism that Git uses for this checksumming is called a SHA-1 hash. This is a 40-character string composed of hexadecimal characters (0–9 and a–f) and calculated based on the contents of a file or directory structure in Git.
 
-SHA-1은 해시 알고리듬
+SHA-1은 해시 알고리듬 ^sha-1-hash
+- Git은 ==파일의 내용==과 ==디렉토리 구조==를 기반으로 체크섬 생성
 
 > [!quote]
 >  
 > Git stores everything in its database not by file name but by the hash value of its contents.
   
-Git은 내용에 기반한 해시값을 데이터베이스에 저장함
+Git은 ==내용에 기반한== 해시값을 데이터베이스에 저장함
 
 ### Git Generally Only Adds Data
 

@@ -91,14 +91,12 @@ Git의 *tag*는 ==두 종류==
 > A lightweight tag is very much like a branch that doesn't change — it's just a pointer to a specific commit.
 
 *Lightweight tag*
+- ==특정 *commit*을 가리키는 pointer==
 - ==움직이지 않는 *branch*==와 유사
-- 즉, ==특정 *commit*을 가리키는 pointer==
 
 > [!note]
 > 
 > *branch*가 commit마다 어떻게 "이동"하는지는 [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index|3.1 Branches in a Nutshell]]에서 다룸
-
-> [!TODO] Branch in a Nutshell 링크 추가
 
 > [!quote]
 > 
