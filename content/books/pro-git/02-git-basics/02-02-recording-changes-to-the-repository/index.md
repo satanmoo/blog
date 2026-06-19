@@ -889,7 +889,7 @@ $ git commit -m "Story 182: fix benchmarks for speed"
 > [!quote]
 > Now you’ve created your first commit! You can see that the commit has given you some output about itself: which branch you committed to (`master`), what SHA-1 checksum the commit has (`463dc4f`), how many files were changed, and statistics about lines added and removed in the commit.
 
-commit이 생성되면 Git은 방금 만든 commit에 대한 정보를 출력함
+commit이 생성되면 Git은 방금 만든 commit에 대한 정보를 출력함 ^commit-output-summary
 - commit한 branch
 	- 예시에서는 `master`
 - commit의 SHA-1 checksum 일부
@@ -926,7 +926,7 @@ Git은 *staging area*를 건너뛰고 커밋하는 shortcut을 제공함
 > [!quote]
 > Adding the `-a` option to the `git commit` command makes Git automatically stage every file that is already tracked before doing the commit, letting you skip the `git add` part:
 
-`git commit`에 `-a` option을 붙이면 이미 *tracked* 상태인 file의 변경을 자동으로 staging함
+`git commit`에 `-a` option을 붙이면 이미 *tracked* 상태인 file의 변경을 자동으로 staging함 ^git-commit-a-auto-stage
 - 즉 `git add`를 따로 실행하지 않고 commit할 수 있음
 
 ```zsh

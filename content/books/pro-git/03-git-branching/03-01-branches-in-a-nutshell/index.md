@@ -117,7 +117,7 @@ Git의 **branch**는 commit 중 하나를 가리키는 ==움직일 수 있는==,
 
 `git branch testing`은 `testing`이라는 새 branch를 생성함
 
-이때 ==새 commit이 만들어지는 것이 아니라==, 현재 위치한 commit을 가리키는 새 pointer가 만들어짐
+이때 ==새 commit이 만들어지는 것이 아니라==, 현재 위치한 commit을 가리키는 새 pointer가 만들어짐 ^create-branch-pointer
 - 기존 branch pointer와 새 branch pointer가 같은 commit을 가리키는 상태
 - 즉 branch 생성은 commit history를 복사하는 작업이 아니라, commit을 가리키는 이름 있는 pointer를 하나 더 만드는 작업
 
@@ -170,7 +170,7 @@ branch pointer가 어디를 가리키는지는 `git log --oneline --decorate`로
 
 기존 branch로 이동하려면 `git checkout` 명령을 사용함
 
-`git checkout testing`을 실행하면 *HEAD*가 `testing` branch를 가리키도록 이동함
+`git checkout testing`을 실행하면 *HEAD*가 `testing` branch를 가리키도록 이동함 ^checkout-moves-head
 - branch pointer 자체가 새 commit으로 이동하는 것이 아님
 - ==현재 작업 위치를 나타내는== *HEAD*가 `master`에서 `testing`으로 바뀌는 것
 
@@ -189,7 +189,7 @@ branch pointer가 어디를 가리키는지는 `git log --oneline --decorate`로
 
 이때 새 commit은 현재 *HEAD*가 가리키는 branch인 `testing` 위에 만들어짐
 - `git commit -a`는 tracked file의 수정사항을 staging하고 commit까지 수행함
-- commit 이후 앞으로 이동하는 branch pointer는 `testing`
+- commit 이후 앞으로 이동하는 branch pointer는 `testing` ^commit-advances-current-branch
 
 ![[branches-in-a-nutshell-006.png]]
 
@@ -232,7 +232,7 @@ branch pointer가 어디를 가리키는지는 `git log --oneline --decorate`로
 >
 > That command did two things. It moved the HEAD pointer back to point to the master branch, and it reverted the files in your working directory back to the snapshot that master points to. This also means the changes you make from this point forward will diverge from an older version of the project. It essentially rewinds the work you’ve done in your testing branch so you can go in a different direction.
 
-`git checkout master`는 두 가지 일을 함
+`git checkout master`는 두 가지 일을 함 ^checkout-master-restores-snapshot
 - *HEAD* pointer를 다시 `master` branch로 이동시킴
 - *working directory*의 file들을 `master`가 가리키는 snapshot 상태로 되돌림
 
