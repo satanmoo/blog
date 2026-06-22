@@ -21,7 +21,7 @@ references:
 
 ![[basic-branching-and-merging-001.png]]
 
-이 commit history가 이후 branch 작업의 기준점이 됨
+이 commit(C2)가 이후 branch 작업의 기준점이 됨
 
 > [!quote]
 >
@@ -41,7 +41,7 @@ references:
 
 `git checkout -b iss53`은 `iss53` branch를 만들고 동시에 그 branch로 이동하는 shortcut임
 
-위 작업은 두 단계로 나눠 생각할 수 있음
+위 명령어는 두 단계로 나눠 생각할 수 있음
 - [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^create-branch-pointer|`git branch iss53`]]: 현재 commit에서 `iss53` branch pointer를 생성함
 - [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^checkout-moves-head|`git checkout iss53`]]: `HEAD`를 새 branch로 이동함
 
@@ -59,6 +59,7 @@ references:
 `iss53` branch를 checkout한 상태에서 새 commit을 만들면, [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^commit-advances-current-branch|`HEAD`가 가리키는 branch pointer]]인 `iss53`만 새 commit으로 이동함
 - `master`는 기존 commit을 계속 가리킴
 - 즉 새 commit은 현재 checkout된 branch의 history에만 추가됨
+	- `HEAD`는 새로운 커밋을 가리킴
 
 ![[basic-branching-and-merging-003.png]]
 
@@ -66,11 +67,11 @@ references:
 >
 > Now you get the call that there is an issue with the website, and you need to fix it immediately. With Git, you don’t have to deploy your fix along with the iss53 changes you’ve made, and you don’t have to put a lot of effort into reverting those changes before you can work on applying your fix to what is in production. All you have to do is switch back to your master branch.
 
-`iss53`에서 진행하던 변경을 함께 배포하거나 되돌릴 필요 없이, 먼저 [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^checkout-master-restores-snapshot|`master`로 switch]]하면 됨
-
 `master`로 checkout하면 `HEAD`와 *working directory*가 `master` branch의 snapshot 기준으로 돌아감
+- [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^checkout-master-restores-snapshot|`master`로 switch]]
 
-따라서 production 기준 hotfix를 `iss53` 작업과 분리해서 시작할 수 있음
+따라서 production 기준 hotfix를 `iss53` 작업과 분리해서 시작할 수 있음 ^seperation
+- 작업하다가 언제나 돌아갈 수 있다는 점에서 "분리"
 
 > [!quote]
 >
@@ -83,16 +84,18 @@ references:
 >
 > At this point, your project working directory is exactly the way it was before you started working on issue #53, and you can concentrate on your hotfix. This is an important point to remember: when you switch branches, Git resets your working directory to look like it did the last time you committed on that branch. It adds, removes, and modifies files automatically to make sure your working copy is what the branch looked like on your last commit to it.
 
-branch를 전환하려면 *working directory*와 *staging area*가 대상 branch로 깨끗하게 전환 가능한 상태여야 함
-- uncommitted changes가 checkout 대상 branch와 충돌하면 Git은 branch 전환을 막음
-- 기본 원칙은 branch 전환 전에 clean working state를 만드는 것
-- 변경을 임시로 치워두는 방법은 [[books/pro-git/07-git-tools/07-03-stashing-and-cleaning/index|7.3 Git Tools - Stashing and Cleaning]]에서 다룸
+branch를 전환하려면 *working directory*와 *staging area* 가 목적지 branch와 ==깨끗하게 전환== 가능한 상태여야 함
+- uncommitted changes가 checkout 대상 branch와 ==충돌==하면 Git은 branch 전환을 막음
+	- 기본 원칙은 branch 전환 전에 clean working state를 만드는 것
+		- 이 예시에서는 *commit* 으로 clean working state 달성
+	- 변경을 ==임시로== 치워두는 방법은 [[books/pro-git/07-git-tools/07-03-stashing-and-cleaning/index|7.3 Git Tools - Stashing and Cleaning]]에서 다룸
 
 이 예시에서는 모든 변경을 commit했다고 가정하고 `git checkout master`를 실행함
 
 `master`로 돌아오면 *working directory*는 issue #53 작업을 시작하기 전 상태와 같아짐
 - Git이 file을 자동으로 추가, 제거, 수정해서 `master` branch의 마지막 commit snapshot과 working copy를 맞춤
-- 그래서 hotfix 작업에 집중할 수 있음
+	- 그래서 hotfix 작업에 집중할 수 있음
+	- 위에서 언급한 [[#^seperation |분리]]
 
 > [!quote]
 >
@@ -111,9 +114,13 @@ branch를 전환하려면 *working directory*와 *staging area*가 대상 branch
 - [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^create-branch-pointer|현재 `master` commit을 가리키는 `hotfix` branch pointer를 만들고]]
 - [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^checkout-moves-head|`HEAD`를 `hotfix` branch로 이동함]]
 
-이후 `index.html`을 수정하고 `git commit -a -m 'Fix broken email address'`를 실행하면 [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^commit-advances-current-branch|현재 checkout된 branch pointer]]인 `hotfix`가 새 commit `1fb7853`(C4)으로 이동함
+이후 다음 작업을 수행
+- `index.html`을 수정하고 
+	- working directory 변경
+- `git commit -a -m 'Fix broken email address'` 실행
+	- [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^commit-advances-current-branch|현재 checkout된 branch pointer]]인 `hotfix`가 새 commit `1fb7853`(C4)으로 이동함
 
-이 출력은 [[books/pro-git/02-git-basics/02-02-recording-changes-to-the-repository/index#^commit-output-summary|commit output]] 형식임
+commit 명령어의 출력은 [[books/pro-git/02-git-basics/02-02-recording-changes-to-the-repository/index#^commit-output-summary|commit output]] 형식임
 - `[hotfix 1fb7853]`는 `hotfix` branch 위에 `1fb7853` commit(C4)이 생성됐다는 뜻
 - `Fix broken email address`는 commit message
 - `1 file changed, 2 insertions(+)`는 1개 file에 2줄이 추가된 요약 통계
@@ -121,7 +128,7 @@ branch를 전환하려면 *working directory*와 *staging area*가 대상 branch
 
 ![[basic-branching-and-merging-004.png]]
 
-이 hotfix commit은 `iss53` 작업과 분리되어 있고, production 기준인 `master`에서 바로 갈라져 나온 수정임
+이 hotfix commit은 `iss53` 작업과 분리되어 있고, production 기준인 `master`에서 갈라져 나온 수정임
 
 > [!quote]
 >
@@ -146,7 +153,7 @@ hotfix 검증이 끝나면 production 배포를 위해 `master`로 돌아와 `ho
 이 경우 `hotfix`가 가리키는 commit `C4`(`3a0874c`)가 현재 `master`가 가리키는 commit `C2`(`f42c576`)의 바로 앞쪽 history에 있음
 - `master`와 `hotfix` 사이에 서로 갈라진 divergent work가 없음
 	- 따라서 Git이 두 branch의 snapshot을 합치는 별도 merge commit을 만들 필요가 없음
-- 이럴 때 Git은 `master` branch pointer만 `hotfix`가 가리키는 commit으로 앞으로 이동시킴
+- 이럴 때 Git은 `master` branch pointer만 `hotfix`가 가리키는 commit으로 앞으로 ==이동==시킴
 
 이처럼 한 commit이 다른 commit의 history를 따라 도달 가능한 위치에 있을 때 pointer만 앞으로 이동하는 merge를 **fast-forward merge**라고 함 ^fast-forward-merge
 
@@ -192,14 +199,14 @@ hotfix를 production에 배포한 뒤에는 중단했던 issue #53 작업으로 
 돌아가기 전 먼저 `hotfix` branch를 삭제함
 - fast-forward merge 이후 `master`가 이미 `hotfix`와 같은 commit(C4)을 가리키고 있음
 	- 따라서 `hotfix` branch pointer는 더 이상 별도로 유지할 필요가 없음
-- `git branch -d hotfix`는 branch pointer만 삭제할 뿐, `master`가 가리키는 commit 자체를 지우는 작업이 아님
+- `git branch -d hotfix`는 branch pointer만 삭제할 뿐, `hotfix` 그리고 `master`가 가리키는 commit 자체를 지우는 작업이 아님
 
 그 다음 `git checkout iss53`으로 다시 작업 중이던 branch로 돌아감
 
 `iss53`로 checkout하면 `HEAD`와 *working directory*가 issue #53 작업 branch의 snapshot(C3)으로 전환
 - 여기서 새 commit을 만들면 `iss53` branch pointer가 `ad82d7a` commit (C5)으로 앞으로 이동함
 
-이 출력도 [[books/pro-git/02-git-basics/02-02-recording-changes-to-the-repository/index#^commit-output-summary|commit output]] 형식으로 읽을 수 있음
+*commit* 출력도 [[books/pro-git/02-git-basics/02-02-recording-changes-to-the-repository/index#^commit-output-summary|commit output]] 형식으로 읽을 수 있음
 - `[iss53 ad82d7a]`는 `iss53` branch 위에 `ad82d7a` commit이 생성됐다는 뜻
 - `Finish the new footer [issue 53]`는 commit message
 - `1 file changed, 1 insertion(+)`는 1개 file에 1줄이 추가된 요약 통계
@@ -410,7 +417,7 @@ Git은 conflict가 난 file 안에 **conflict-resolution marker**를 직접 삽�
 >
 > If you want to use a merge tool other than the default (Git chose opendiff in this case because the command was run on macOS), you can see all the supported tools listed at the top after “one of the following tools.” Just type the name of the tool you’d rather use.
 
-conflict를 해결한 file에는 `<<<<<<<`, `=======`, `>>>>>>>` marker가 남아 있으면 안 됨
+conflict를 해결한 file에는 `<<<<<<<`, `=======`, `>>>>>>>` marker가 ==남아 있으면 안 됨==
 
 각 conflict file의 내용을 정리한 뒤 `git add <file>`을 실행하면 Git은 그 file을 resolved 상태로 표시함
 - 여기서 staging은 단순히 다음 commit에 포함한다는 뜻뿐 아니라, conflict 해결 완료를 Git에 알려주는 역할도 함
@@ -484,7 +491,9 @@ conflict를 해결한 file에는 `<<<<<<<`, `=======`, `>>>>>>>` marker가 남�
 
 기본 merge commit message에는 다음 내용이 포함됨
 - 병합 대상 branch
+	- `Merge branch 'iss53'`
 - conflict가 있었던 file
+	- `Conflicts: ...`
 - editor buffer에는 실제 commit message가 될 non-comment 줄과 Git 안내용 `#` comment 줄이 함께 들어 있음
 	- `Merge branch 'iss53'`, `Conflicts:`, `index.html` 같은 non-comment 줄은 기본 message에 포함될 수 있음
 	- `#`으로 시작하는 줄만 commit message에서 제외됨
