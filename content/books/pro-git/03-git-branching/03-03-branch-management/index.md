@@ -69,7 +69,7 @@ references:
 
 `git branch --merged`는 ==현재 checkout된 branch==에 ==이미 merge된== branch만 보여줌
 
-위 예시에서는 현재 branch가 `master`이고, `iss53`은 이미 `master`에 merge된 상태임
+위 예시에서는 현재 checkout된 branch가 `master`이고, `iss53`은 이미 `master`에 merge된 상태임
 - 그래서 `iss53`이 `--merged` 목록에 나타남
 - `* master`는 현재 checkout된 branch를 표시함
 
@@ -132,7 +132,7 @@ references:
 
 `--merged`와 `--no-merged`는 기준 commit이나 ==branch를 따로 주지 않으면== ==현재 checkout된 branch를 기준==으로 판단함
 
-하지만 ==마지막 인자로 branch 이름을 넘기면==, 현재 checkout된 branch가 아니라 그 branch를 기준으로 merge 여부를 확인함
+하지만 ==마지막 인자로 branch 이름을 넘기면==, 현재 checkout된 branch가 아니라 인자로 넘긴 branch를 기준으로 merge 여부를 확인함
 - `git branch --no-merged master`는 `master`에 아직 merge되지 않은 branch를 보여줌
 - 현재 `testing`을 checkout하고 있어도, 조회 기준은 `master`임
 
@@ -168,7 +168,7 @@ branch 이름 변경은 내 local branch 이름만 바꾸는 문제가 아니라
 
 branch 이름을 바꿔도 기존 commit history는 그대로 유지됨
 
-`git branch --move bad-branch-name corrected-branch-name`은 local에서 branch 이름을 바꾸는 명령임
+`git branch --move bad-branch-name corrected-branch-name`은 ==local에서== branch 이름을 바꾸는 명령임
 - `bad-branch-name`이라는 이름을 제거하고
 - 같은 branch history를 가리키는 새 이름 `corrected-branch-name`을 만듦
 
@@ -215,7 +215,7 @@ local에서 이름을 바꾼 branch를 ==다른 사람도 볼 수 있게 하려�
 - `remotes/origin/corrected-branch-name`: 새 이름으로 remote에 생긴 branch
 - `remotes/origin/bad-branch-name`: 아직 remote에 남아 있는 예전 이름의 branch
 
-새 이름을 push해도 remote의 예==전 branch 이름이 자동으로 사라지지는 않음==
+새 이름을 push해도 remote의 ==예전 branch 이름이 자동으로 사라지지는 않음==
 
 그래서 `git push origin --delete bad-branch-name`으로 remote의 예전 branch를 삭제함
 - 이 삭제까지 끝나야 remote에서도 `bad-branch-name`이 `corrected-branch-name`으로 완전히 교체된 상태가 됨
@@ -285,7 +285,7 @@ local에서 이름을 바꾼 branch를 ==다른 사람도 볼 수 있게 하려�
 - remote에는 새 `origin/main`이 생김
 - 하지만 예전 `origin/master`도 아직 남아 있음
 - `remotes/origin/HEAD -> origin/master`는 ==remote의 기본 branch==가 여전히 `master`를 가리키고 있음을 보여줌
-	- remote의 `HEAD`는 remote repository의 기본 branch를 보여줌
+	- remote의 `HEAD`는 remote repository의 ==기본 branch==를 보여줌
 
 따라서 여기까지 수행하면 협업자들은 여전히 `master`를 기준 branch로 사용할 수 있음
 
@@ -327,3 +327,16 @@ remote의 예전 `master` branch를 삭제하기 전에 ==주변 의존성을 �
 
 이 명령은 remote에서 예전 `master` branch 이름을 제거함
 - commit history를 지우는 것이 아니라, remote의 `master` branch reference를 제거하는 것임
+
+> [!note]
+>
+> 아래는 책 본문에는 없는 추가 정리임. remote의 예전 `master` branch를 삭제해도 remote의 기본 branch(`remotes/origin/HEAD`)는 자동으로 바뀌지 않으므로, 마지막으로 이를 `main`으로 갱신함.
+
+`git remote set-head origin main`은 remote repository의 기본 branch를 `main`으로 변경하는 명령임
+
+```zsh
+$ git remote set-head origin main
+```
+
+이 명령을 실행하면 `remotes/origin/HEAD`가 가리키는 대상이 갱신됨
+- 기존 `remotes/origin/HEAD -> origin/master`가 `remotes/origin/HEAD -> origin/main`으로 바뀜
