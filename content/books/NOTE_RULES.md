@@ -162,9 +162,9 @@ On branch main
 - 장이나 절 전체를 관통하는 핵심 개념어에만 첫 도입/재언급 규칙을 적용함
 - 번역어가 흔들릴 수 있는 용어는 첫 도입 시 원어를 병기함
 - `==highlight==`는 자동으로 남발하지 않고, 작성자가 독자가 놓치면 안 되는 지점에 직접 표시함
-- `==highlight==`와 `` `backtick` ``을 겹쳐 쓰지 않음 (Quartz hosting 시 렌더링이 깨짐)
-  - 코드 식별자 강조가 핵심이면 backtick만 사용하고 highlight는 빼기
-  - 문장의 판단 포인트 강조가 핵심이면 backtick span을 제외한 평문 부분만 highlight로 감싸기
+- `==highlight==` 안에는 **평문만** 둠 — `` `backtick` ``, `**bold**`, `*italic*`를 highlight와 겹쳐 쓰지 않음 (Quartz hosting 시 렌더링이 깨짐)
+  - 강조 대상이 코드/개념어 자체면: highlight 안에서 그 마크업을 떼고 평문으로 두거나(`==*shortname*==` → `==shortname==`), 마크업만 쓰고 highlight를 뺌
+  - 문장의 판단 포인트가 핵심이면: 마크업 span을 highlight 밖으로 빼고 평문 판단 구절만 highlight로 감쌈 (`==*modified* 상태로 되돌아감==` → `*modified* 상태로 ==되돌아감==`)
 
 예시:
 
@@ -245,7 +245,7 @@ Wiki-link 표기:
 - [ ] 핵심 개념은 첫 도입 bold, 재언급 italic
 - [ ] 코드 식별자는 backtick 사용
 - [ ] 판단 포인트는 필요할 때만 highlight 사용
-- [ ] highlight와 backtick을 겹쳐 쓰지 않음 (Quartz 렌더링)
+- [ ] highlight 안에는 평문만 (backtick/bold/italic 겹쳐쓰기 금지, Quartz 렌더링)
 - [ ] wikilink 표시 텍스트에 backtick 없음 (Quartz 렌더링)
 - [ ] 용어 표기가 같은 노트 안에서 흔들리지 않음
 - [ ] 이미지는 `images/` 폴더와 `![[...]]` 임베드 사용
