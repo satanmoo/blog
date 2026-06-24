@@ -36,7 +36,7 @@ Git의 merge가 [[books/pro-git/03-git-branching/03-02-basic-branching-and-mergi
 `develop`(또는 `next`)은 `master`와 ==나란히 유지되는== 작업용 branch임
 - 실제 개발과 안정성 test가 이뤄지는 곳임
 - 항상 안정적이지는 않음
-- ==안정 상태에 도달할 때마다 `master`로 merge함==
+- 안정 상태에 도달할 때마다 `master`로 ==merge함==
 
 > [!quote]
 >
@@ -112,7 +112,7 @@ long-running branch와 달리 *topic branch*는 ==프로젝트 규모와 무관�
 >
 > You saw this in the last section with the iss53 and hotfix branches you created. You did a few commits on them and deleted them directly after merging them into your main branch. This technique allows you to context-switch quickly and completely — because your work is separated into silos where all the changes in that branch have to do with that topic, it’s easier to see what has happened during code review and such. You can keep the changes there for minutes, days, or months, and merge them in when they’re ready, regardless of the order in which they were created or worked on.
 
-앞 절의 [[books/pro-git/03-git-branching/03-02-basic-branching-and-merging/index#Basic Branching|`iss53`, `hotfix`]]가 바로 *topic branch*의 예임
+앞 절의 [[books/pro-git/03-git-branching/03-02-basic-branching-and-merging/index#Basic Branching|iss53, hotfix]]가 바로 *topic branch*의 예임
 - 몇 개 commit만 올리고, main branch에 merge한 직후 바로 삭제함
 
 *topic branch*의 핵심 이점은 ==빠르고 완전한 context switch==임

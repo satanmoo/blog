@@ -78,7 +78,7 @@ Git에서 commit을 만들면 **commit object**가 저장됨
 
 ![[branches-in-a-nutshell-001.png]]
 
-그림에서 ==*commit object*도 체크섬== 값을 가짐을 확인할 수 있음
+그림에서 ==commit object도 체크섬== 값을 가짐을 확인할 수 있음
 
 > [!quote]
 >
@@ -243,7 +243,7 @@ branch pointer가 어디를 가리키는지는 `git log --oneline --decorate`로
 >
 > It’s important to note that when you switch branches in Git, files in your working directory will change. If you switch to an older branch, your working directory will be reverted to look like it did the last time you committed on that branch. If Git cannot do it cleanly, it will not let you switch at all.
 
-Git에서 branch를 전환하면 ==*working directory*의 file도 바뀔 수 있음==
+Git에서 branch를 전환하면 ==working directory의 file도 바뀔 수 있음==
 
 이전 branch로 이동하면 *working directory*는 그 branch에서 마지막으로 commit했던 상태로 되돌아감
 - branch 전환은 단순히 *HEAD* pointer만 바꾸는 작업이 아님

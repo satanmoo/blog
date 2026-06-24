@@ -42,7 +42,7 @@ commit history를 보는 가장 기본 도구가 `git log`
 `git log`의 자주 쓰는 옵션
 - `-p` 또는 `--patch`
 	- 각 commit이 ==도입한 변경(diff)을 함께 표시==
-	- 출력 형식은 [[books/pro-git/02-git-basics/02-02-recording-changes-to-the-repository/index#Viewing Your Staged and Unstaged Changes|`git diff`]]와 동일
+	- 출력 형식은 [[books/pro-git/02-git-basics/02-02-recording-changes-to-the-repository/index#Viewing Your Staged and Unstaged Changes|git diff]]와 동일
 - `-N` (숫자)
 	- 표시할 log 항목 수 제한
 	- 예: `-2`는 최근 두 commit만 표시

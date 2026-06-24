@@ -29,14 +29,14 @@ Git의 command 입력 동작
 
 **Alias**
 - 자주 쓰는 명령에 ==짧은 별칭==을 붙여 등록하는 기능
-- ==`git config`로 손쉽게 설정== 가능
+- `git config`로 ==손쉽게 설정== 가능
 - 긴 명령 전체를 매번 입력하는 부담을 줄여줌
 
 *alias* 등록 형식
 - `git config --global alias.<short> <full-command>`
-	- ==`--global`==: ==전역 설정==으로 등록 (해당 사용자의 모든 repository에 적용)
-	- ==`alias.<short>`==: 등록할 ==별칭 이름==
-	- ==`<full-command>`==: 별칭이 ==대체할 실제 Git 하위 명령==
+	- `--global`: ==전역 설정==으로 등록 (해당 사용자의 모든 repository에 적용)
+	- `alias.<short>`: 등록할 ==별칭 이름==
+	- `<full-command>`: 별칭이 ==대체할 실제 Git 하위 명령==
 
 예시 alias 해석
 - `alias.co checkout` → `git co` = `git checkout`
@@ -72,8 +72,8 @@ Git의 command 입력 동작
 	- ==뒤따라 오는 인자를 file path로 강제 해석==하기 위해 끝에 `--`를 둠
 		- `--` 뒤의 토큰은 ==option이 아니라 path==로 처리됨
 		- branch / tag 이름과 동일한 file 이름이 와도 ==모호성 제거==
-		- [[books/pro-git/02-git-basics/02-03-viewing-the-commit-history/index#^double-dash-separator|2.3 path filter에서 본 `--` separator]]와 동일한 관용
-- `<full-command>` 인자는 ==`'`를 사용해 quoting==해서 여러 토큰을 ==하나의 alias value==로 묶음
+		- [[books/pro-git/02-git-basics/02-03-viewing-the-commit-history/index#^double-dash-separator|2.3 path filter에서 본 -- separator]]와 동일한 관용
+- `<full-command>` 인자는 `'`를 ==사용해 quoting==해서 여러 토큰을 ==하나의 alias value==로 묶음
 
 > [!quote]
 >
@@ -86,7 +86,7 @@ Git의 command 입력 동작
 
 위 등록 결과 ==두 명령이 동치==
 - `git unstage fileA` = `git reset HEAD -- fileA`
-- *alias*의 ==뒤에 입력한 추가 인자(`fileA`)는 그대로 확장된 명령의 끝에 붙음==
+- *alias*의 뒤에 입력한 추가 인자(`fileA`)는 ==그대로 확장된 명령의 끝에 붙음==
 	- 즉 `git <alias> <args>` → `git <alias-value> <args>`로 단순 치환
 	- 그래서 `'reset HEAD --'`의 끝 `--` 덕분에 `fileA`가 ==항상 path로 해석==됨
 
@@ -113,10 +113,10 @@ Git의 command 입력 동작
 
 또 다른 자주 쓰는 alias: `last`
 - 등록: `git config --global alias.last 'log -1 HEAD'`
-	- ==`log -1`==: 최근 ==1개의 *commit*만== 출력
+	- `log -1`: 최근 ==1개의 commit만== 출력
 		- `git log -<n>`은 [[books/pro-git/02-git-basics/02-03-viewing-the-commit-history/index|2.3 Viewing the Commit History]]에서 다룬 ==출력 개수 제한 옵션==
-	- ==`HEAD`==: ==출력 시작점== — 현재 *branch*가 가리키는 *commit*
-- 사용: `git last` → ==직전 *commit* 하나를 즉시 확인==
+	- `HEAD`: ==출력 시작점== — 현재 *branch*가 가리키는 *commit*
+- 사용: `git last` → ==직전 commit 하나를 즉시 확인==
 	- *commit* hash / author / date / message / footer(`Signed-off-by` 등) 모두 표시
 
 > [!quote]
@@ -132,11 +132,11 @@ Git의 command 입력 동작
 	- 지금까지의 예시는 모두 ==Git 하위 명령==(`commit`, `reset`, `log`)으로 치환
 
 ==외부 명령==을 실행하고 싶을 때: `!` prefix
-- *alias value* 앞에 ==`!`를 붙이면 Git 하위 명령이 아니라 외부 shell command==로 실행됨
+- *alias value* 앞에 `!`를 붙이면 ==Git 하위 명령이 아니라 외부 shell command==로 실행됨
 - 활용 예
 	- ==Git repository와 함께 동작하는 자체 도구==를 alias로 노출
 	- `gitk`처럼 ==별도 binary로 제공되는 도구==를 짧게 호출
 
 예시 `git config --global alias.visual '!gitk'`
-- `git visual` 실행 시 ==Git이 `gitk`를 외부 명령으로 실행==
+- `git visual` 실행 시 Git이 `gitk`를 ==외부 명령으로 실행==
 - `!`가 없었다면 Git은 `gitk`를 ==하위 명령으로 해석하려 시도해 실패==했을 것

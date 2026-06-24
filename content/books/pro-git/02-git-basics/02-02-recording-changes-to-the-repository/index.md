@@ -202,7 +202,7 @@ Changes to be committed:
 >
 > You may recall that when you ran `git init` earlier, you then ran `git add <files>` — that was to begin tracking files in your directory.
 
-앞에서 [[books/pro-git/02-git-basics/02-01-getting-a-git-repository/index#^tracking-files-with-git-add|`git init` 이후 `git add`를 실행했던 것]]도 directory 안의 file들을 tracking하기 위한 작업이었음
+앞에서 [[books/pro-git/02-git-basics/02-01-getting-a-git-repository/index#^tracking-files-with-git-add|git init 이후 git add를 실행했던 것]]도 directory 안의 file들을 tracking하기 위한 작업이었음
 
 > [!quote]
 >

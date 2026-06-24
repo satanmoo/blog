@@ -31,7 +31,7 @@ references:
 > 
 > This command takes your staging area and uses it for the commit. If you've made no changes since your last commit (for instance, you run this command immediately after your previous commit), then your snapshot will look exactly the same, and all you'll change is your commit message.
 
-`git commit --amend`는 ==현재 *staging area*의 상태==로 직전 *commit*을 다시 작성함
+`git commit --amend`는 ==현재 staging area의 상태==로 직전 *commit*을 다시 작성함
 - 직전 *commit* 이후 변경한 게 없다면
 	- *snapshot*은 그대로 유지됨
 	- *commit message*만 바뀜
@@ -41,7 +41,7 @@ references:
 > 
 > The same commit-message editor fires up, but it already contains the message of your previous commit. You can edit the message the same as always, but it overwrites your previous commit.
 
-`--amend` 실행 시 평소처럼 *commit message* 편집기가 열리되, ==직전 *commit*의 메시지가 미리 채워져== 있음
+`--amend` 실행 시 평소처럼 *commit message* 편집기가 열리되, ==직전 commit의 메시지가 미리 채워져== 있음
 - 그 상태에서 수정·저장하면 직전 *commit*이 새 *commit*으로 ==덮어써짐==
 
 > [!quote]
@@ -58,7 +58,7 @@ references:
 
 빠뜨린 파일을 추가하는 시나리오 예시
 - 첫 *commit* 직후 빠뜨린 파일을 *staging*에 추가
-- `git commit --amend`로 다시 *commit*하면 ==두 번째 *commit*이 첫 번째를 대체==해서 ==최종 결과는 *commit* 하나==가 됨
+- `git commit --amend`로 다시 *commit*하면 ==두 번째 commit이 첫 번째를 대체==해서 ==최종 결과는 commit 하나==가 됨
 
 > [!quote] Note
 > 
@@ -75,13 +75,13 @@ references:
 > The obvious value to amending commits is to make minor improvements to your last commit, without cluttering your repository history with commit messages of the form, "Oops, forgot to add a file" or "Darn, fixing a typo in last commit".
 
 `--amend`의 가치
-- 직전 *commit*에 사소한 보완을 더할 때, "Oops, forgot to add a file" 같은 ==잡음 *commit message*로 *history*가 지저분해지는 것을 방지==
+- 직전 *commit*에 사소한 보완을 더할 때, "Oops, forgot to add a file" 같은 ==잡음 commit message로 history가 지저분해지는 것을 방지==
 
 > [!quote] Note
 > 
 > Only amend commits that are still local and have not been pushed somewhere. Amending previously pushed commits and force pushing the branch will cause problems for your collaborators. For more on what happens when you do this and how to recover if you're on the receiving end read [The Perils of Rebasing](https://git-scm.com/book/en/v2/ch00/_rebase_peril).
 
-`--amend`는 ==아직 *push*하지 않은 로컬 *commit*==에만 사용하기를 권함
+`--amend`는 ==아직 push하지 않은 로컬 commit==에만 사용하기를 권함
 - 이미 원격에 올라간 *commit*을 *amend* + force push하면 협업자에게 문제가 발생함
 - 자세한 내용·복구 방법은 *The Perils of Rebasing* 절에서 다룸
 
@@ -134,7 +134,7 @@ references:
 > The command is a bit strange, but it works. The `CONTRIBUTING.md` file is modified but once again unstaged.
 
 안내대로 `git reset HEAD CONTRIBUTING.md` 실행
-- 대상 파일이 *staging area*에서 빠지고 ==*modified* 상태로 되돌아감==
+- 대상 파일이 *staging area*에서 빠지고 ==modified 상태로 되돌아감==
 - `git status`에서 해당 파일이 `Changes to be committed`가 아닌 `Changes not staged for commit`로 이동한 것을 확인 가능
 - 다른 *staged* 파일(`README` rename)은 ==영향 없이 그대로== 남음
 
@@ -145,14 +145,14 @@ references:
 > 
 > It's true that `git reset` can be a dangerous command, especially if you provide the `--hard` flag. However, in the scenario described above, the file in your working directory is not touched, so it's relatively safe.
 
-`git reset`은 ==`--hard` 플래그를 붙이면 위험==한 명령
-- 다만 위 시나리오처럼 ==플래그 없이 경로 인자만== 주는 경우엔 ==*working directory*를 건드리지 않으므로== 비교적 안전
+`git reset`은 `--hard` ==플래그를 붙이면 위험==한 명령
+- 다만 위 시나리오처럼 ==플래그 없이 경로 인자만== 주는 경우엔 ==working directory를 건드리지 않으므로== 비교적 안전
 
 > [!quote]
 > 
 > For now this magic invocation is all you need to know about the `git reset` command. We'll go into much more detail about what reset does and how to master it to do really interesting things in [Reset Demystified](https://git-scm.com/book/en/v2/ch00/_git_reset).
 
-지금 단계에서 `git reset`에 대해 알아야 할 것은 ==*unstaging* 한 줄 사용법==뿐
+지금 단계에서 `git reset`에 대해 알아야 할 것은 ==unstaging 한 줄 사용법==뿐
 - `git reset`의 전반적인 동작과 활용은 *Reset Demystified* 절에서 본격적으로 다룸
 
 > [!TODO] Reset Demystified 문서 링크
@@ -171,7 +171,7 @@ references:
 >     modified:   CONTRIBUTING.md
 > ```
 
-수정한 파일의 변경을 ==통째로 버리고 마지막 *commit* 시점의 상태로 되돌리는== 시나리오
+수정한 파일의 변경을 ==통째로 버리고 마지막 commit 시점의 상태로 되돌리는== 시나리오
 - 기준이 되는 "원래 상태"
 	- 마지막 *commit*
 	- 또는 처음 *clone*했을 때
@@ -197,8 +197,8 @@ references:
 
 `git checkout -- CONTRIBUTING.md` 실행 결과는 다음과 같음
 - `git status` 출력에서 `CONTRIBUTING.md`의 *modified* 항목이 사라짐
-- 파일이 ==마지막 *commit* 시점의 내용으로 되돌아옴== 
-- ==*working directory*의 로컬 변경도 사라짐==
+- 파일이 ==마지막 commit 시점의 내용으로 되돌아옴== 
+- ==working directory의 로컬 변경도 사라짐==
 
 > [!quote] Important
 > 
@@ -224,12 +224,12 @@ references:
 > 
 > Remember, anything that is committed in Git can almost always be recovered. Even commits that were on branches that were deleted or commits that were overwritten with an `--amend` commit can be recovered (see [Data Recovery](https://git-scm.com/book/en/v2/ch00/_data_recovery) for data recovery). However, anything you lose that was never committed is likely never to be seen again.
 
-==한 번이라도 *commit*된 것==은 Git에서 거의 항상 복구 가능
+==한 번이라도 commit된 것==은 Git에서 거의 항상 복구 가능
 - 삭제된 *branch* 위에 있던 *commit*도 복구 가능
 - `--amend`로 덮어쓴 *commit*도 복구 가능
 - 복구 방법은 *Data Recovery* 절에서 다룸
 
-반면 ==한 번도 *commit*되지 않은 변경==은 잃어버리면 ==사실상 복구 불가==
+반면 ==한 번도 commit되지 않은 변경==은 잃어버리면 ==사실상 복구 불가==
 
 > [!TODO] Data Recovery 문서 링크
 
@@ -249,8 +249,8 @@ references:
 >     renamed:    README.md -> README
 > ```
 
-Git version 2.23부터 *staging area*·*working directory*의 변경을 ==`git restore`로 다루는 흐름== 소개
-- 앞의 `git reset HEAD`([[#Unstaging a Staged File]]) / `git checkout -- <file>`([[#Unmodifying a Modified File]]) 시나리오와 ==동일한 상황을 `git restore`로 푸는 방식==
+Git version 2.23부터 *staging area*·*working directory*의 변경을 `git restore`로 ==다루는 흐름== 소개
+- 앞의 `git reset HEAD`([[#Unstaging a Staged File]]) / `git checkout -- <file>`([[#Unmodifying a Modified File]]) 시나리오와 ==동일한 상황을== `git restore`로 푸는 방식
 - 여기서도 `git status`가 ==사용해야 할 명령을 직접 안내==
 	- `(use "git restore --staged <file>..." to unstage)`
 
@@ -275,10 +275,10 @@ Git version 2.23부터 *staging area*·*working directory*의 변경을 ==`git r
 > The `CONTRIBUTING.md` file is modified but once again unstaged.
 
 안내대로 `git restore --staged CONTRIBUTING.md` 실행
-- 대상 파일이 *staging area*에서 빠지고 ==*modified* 상태로 되돌아감==
+- 대상 파일이 *staging area*에서 빠지고 ==modified 상태로 되돌아감==
 - 결과는 앞서 본 `git reset HEAD CONTRIBUTING.md`와 ==동일==
 	- [[#Unstaging a Staged File]]
-- `git status`는 다음 단계로 ==`git restore <file>`을 안내== (변경 폐기용)
+- `git status`는 다음 단계로 `git restore <file>`을 ==안내== (변경 폐기용)
 	- `(use "git restore <file>..." to discard changes in working directory)`
 		- 이는 [[#Unmodifying a Modified File]] 와 동일한 동작
 		- 바로 아래 섹션에서 다룸
@@ -301,7 +301,7 @@ Git version 2.23부터 *staging area*·*working directory*의 변경을 ==`git r
 	- 마지막 *commit*
 	- 또는 처음 *clone*했을 때
 	- 또는 *working directory*에 들어온 시점의 모습
-- 앞서 본 [[#Unmodifying a Modified File]]의 `git checkout -- <file>`을 ==`git restore <file>`이 대체==
+- 앞서 본 [[#Unmodifying a Modified File]]의 `git checkout -- <file>`을 `git restore <file>`이 ==대체==
 - `git status` 출력이 사용해야 할 명령을 ==직접 안내==
 	- `(use "git restore <file>..." to discard changes in working directory)`
 
@@ -320,7 +320,7 @@ Git version 2.23부터 *staging area*·*working directory*의 변경을 ==`git r
 
 안내대로 `git restore CONTRIBUTING.md` 실행
 - `git status` 출력에서 `CONTRIBUTING.md`의 *modified* 항목이 ==사라짐==
-- 파일이 ==마지막 *commit* 시점의 내용으로 되돌아옴==
+- 파일이 ==마지막 commit 시점의 내용으로 되돌아옴==
 - 결과는 앞서 본 `git checkout -- CONTRIBUTING.md`와 ==동일==
 	- [[#Unmodifying a Modified File]]
 

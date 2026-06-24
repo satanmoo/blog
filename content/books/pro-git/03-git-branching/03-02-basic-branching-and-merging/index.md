@@ -42,8 +42,8 @@ references:
 `git checkout -b iss53`은 `iss53` branch를 만들고 동시에 그 branch로 이동하는 shortcut임
 
 위 명령어는 두 단계로 나눠 생각할 수 있음
-- [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^create-branch-pointer|`git branch iss53`]]: 현재 commit에서 `iss53` branch pointer를 생성함
-- [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^checkout-moves-head|`git checkout iss53`]]: `HEAD`를 새 branch로 이동함
+- [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^create-branch-pointer|git branch iss53]]: 현재 commit에서 `iss53` branch pointer를 생성함
+- [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^checkout-moves-head|git checkout iss53]]: `HEAD`를 새 branch로 이동함
 
 ![[basic-branching-and-merging-002.png]]
 
@@ -56,7 +56,7 @@ references:
 > $ git commit -a -m 'Create new footer [issue 53]'
 > ```
 
-`iss53` branch를 checkout한 상태에서 새 commit을 만들면, [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^commit-advances-current-branch|`HEAD`가 가리키는 branch pointer]]인 `iss53`만 새 commit으로 이동함
+`iss53` branch를 checkout한 상태에서 새 commit을 만들면, [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^commit-advances-current-branch|HEAD가 가리키는 branch pointer]]인 `iss53`만 새 commit으로 이동함
 - `master`는 기존 commit을 계속 가리킴
 - 즉 새 commit은 현재 checkout된 branch의 history에만 추가됨
 	- `HEAD`는 새로운 커밋을 가리킴
@@ -68,7 +68,7 @@ references:
 > Now you get the call that there is an issue with the website, and you need to fix it immediately. With Git, you don’t have to deploy your fix along with the iss53 changes you’ve made, and you don’t have to put a lot of effort into reverting those changes before you can work on applying your fix to what is in production. All you have to do is switch back to your master branch.
 
 `master`로 checkout하면 `HEAD`와 *working directory*가 `master` branch의 snapshot 기준으로 돌아감
-- [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^checkout-master-restores-snapshot|`master`로 switch]]
+- [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^checkout-master-restores-snapshot|master로 switch]]
 
 따라서 production 기준 hotfix를 `iss53` 작업과 분리해서 시작할 수 있음 ^seperation
 - 작업하다가 언제나 돌아갈 수 있다는 점에서 "분리"
@@ -111,8 +111,8 @@ branch를 전환하려면 *working directory*와 *staging area* 가 목적지 br
 > ```
 
 `master` 상태에서 `git checkout -b hotfix`를 실행해 hotfix 전용 branch를 생성함
-- [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^create-branch-pointer|현재 `master` commit을 가리키는 `hotfix` branch pointer를 만들고]]
-- [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^checkout-moves-head|`HEAD`를 `hotfix` branch로 이동함]]
+- [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^create-branch-pointer|현재 master commit을 가리키는 hotfix branch pointer를 만들고]]
+- [[books/pro-git/03-git-branching/03-01-branches-in-a-nutshell/index#^checkout-moves-head|HEAD를 hotfix branch로 이동함]]
 
 이후 다음 작업을 수행
 - `index.html`을 수정하고 

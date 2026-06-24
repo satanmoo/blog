@@ -40,7 +40,7 @@ references:
 > This command lists the tags in alphabetical order; the order in which they are displayed has no real importance.
 
 *tag* 목록 조회
-- `git tag` 명령으로 ==기존 *tag* 전체==를 출력
+- `git tag` 명령으로 ==기존 tag 전체==를 출력
 - `-l` 또는 `--list` 플래그를 ==선택적==으로 붙일 수 있음 (동작 동일)
 - 출력은 ==alphabetical order==로 정렬됨
 	- 다만 정렬 순서 자체에 ==실질적 의미는 없음==
@@ -70,9 +70,9 @@ references:
 > > If, however, you're supplying a wildcard pattern to match tag names, the use of `-l` or `--list` is mandatory.
 
 *tag* 필터링
-- `git tag -l "<pattern>"` 형식으로 ==wildcard pattern과 일치하는 *tag*만 출력==
+- `git tag -l "<pattern>"` 형식으로 ==wildcard pattern과 일치하는 tag만 출력==
 	- 예: `"v1.8.5*"` → `v1.8.5`, `v1.8.5-rc0`, `v1.8.5.1` 등 prefix 일치 *tag*만 나옴
-- wildcard pattern을 줄 때는 ==`-l` / `--list` 옵션이 필수==
+- wildcard pattern을 줄 때는 `-l` / `--list` ==옵션이 필수==
 	- 인자 없이 `git tag`만 실행하면 `-l / --list`옵션 생략 가능
 	- pattern을 인자로 주려면 ==반드시== 명시해야 함 (생략 시 의도대로 동작하지 않음)
 
@@ -91,8 +91,8 @@ Git의 *tag*는 ==두 종류==
 > A lightweight tag is very much like a branch that doesn't change — it's just a pointer to a specific commit.
 
 *Lightweight tag*
-- ==특정 *commit*을 가리키는 pointer==
-- ==움직이지 않는 *branch*==와 유사
+- ==특정 commit을 가리키는 pointer==
+- ==움직이지 않는 branch==와 유사
 
 > [!note]
 > 
@@ -122,7 +122,7 @@ Git의 *tag*는 ==두 종류==
 - 기본은 *annotated tag* ==권장==
 	- 모든 메타데이터(tagger / date / message / 서명)를 ==함께 보존== 가능
 - *lightweight tag*가 적합한 경우
-	- ==임시 *tag*==가 필요할 때
+	- ==임시 tag==가 필요할 때
 	- 메타데이터를 ==보존하지 않으려== 할 때
 
 ### Annotated Tags
@@ -141,7 +141,7 @@ Git의 *tag*는 ==두 종류==
 
 *Annotated tag* 생성
 - 명령: `git tag -a <tagname>`
-	- `-a` (annotate) 플래그가 ==*annotated tag* 생성을 지정==
+	- `-a` (annotate) 플래그가 ==annotated tag 생성을 지정==
 	- *commit* 인자 생략 시 ==현재 HEAD에 tag==가 걸림 ([[#Tagging Later]]에서 과거 *commit* 지정 방법 다룸)
 - 생성 후 `git tag`로 신규 *tag*가 ==목록에 추가됨을 확인==
 
@@ -151,7 +151,7 @@ Git의 *tag*는 ==두 종류==
 
 `-m` 옵션
 - `-m "<message>"`로 ==tagging message를 인라인 지정==
-- 지정한 message는 ==*tag* object에 함께 저장==됨
+- 지정한 message는 ==tag object에 함께 저장==됨
 - *annotated tag* 생성 시 ==생략하면 Git이 editor를 자동 실행==하여 message를 입력받음
 
 > [!quote]
@@ -176,12 +176,12 @@ Git의 *tag*는 ==두 종류==
 > That shows the tagger information, the date the commit was tagged, and the annotation message before showing the commit information.
 
 *tag* 정보 조회
-- `git show <tagname>`으로 ==*tag* 데이터와 가리키는 *commit*을 함께== 조회
+- `git show <tagname>`으로 ==tag 데이터와 가리키는 commit을 함께== 조회
 - 출력 구성 (순서대로)
 	- tagger 정보 (name / email)
 	- tagging date
 	- annotation message
-	- 이어서 ==tagged된 *commit* 정보== (hash / author / date / commit message)
+	- 이어서 ==tagged된 commit 정보== (hash / author / date / commit message)
 
 ### Lightweight Tags
 
@@ -200,8 +200,8 @@ Git의 *tag*는 ==두 종류==
 > ```
 
 *Lightweight tag* 생성
-- 명령: `git tag <tagname>` — ==`-a` / `-s` / `-m` 옵션 없이== tag name만 지정
-- 저장 형태: ==*commit* checksum 하나가 파일에 기록==됨
+- 명령: `git tag <tagname>` — `-a` / `-s` / `-m` ==옵션 없이== tag name만 지정
+- 저장 형태: ==commit checksum 하나가 파일에 기록==됨
 	- 그 외 정보(tagger / date / message)는 ==저장되지 않음==
 
 > [!quote]
@@ -218,7 +218,7 @@ Git의 *tag*는 ==두 종류==
 > ```
 
 *Lightweight tag*에 `git show`
-- 가리키는 ==*commit* 정보만 그대로== 출력
+- 가리키는 ==commit 정보만 그대로== 출력
 	- *annotated tag*의 출력에 있던 ==tag header (tagger / date / message) 블록이 빠짐==
 - 저장된 메타데이터가 없으므로 ==보여줄 extra 정보 자체가 없음==
 
@@ -249,10 +249,10 @@ Git의 *tag*는 ==두 종류==
 > ```
 
 과거 *commit*에 *tag* 걸기
-- 명령 끝에 ==*commit* checksum (또는 prefix 일부)==을 인자로 추가
+- 명령 끝에 ==commit checksum (또는 prefix 일부)==을 인자로 추가
 	- 형식: `git tag -a <tagname> <commit-hash>`
 	- 예: `git tag -a v1.2 9fceb02` — `9fceb02d0...` 의 ==prefix만으로도 식별 가능==
-- HEAD가 아니어도 ==이미 지나간 *commit*에 소급해서 *tag*== 부착 가능
+- HEAD가 아니어도 ==이미 지나간 commit에 소급해서 tag== 부착 가능
 
 > [!quote]
 > 
@@ -282,13 +282,13 @@ Git의 *tag*는 ==두 종류==
 > ```
 
 뒤늦게 단 *tag* 확인
-- `git tag` 목록에 ==새 *tag*가 알파벳 순으로 삽입==됨
+- `git tag` 목록에 ==새 tag가 알파벳 순으로 삽입==됨
 	- 예: `v1.2`를 뒤늦게 달았어도 `v0.1`과 `v1.3` ==사이에 위치==
 	- [[#Listing Your Tags]]에서 본 ==정렬 순서가 생성 시점과 무관==하다는 점의 구체적 예시
 - `git show v1.2` 출력 구조
 	- ==Tagger / Date==: *tag*를 ==건 시점==의 정보 (예: `Mon Feb 9 15:32:16 2009`)
 	- ==commit Author / Date==: 원래 *commit* 시점의 정보 (예: `Sun Apr 27 20:43:35 2008`)
-- 즉 뒤늦게 단 *tag*도 ==일반 *annotated tag*와 동일한 구조==를 가지며, 두 시점이 ==따로 보존==됨
+- 즉 뒤늦게 단 *tag*도 ==일반 annotated tag와 동일한 구조==를 가지며, 두 시점이 ==따로 보존==됨
 
 ### Sharing Tags
 
@@ -308,7 +308,7 @@ Git의 *tag*는 ==두 종류==
 > ```
 
 *tag* push
-- ==기본적으로 `git push`는 *tag*를 전송하지 않음==
+- 기본적으로 `git push`는 *tag*를 ==전송하지 않음==
 - 공유하려면 ==명시적으로 push== 필요
 	- 명령: `git push origin <tagname>`
 	- remote *branch* push와 ==동일한 형식==
@@ -329,8 +329,8 @@ Git의 *tag*는 ==두 종류==
 > ```
 
 *tag* 일괄 push
-- `git push origin --tags`로 ==한 번에 여러 *tag* push==
-- ==*remote repository*에 아직 없는 모든 *tag*만== 전송됨
+- `git push origin --tags`로 ==한 번에 여러 tag push==
+- ==remote repository에 아직 없는 모든 tag만== 전송됨
 - *annotated tag* / *lightweight tag* ==구분 없이== 함께 전송됨
 	- 예시 출력에서 `v1.4` (annotated)와 `v1.4-lw` (lightweight)가 한 번에 push
 
@@ -339,7 +339,7 @@ Git의 *tag*는 ==두 종류==
 > Now, when someone else clones or pulls from your repository, they will get all your tags as well.
 
 *tag*의 전파
-- push된 *tag*는 ==다른 사용자가 `git clone` / `git pull`할 때 자동으로 함께== 받음
+- push된 *tag*는 다른 사용자가 `git clone` / `git pull`할 때 ==자동으로 함께== 받음
 - 즉 한번 push로 ==협업자 전원에게 공유==됨
 
 > [!quote] Note — `git push` pushes both types of tags
@@ -350,8 +350,8 @@ push 옵션별 전송되는 *tag* 종류
 - `git push <remote> --tags`
 	- *lightweight* / *annotated* ==둘 다 push==됨
 - `git push <remote> --follow-tags`
-	- ==*annotated tag*만== push됨
-- ==*lightweight tag*만 골라서 push하는 옵션은 없음==
+	- ==annotated tag만== push됨
+- ==lightweight tag만 골라서 push하는 옵션은 없음==
 
 ### Deleting Tags
 
@@ -367,7 +367,7 @@ push 옵션별 전송되는 *tag* 종류
 local *tag* 삭제
 - 명령: `git tag -d <tagname>`
 	- `-d` (delete) 플래그가 ==삭제 동작을 지정==
-- 출력: `Deleted tag '<tagname>' (was <hash>)` — ==삭제 전 가리키던 *commit* hash==를 함께 표시
+- 출력: `Deleted tag '<tagname>' (was <hash>)` — ==삭제 전 가리키던 commit hash==를 함께 표시
 
 > [!quote]
 > 
@@ -393,7 +393,7 @@ local *tag* 삭제
 
 remote *tag* 삭제 — 첫 번째 방법
 - 명령: `git push <remote> :refs/tags/<tagname>`
-- 의미: ==콜론 앞의 null value를 콜론 뒤의 remote *tag* ref에 push== → 결과적으로 ==해당 ref가 사라짐==
+- 의미: ==콜론 앞의 null value를 콜론 뒤의 remote tag ref에 push== → 결과적으로 ==해당 ref가 사라짐==
 	- "아무것도 없는 값"을 remote ref에 덮어쓰는 trick
 - 출력: `- [deleted] <tagname>`
 
@@ -444,12 +444,12 @@ remote *tag* 삭제 — 두 번째 방법
 > ```
 
 *tag* checkout
-- `git checkout <tagname>`으로 ==해당 *tag*가 가리키는 *commit*의 파일 상태==를 working directory에 적용
+- `git checkout <tagname>`으로 ==해당 tag가 가리키는 commit의 파일 상태==를 working directory에 적용
 - 그 결과 **detached HEAD** 상태 진입
-	- ==어떤 *branch*에도 속하지 않은 채== 특정 *commit*에 HEAD가 직접 위치
-	- 이 상태에서 만든 새 *commit*은 ==어떤 *branch*에도 속하지 않음==
-	- 다른 곳으로 checkout하면 ==그 *commit*들의 참조를 잃어 사실상 분실==됨
-- 작업을 ==보존하려면 새 *branch*를 만들어야== 함
+	- ==어떤 branch에도 속하지 않은 채== 특정 *commit*에 HEAD가 직접 위치
+	- 이 상태에서 만든 새 *commit*은 ==어떤 branch에도 속하지 않음==
+	- 다른 곳으로 checkout하면 ==그 commit들의 참조를 잃어 사실상 분실==됨
+- 작업을 ==보존하려면 새 branch를 만들어야== 함
 	- `git switch -c <new-branch-name>` 또는 `git checkout -b <new-branch-name>`
 
 > [!quote]
@@ -459,7 +459,7 @@ remote *tag* 삭제 — 두 번째 방법
 *detached HEAD*에서 *commit*을 만들었을 때
 - 기준이 된 *tag* 자체는 ==그대로== 
 	- 새 *commit*이 기준이 된 *tag*에 영향을 주지 않음
-- 새 *commit*은 ==어떤 *branch*에도 속하지 않음==
+- 새 *commit*은 ==어떤 branch에도 속하지 않음==
 	- ==exact commit hash로만 reach 가능== — name(branch / tag)으로는 unreachable
 		- 즉 hash를 잃거나 GC 대상이 되면 사실상 분실
 
@@ -474,17 +474,17 @@ remote *tag* 삭제 — 두 번째 방법
 
 *tag* 시점에서 작업이 필요할 때
 - `git checkout -b <new-branch-name> <tagname>` 명령어를 실행하면 됨
-- ==새 *branch*를 만들면서 동시에 그 *branch*로 switch==, 시작점은 *tag*가 가리키던 *commit*
+- ==새 branch를 만들면서 동시에 그 branch로 switch==, 시작점은 *tag*가 가리키던 *commit*
 	- 전형적으로 사용하는 상황은 ==이전 버전의 bug fix==
 - 이후 *commit*은 새 *branch*에 누적 
-	-  ==*detached HEAD* 문제는 회피==
+	-  ==detached HEAD 문제는 회피==
 
 > [!quote]
 > 
 > If you do this and make a commit, your version2 branch will be slightly different than your v2.0.0 tag since it will move forward with your new changes, so do be careful.
 
-새 *branch*에서 *commit*하면 ==*branch* pointer가 새 *commit*을 가리키도록 이동(advance)==, 원래 *tag*는 ==그 *commit*에 고정==
-- 그 결과 새 *branch*와 기준 *tag*가 ==더 이상 동일 *commit*을 가리키지 않음==
+새 *branch*에서 *commit*하면 ==branch pointer가 새 commit을 가리키도록 이동(advance)==, 원래 *tag*는 ==그 commit에 고정==
+- 그 결과 새 *branch*와 기준 *tag*가 ==더 이상 동일 commit을 가리키지 않음==
 - 따라서 두 ref의 상태 차이를 ==항상 인지하고 작업== 
 	- 책에서 "so do be careful" 라고 표현
 
