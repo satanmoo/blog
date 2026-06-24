@@ -42,7 +42,7 @@ bookmark처럼 생각하면 이해하기 쉬움
 >
 > Remote-tracking branch names take the form `<remote>/<branch>`. For instance, if you wanted to see what the master branch on your origin remote looked like as of the last time you communicated with it, you would check the origin/master branch. If you were working on an issue with a partner and they pushed up an iss53 branch, you might have your own local iss53 branch, but the branch on the server would be represented by the remote-tracking branch origin/iss53.
 
-*remote-tracking branch*의 이름은 ==`<remote>/<branch>`== 형식을 가짐
+*remote-tracking branch*의 이름은 `<remote>/<branch>` 형식을 가짐
 - `<remote>`: remote 이름 (예: `origin`)
 - `<branch>`: 그 remote에 있는 branch 이름
 
@@ -51,7 +51,7 @@ bookmark처럼 생각하면 이해하기 쉬움
 동료가 server에 `iss53` branch를 push한 상황을 생각해 볼 수 있음
 - 내 local에는 내 작업용 `iss53` branch가 따로 있을 수 있음
 - server 쪽 branch는 remote-tracking branch인 `origin/iss53`으로 표현됨
-- 즉 같은 `iss53`이라는 이름이라도 ==local `iss53`과 `origin/iss53`은 서로 다른 reference==임
+- 즉 같은 `iss53`이라는 이름이라도 local `iss53`과 `origin/iss53`은 ==서로 다른 reference==임
 
 > [!quote]
 >
@@ -127,7 +127,7 @@ remote server는 ==하나만 둘 수 있는 게 아님==
 - 주소는 `git.team1.ourcompany.com`
 
 이 server를 현재 작업 중인 project에 ==새 remote reference로 추가==할 수 있음
-- [[books/pro-git/02-git-basics/02-05-working-with-remotes/index#Adding Remote Repositories|`git remote add`]] 명령으로 등록함
+- [[books/pro-git/02-git-basics/02-05-working-with-remotes/index#Adding Remote Repositories|git remote add]] 명령으로 등록함
 - 이 remote 이름을 `teamone`으로 지정함
 	- `teamone`은 긴 URL을 대신 가리키는 ==shortname==임
 
@@ -277,7 +277,7 @@ remote-tracking branch에서 local branch를 checkout하면 자동으로 **track
 
 이 관계 덕분에 명령이 간단해짐
 - *tracking branch*에서 `git pull`을 실행하면 Git이 ==어느 server에서 fetch하고 어느 branch를 merge할지== 자동으로 앎
-	- [[books/pro-git/02-git-basics/02-05-working-with-remotes/index#Fetching and Pulling from Your Remotes|`git pull`]] 참고
+	- [[books/pro-git/02-git-basics/02-05-working-with-remotes/index#Fetching and Pulling from Your Remotes|git pull]] 참고
 
 > [!quote]
 >
@@ -290,16 +290,20 @@ remote-tracking branch에서 local branch를 checkout하면 자동으로 **track
 > ```
 
 clone하면 보통 `origin/master`를 추적하는 `master` branch가 자동으로 만들어짐
+- `master`가 *tracking branch*
+- `origin/master`가 *upstream branch*
+	- `master`의 upstream이 `origin/master`임
 
-원하면 다른 branch를 tracking branch로 직접 설정할 수 있음
-- 예를 들어 다음과 같이 사용
-	- 다른 remote의 branch를 추적하는 tracking branch
-	- `master`가 아닌 branch를 추적하는 tracking branch
+원하면 다른 *tracking branch*도 직접 설정할 수 있음
+- 다른 remote의 branch를 추적하는 tracking branch
+	- 예: `teamone/server-fix`를 upstream으로 하는 local branch
+- `master`가 아닌 branch를 추적하는 tracking branch
 
-앞에서 본 `git checkout -b <branch> <remote>/<branch>`가 가장 단순한 예임
-- 이 동작이 워낙 흔해서 Git은 ==`--track` 축약형==을 제공함
-	- `git checkout --track origin/serverfix`
-	- `<remote>/<branch>`만 주면 같은 이름(`serverfix`)의 local tracking branch를 만들어 줌
+앞에서 본 `git checkout -b <branch> <remote>/<branch>`가 이런 tracking branch를 만드는 가장 단순한 예임
+
+*upstream branch*와 *tracking branch*의 이름을 통일하는 동작이 워낙 흔해서 Git은 `--track` ==축약형==을 제공함
+- `git checkout --track origin/serverfix`
+- 같은 이름(`serverfix`)의 local tracking branch를 만들어 줌
 
 > [!quote]
 >
@@ -336,6 +340,8 @@ checkout하려는 branch 이름이 다음 두 조건을 모두 만족하면 Git�
 remote branch와 ==이름이 다른== local branch를 만들고 싶으면, 앞의 방식(`git checkout -b`)에 다른 local 이름을 주면 됨
 - `git checkout -b sf origin/serverfix`
 - `origin/serverfix`를 추적하는 local `sf` branch가 생김
+	- `sf`는 *tracking branch*
+	- `origin/serverfix`는 *upstream branch*
 - 이후 local `sf`에서 pull하면 자동으로 `origin/serverfix`에서 받아옴
 
 > [!quote]
@@ -361,7 +367,7 @@ remote branch와 ==이름이 다른== local branch를 만들고 싶으면, 앞�
 >
 > When you have a tracking branch set up, you can reference its upstream branch with the @{upstream} or @{u} shorthand. So if you’re on the master branch and it’s tracking origin/master, you can say something like git merge @{u} instead of git merge origin/master if you wish.
 
-tracking branch가 설정돼 있으면 그 upstream branch를 ==`@{upstream}` 또는 `@{u}`== 축약으로 가리킬 수 있음
+tracking branch가 설정돼 있으면 그 upstream branch를 `@{upstream}` 또는 `@{u}` ==축약==으로 가리킬 수 있음
 
 예를 들어 `master`에 있고 그 branch가 `origin/master`를 추적 중이라면
 - `git merge origin/master` 대신 `git merge @{u}`라고 써도 됨
@@ -422,7 +428,7 @@ tracking branch가 설정돼 있으면 그 upstream branch를 ==`@{upstream}` �
 `git fetch`는 server의 새 변경을 받아오기만 하고, ==working directory는 전혀 건드리지 않음==
 - data만 가져오고, merge는 ==내가 직접== 해야 함
 
-`git pull`은 대부분의 경우 ==`git fetch` 직후 `git merge`==를 이어서 실행하는 것과 같음
+`git pull`은 대부분의 경우 `git fetch` 직후 `git merge`를 이어서 실행하는 것과 같음
 - tracking branch가 설정돼 있으면 
 	- 아래 이유로 인해 설정됨
 		- 직접 설정
