@@ -105,8 +105,9 @@ rebase를 쓰는 흔한 이유는 내 commit이 ==remote branch에 깔끔하게 
 - 이때 작업 흐름은 다음과 같음
 	- 별도 branch에서 작업함
 	- main project에 patch를 제출할 준비가 되면 내 작업을 `origin/master` 위로 rebase함
-	- maintainer는 별도 통합 작업이 필요 없음
-		- ==fast-forward 또는 clean apply==만 하면 됨
+	- maintainer는 별도 통합 작업 부담이 줄어듦
+		- branch를 그대로 받는 경우: ==fast-forward==로 pointer만 이동하면 됨
+		- patch 형태로 받는 경우: 충돌 없이 ==clean apply==할 수 있음
 
 > [!quote]
 >
