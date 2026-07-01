@@ -11,3 +11,10 @@ private/
 replit.nix
 CLAUDE.md
 content/books/code-complete-2/images.md
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
